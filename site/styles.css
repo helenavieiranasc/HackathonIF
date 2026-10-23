@@ -29,11 +29,11 @@
   --ink-on-steel-muted: #b7bcc2;
 
   /* Tape cartridges: role colors */
-  --tape-black: #161718;
-  --tape-green: #1f7f33;   /* IFSP green family, deepened for 4.6:1 with raised letters */
+  --tape-black: #0d0e10;
+  --tape-green: #188a35;   /* IFSP green family, deepened for 4.6:1 with raised letters */
   --tape-red: #cd191e;     /* IFSP red: the event plate and deadlines only */
   --tape-yellow: #f2c200;  /* pending facts */
-  --tape-blue: #1f4fb5;    /* outbound links */
+  --tape-blue: #1d56d6;    /* outbound links */
   --tape-white: #f4f4f0;
   --green-ink: #176a2a;     /* IFSP green for text on light grounds (5.3:1 on the bench) */
   --red-ink: #b3161b;       /* IFSP red for text on light grounds (5.4:1) */
@@ -852,4 +852,20 @@ button.tape:disabled { cursor: not-allowed; opacity: 0.55; translate: none; filt
   .mini-cells .tape { font-size: 1.0625rem; }
   .mini-cells .tape-body { padding-left: 0.6em; padding-right: 0.6em; }
   .mini-cells i { font-size: 0.875rem; margin-right: 0.25rem; }
+}
+
+/* ---------- Fitas: acabamento reforçado ----------
+   Brilho de vinil no topo, sombra na base e borda interna, para a fita não parecer opaca. */
+.tape-body {
+  background-image:
+    linear-gradient(180deg, rgb(255 255 255 / 0.22) 0%, rgb(255 255 255 / 0.06) 38%, rgb(0 0 0 / 0) 55%, rgb(0 0 0 / 0.28) 100%),
+    var(--tape-skin);
+  background-size: 100% 100%, 96px 96px, 100% 100%;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.25),
+    inset 0 -2px 0 rgb(0 0 0 / 0.35);
+}
+.tape {
+  --tape-shadow: drop-shadow(0 2px 1px rgb(0 0 0 / 0.45)) drop-shadow(0 8px 10px rgb(0 0 0 / 0.22));
+  font-weight: 700;
 }
