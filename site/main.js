@@ -1,5 +1,5 @@
-/* Renders content.js into the page and runs the tape motion.
-   Every fact on the page comes from window.HACKATHON. */
+/* Renders content.js into the page, builds the tapes, the countdown, the week model
+   and the label maker, then runs the motion. Every fact on the page comes from window.HACKATHON. */
 (function () {
   "use strict";
 
@@ -9,30 +9,27 @@
 
   const get = (path) => path.split(".").reduce((o, k) => (o == null ? o : o[k]), C);
   const isPlaceholder = (s) => typeof s === "string" && PH.test(s);
+  const isWholePlaceholder = (s) => typeof s === "string" && /^\[[^\]]+\]$/.test(s.trim());
   const isUrl = (s) => typeof s === "string" && /^https?:\/\//.test(s) && !isPlaceholder(s);
-
   const esc = (s) =>
     String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
-  // Wrap each [MARCADOR] in a yellow-tape <mark> so pending facts read as state, not as finished copy.
-  function rich(s, size = "s", inline = false) {
+  // "[LOCAL A DEFINIR]" reads as "Local a definir": sentence case, in the reading face.
+  const sentence = (s) => {
+    const t = s.toLocaleLowerCase("pt-BR");
+    return t.charAt(0).toLocaleUpperCase("pt-BR") + t.slice(1);
+  };
+  const phText = (inner) => sentence(inner.replace(/^RESPOSTA:\s*/i, ""));
+
+  // Placeholders become a yellow marker inside the text, never a block of mono caps.
+  function rich(s) {
     if (s == null) return "";
-    if (!inline && /^\[[^\]]+\]$/.test(String(s).trim())) {
-      return `<span class="tape tape--pending tape--${size}">${esc(String(s).trim().slice(1, -1))}</span>`;
-    }
     return esc(s).replace(/\[([^\]]+)\]/g, (_, inner) =>
-      `<mark class="ph" title="A confirmar pela organização">${inner}</mark>`
+      `<mark class="ph" title="A confirmar pela organização">${esc(phText(inner))}</mark>`
     );
   }
-
-  // A tape whose whole text is a placeholder becomes yellow pending tape with plain words.
-  function tapeText(s) {
-    return isPlaceholder(s) ? esc(s.replace(/[\[\]]/g, "")) : esc(s);
-  }
-
-  function pendingTag(confirmed) {
-    return confirmed ? "" : `<span class="tape tape--yellow tape--s qa-status">Resposta pendente</span>`;
-  }
+  // Tape text: a placeholder strip shows its words without brackets.
+  const tapeText = (s) => (isPlaceholder(s) ? esc(phText(s.replace(/[\[\]]/g, ""))) : esc(s));
 
   /* ---------- Simple fields ---------- */
   document.querySelectorAll("[data-c]").forEach((el) => {
@@ -44,109 +41,68 @@
       el.classList.toggle("tape--pending", pending);
       if (!pending) el.classList.add(kind === "deadline" ? "tape--red" : "tape--black");
     } else {
-      el.innerHTML = rich(v, el.dataset.size, "inline" in el.dataset);
+      el.innerHTML = rich(v);
     }
   });
 
   /* ---------- Lists ---------- */
   const renderers = {
-    "sobre.texto": (items) => items.map((t) => `<p>${rich(t, "s", true)}</p>`).join(""),
-
+    "sobre.texto": (items) => items.map((t) => `<p>${rich(t)}</p>`).join(""),
     "sobre.motivos": (items) =>
-      items
-        .map(
-          (m) => `<li>
-            <h3 class="motive-title"><span class="tape tape--black tape--s">${esc(m.titulo)}</span></h3>
-            <p>${rich(m.texto, "s", true)}</p>
-          </li>`
-        )
-        .join(""),
+      items.map((m) => `<li><h3 class="motive-title">${esc(m.titulo)}</h3><p>${rich(m.texto)}</p></li>`).join(""),
 
-    "participacao.habilidades": (items) =>
-      items.map((h) => `<li><span class="tape tape--white tape--s">${esc(h)}</span></li>`).join(""),
-
-    "revelacao.pauta": (items) => items.map((t) => `<li>${rich(t, "s", true)}</li>`).join(""),
+    "revelacao.pauta": (items) => items.map((t) => `<li>${rich(t)}</li>`).join(""),
 
     "ia.frases": (items) => items.map((t) => `<span class="ai-line">${esc(t)}</span>`).join(""),
-    "ia.texto": (items) => items.map((t) => `<p>${rich(t, "s", true)}</p>`).join(""),
-    "ia.usos": (items) => items.map((t) => `<li><span class="tape tape--white tape--s">${esc(t)}</span></li>`).join(""),
-    "projeto.formatos": (items) => items.map((t) => `<li><span class="tape tape--black tape--s">${esc(t)}</span></li>`).join(""),
-    "projeto.regras": (items) => items.map((t) => `<li>${rich(t, "s", true)}</li>`).join(""),
+    "ia.texto": (items) => items.map((t) => `<p>${rich(t)}</p>`).join(""),
+    "projeto.regras": (items) => items.map((t) => `<li>${rich(t)}</li>`).join(""),
 
     etapas: (items) =>
       items
         .map(
           (e, i) => `<li class="control" id="etapa-${esc(e.id)}">
             <span class="control-num" aria-hidden="true">${i + 1}</span>
-            <h3 class="control-title"><span class="sr-only">Etapa ${i + 1}: </span><span class="tape tape--black tape--s">${esc(e.titulo)}</span></h3>
-            <p>${rich(e.texto, "s", true)}</p>
+            <h3 class="control-title"><span class="sr-only">Etapa ${i + 1}: </span>${esc(e.titulo)}</h3>
+            <p>${rich(e.texto)}</p>
             ${e.detalhe ? `<p class="control-detail">${rich(e.detalhe)}</p>` : ""}
           </li>`
         )
         .join(""),
 
-    cronograma: (items) =>
-      items
-        .filter((c) => c.exibir !== false)
-        .map((c) => {
-          const pending = isPlaceholder(c.data);
-          const tapeClass = pending ? "tape--pending" : c.marco ? "tape--red" : "tape--black";
-          return `<li class="slot${c.marco ? " slot--deadline" : ""}">
-            <span class="slot-date"><span class="tape tape--s ${tapeClass}">${tapeText(c.data)}</span></span>
-            <span class="slot-title">${esc(c.titulo)}${c.marco ? ' <span class="tape tape--red tape--s slot-deadline">Prazo</span>' : ""}${c.local ? `<small>${rich(c.local, "s", true)}</small>` : ""}</span>
-            <span class="slot-time">${c.hora ? rich(c.hora, "s", true) : ""}</span>
-          </li>`;
-        })
-        .join(""),
-
-    "pitch.mostrar": (items) =>
-      items.map((m) => `<li><strong>${esc(m.titulo)}</strong> ${rich(m.texto, "s", true)}</li>`).join(""),
-
+    "pitch.mostrar": (items) => items.map((m) => `<li><strong>${esc(m.titulo)}</strong> ${rich(m.texto)}</li>`).join(""),
     "pitch.star": (items) =>
       items
         .map(
-          (s) => `<li class="star-step">
-            <span class="tape tape--black tape--l star-letter" aria-hidden="true">${esc(s.letra)}</span>
-            <span class="star-text"><strong>${esc(s.nome)}</strong> ${rich(s.texto, "s", true)}</span>
-          </li>`
+          (s) => `<li class="star-step"><span class="star-letter" aria-hidden="true">${esc(s.letra)}</span>
+            <span class="star-text"><strong>${esc(s.nome)}</strong> ${rich(s.texto)}</span></li>`
         )
         .join(""),
 
     "avaliacao.criterios": (items) =>
-      items.map((c, i) => `<li><span class="crit-num" aria-hidden="true">${i + 1}</span>${rich(c)}</li>`).join(""),
-
-    // The confirmed judge is printed on black tape; pending seats stay yellow, smaller and grouped.
+      items.map((c, i) => `<li><span class="crit-num" aria-hidden="true">${i + 1}</span><span>${rich(c)}</span></li>`).join(""),
     "avaliacao.banca": (items) =>
       items
-        .map((n) =>
-          isPlaceholder(n)
-            ? `<li class="panel-pending">${rich(n)}</li>`
-            : `<li class="panel-confirmed"><span class="tape tape--black tape--m">${esc(n)}</span></li>`
-        )
+        .map((n) => (isPlaceholder(n) ? `<li class="panel-pending">${rich(n)}</li>` : `<li class="panel-confirmed">${esc(n)}</li>`))
         .join(""),
-
     "avaliacao.premios": (items) =>
       items
         .map(
           (p, i) => `<li class="award award--${i + 1}">
-            <span class="tape tape--black tape--l award-place">${esc(p.lugar)}</span>
-            <span class="award-items">
-              ${p.medalha ? '<span class="tape tape--green tape--s">Medalha</span>' : ""}
-              <span class="award-plus" aria-hidden="true">+</span>
-              ${rich(p.premio)}
-            </span>
+            <span class="award-place">${esc(p.lugar.replace(" lugar", ""))}<span class="sr-only"> lugar</span></span>
+            <span class="award-items">${p.medalha ? '<span class="award-medal">Medalha</span> <span aria-hidden="true">+</span>' : ""} ${rich(p.premio)}</span>
           </li>`
         )
         .join(""),
 
     faq: (items) =>
       items
-        .map(
-          (q) => `<details class="qa">
-            <summary><span class="qa-q">${esc(q.pergunta)}${pendingTag(q.confirmado && !/^\[[^\]]+\]$/.test(q.resposta.trim()))}</span><span class="qa-mark" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span></summary>
+        .map((q) => {
+          const pending = !q.confirmado || isWholePlaceholder(q.resposta);
+          return `<details class="qa">
+            <summary><span class="qa-q">${esc(q.pergunta)}${pending ? '<mark class="ph qa-status">Resposta pendente</mark>' : ""}</span><span class="qa-mark" aria-hidden="true"><svg class="icon"><use href="#i-plus"/></svg></span></summary>
             <div class="qa-a"><p>${rich(q.resposta)}</p></div>
-          </details>`
-        )
+          </details>`;
+        })
         .join(""),
 
     "regulamento.secoes": (items) =>
@@ -158,7 +114,7 @@
             <ul>${s.itens
               .map((t) =>
                 typeof t === "string"
-                  ? `<li>${rich(t, "s", true)}</li>`
+                  ? `<li>${rich(t)}</li>`
                   : `<li class="rule-field"><strong>${esc(t.rotulo)}:</strong> ${rich(t.valor)}</li>`
               )
               .join("")}</ul>
@@ -168,83 +124,82 @@
 
     "contato.redes": (items) =>
       items.length
-        ? items.map((r) => `<li><a class="tape tape--blue tape--s" href="${esc(r.url)}" rel="noopener">${esc(r.nome)}</a></li>`).join("")
+        ? items.map((r) => `<li><a class="link-out" href="${esc(r.url)}" rel="noopener" target="_blank">${esc(r.nome)} <svg class="icon" aria-hidden="true"><use href="#i-external"/></svg><span class="sr-only"> (abre em nova aba)</span></a></li>`).join("")
         : `<li>${rich("[REDES SOCIAIS A DEFINIR]")}</li>`,
   };
-
   document.querySelectorAll("[data-list]").forEach((el) => {
     const key = el.dataset.list;
-    const items = get(key) || [];
-    if (renderers[key]) el.innerHTML = renderers[key](items);
+    if (renderers[key]) el.innerHTML = renderers[key](get(key) || []);
   });
 
+  // Inline lists read as sentences, not as a row of pills.
+  const joinInline = (items) => items.map((t) => `<span>${esc(t)}</span>`).join("");
+  const fill = (sel, html) => { const el = document.querySelector(sel); if (el) el.innerHTML = html; };
+  if (C.participacao) fill("[data-skills]", esc(C.participacao.habilidades.join(", ").toLocaleLowerCase("pt-BR")));
+  if (C.ia) fill("[data-uses]", esc(C.ia.usos.join(", ").toLocaleLowerCase("pt-BR")));
+  if (C.projeto) fill("[data-formats]", joinInline(C.projeto.formatos));
 
-  /* ---------- Team slots: the required seats are punched, the optional ones are blank tape ---------- */
+  /* ---------- Regulation index ---------- */
+  const toc = document.querySelector("[data-toc]");
+  if (toc && C.regulamento) {
+    toc.innerHTML = C.regulamento.secoes.map((s) => `<li><a href="#regra-${esc(s.id)}">${esc(s.titulo)}</a></li>`).join("");
+  }
+
+  /* ---------- The week: days 26 to 30, with the confirmed events pinned to their day ---------- */
+  const reveal = C.revelacao || {};
+  const weekStart = new Date((reveal.inicio || "2026-10-26T08:00:00-03:00").slice(0, 10) + "T12:00:00-03:00");
+  const days = Array.from({ length: 5 }, (_, i) => {
+    const d = new Date(weekStart.getTime() + i * 86400000);
+    return {
+      num: d.getUTCDate(),
+      name: new Intl.DateTimeFormat("pt-BR", { weekday: "long", timeZone: "America/Sao_Paulo" }).format(d),
+      events: [],
+    };
+  });
+  const undated = [];
+  (C.cronograma || []).filter((c) => c.exibir !== false).forEach((c) => {
+    const m = !isPlaceholder(c.data) && /(\d{1,2})\/10/.exec(c.data);
+    const day = m && days.find((d) => d.num === Number(m[1]));
+    if (day) day.events.push(c);
+    else undated.push(c);
+  });
+  const weekList = document.querySelector(".week-days");
+  if (weekList) {
+    weekList.innerHTML = days
+      .map(
+        (d) => `<li class="week-day${d.events.length ? "" : " week-day--empty"}">
+          <span class="wd-name">${esc(d.name.charAt(0).toUpperCase() + d.name.slice(1))}</span>
+          <span class="wd-num">${d.num}<span class="sr-only"> de outubro</span></span>
+          <div class="wd-events">${d.events
+            .map(
+              (e) => `<div class="wd-event${e.marco ? " wd-event--deadline" : ""}">
+                ${e.hora ? `<span class="tape tape--s tape--time ${e.marco ? "tape--red" : "tape--black"}">${esc(e.hora)}</span>` : ""}
+                <span class="wd-title">${esc(e.titulo)}</span>
+                ${e.marco ? '<span class="wd-meta">Prazo sem volta</span>' : ""}
+                ${e.local ? `<span class="wd-meta">${rich(e.local)}</span>` : ""}
+              </div>`
+            )
+            .join("")}</div>
+        </li>`
+      )
+      .join("");
+  }
+  fill(
+    "[data-week-pending]",
+    undated
+      .map((e) => `<li><strong>${esc(e.titulo)}</strong>${e.marco ? ' <span class="tape tape--red tape--s">Prazo</span>' : ""} ${rich(e.data)}</li>`)
+      .join("")
+  );
+
+  /* ---------- Team slots: required seats are punched, optional ones are blank tape ---------- */
   const team = document.querySelector("[data-team]");
   if (team && C.participacao) {
     const { minimo, maximo } = C.participacao;
     team.innerHTML = Array.from({ length: maximo }, (_, i) =>
       i < minimo
         ? `<li><span class="tape tape--black tape--s">Integrante ${i + 1}</span></li>`
-        : `<li class="slot-optional"><span class="tape tape--blank tape--s">Opcional ${i + 1}</span></li>`
+        : `<li><span class="tape tape--blank tape--s">Opcional ${i + 1}</span></li>`
     ).join("");
-  }
-
-  /* ---------- Theme reveal: countdown to the opening, then the revealed state ---------- */
-  const reveal = C.revelacao || {};
-  const revealStart = Date.parse(reveal.inicio);
-  const revealEnd = Date.parse(reveal.fim);
-  const cdBox = document.querySelector("[data-countdown]");
-  const cdStatus = document.querySelector("[data-reveal-status]");
-  const themeTape = document.querySelector("[data-theme-tape]");
-  const revealTitle = document.querySelector("[data-reveal-title]");
-  const pad = (n) => String(n).padStart(2, "0");
-  let cdTimer = null;
-  function setThemeTape(text, color) {
-    if (!themeTape) return;
-    themeTape.classList.remove("tape--red", "tape--black", "tape--white");
-    themeTape.classList.add(color);
-    const face = themeTape.querySelector(".tape-face") || themeTape;
-    face.textContent = text;
-    delete face.dataset.split;
-  }
-  function tickReveal() {
-    if (!cdBox || Number.isNaN(revealStart)) return;
-    const now = Date.now();
-    if (now < revealStart) {
-      let left = Math.floor((revealStart - now) / 1000);
-      const d = Math.floor(left / 86400); left -= d * 86400;
-      const h = Math.floor(left / 3600); left -= h * 3600;
-      const m = Math.floor(left / 60);
-      const sec = left - m * 60;
-      for (const [k, v] of [["d", d], ["h", h], ["m", m], ["s", sec]]) {
-        const cell = cdBox.querySelector(`[data-cd="${k}"]`);
-        const face = cell.querySelector(".tape-face") || cell;
-        if (face.textContent !== pad(v)) face.textContent = pad(v);
-      }
-      return;
-    }
-    clearInterval(cdTimer);
-    cdBox.hidden = true;
-    if (now < revealEnd) {
-      revealTitle.textContent = "A revelação é agora.";
-      cdStatus.textContent = "A abertura está acontecendo neste momento.";
-      setThemeTape("Revelando agora", "tape--red");
-    } else if (reveal.tema && reveal.tema.trim()) {
-      revealTitle.textContent = "O tema foi revelado.";
-      cdStatus.textContent = `Revelado na abertura de ${reveal.dia.toLowerCase()}.`;
-      setThemeTape(reveal.tema.trim(), "tape--black");
-    } else {
-      revealTitle.textContent = "O tema já foi revelado na abertura.";
-      cdStatus.textContent = `A revelação aconteceu em ${reveal.dia.toLowerCase()}.`;
-      setThemeTape("Revelado em 26/10", "tape--white");
-    }
-  }
-
-  /* ---------- Status lines that depend on confirmation ---------- */
-  if (C.regulamento && C.regulamento.oficialConfirmado) {
-    const flag = document.querySelector('[data-status="regulamento"]');
-    if (flag) flag.hidden = true;
   }
 
   /* ---------- Links: real URLs go out, placeholders stay on the page and say why ---------- */
@@ -260,7 +215,6 @@
       }
       return;
     }
-    // Placeholder URL
     if (key === "inscricao") {
       const note = document.querySelector('[data-link-note="inscricao"]');
       if (note) note.hidden = false;
@@ -274,7 +228,7 @@
         a.classList.remove("tape--green");
         a.classList.add("tape--muted");
         a.innerHTML = esc(label);
-        a.insertAdjacentHTML("afterend", ' <span class="tape tape--pending tape--l" aria-hidden="true">Em breve</span>');
+        a.insertAdjacentHTML("afterend", ' <mark class="ph" aria-hidden="true">em breve</mark>');
       } else {
         // Elsewhere: lead to the registration block, never to a fake form.
         a.href = "#participe";
@@ -296,12 +250,12 @@
       a.setAttribute("aria-disabled", "true");
       a.removeAttribute("href");
       a.title = "Link ainda não publicado";
-      a.insertAdjacentHTML("beforeend", ' <mark class="ph">em breve</mark>');
+      a.setAttribute("role", "link");
+      a.insertAdjacentHTML("afterend", ' <mark class="ph">em breve</mark>');
     }
   });
 
   /* ---------- Tape construction: every .tape gets a vinyl body and a raised face ---------- */
-  // Small stable hash so each strip gets its own scissor cut, the same on every visit.
   function hash(str) {
     let h = 2166136261;
     for (let i = 0; i < str.length; i++) h = Math.imul(h ^ str.charCodeAt(i), 16777619);
@@ -327,62 +281,112 @@
   const faceOf = (tape) => tape.querySelector(".tape-face") || tape;
   document.querySelectorAll(".tape").forEach(tapeify);
 
-  // A heading strip that is wider than its column is punched as two or three strips, never wrapped.
-  function fitTitles() {
-    document.querySelectorAll(".section-title, .control-title").forEach((h) => {
-      const first = h.querySelector(".tape");
-      if (!h.dataset.text) {
-        h.dataset.text = first.textContent.trim();
-        h.dataset.cls = first.className;
-        h.dataset.stick = first.hasAttribute("data-stick") ? "1" : "";
-        const sr = h.querySelector(".sr-only");
-        h.dataset.sr = sr ? sr.textContent : "";
-      }
-      const words = h.dataset.text.split(" ");
-      const build = (lines) => {
-        h.innerHTML = `<span class="sr-only">${esc(h.dataset.sr + h.dataset.text)}</span>` + lines
-          .map((l) => `<span class="${h.dataset.cls}" aria-hidden="true"${h.dataset.stick ? " data-stick" : ""}>${esc(l)}</span>`)
-          .join("");
-        h.querySelectorAll(".tape").forEach(tapeify);
-      };
-      build([h.dataset.text]);
-      const avail = h.clientWidth;
-      for (let n = 2; n <= Math.min(3, words.length); n++) {
-        if (h.querySelector(".tape").getBoundingClientRect().width <= avail) break;
-        const per = Math.ceil(words.length / n);
-        const lines = [];
-        for (let i = 0; i < words.length; i += per) lines.push(words.slice(i, i + per).join(" "));
-        build(lines);
-      }
-    });
+  /* ---------- Headlines: words wrapped so they can rise; the text itself is untouched ---------- */
+  document.querySelectorAll("[data-words]").forEach((el) => {
+    const words = el.textContent.trim().split(/\s+/);
+    el.innerHTML = words.map((w) => `<span class="w"><span>${esc(w)}</span></span>`).join(" ");
+  });
+
+  /* ---------- Countdown to the theme reveal (fixed instants, Brasília time) ---------- */
+  const revealStart = Date.parse(reveal.inicio);
+  const revealEnd = Date.parse(reveal.fim);
+  const boxes = [...document.querySelectorAll("[data-countdown]")];
+  const cdStatus = document.querySelector("[data-reveal-status]");
+  const miniWrap = document.querySelector("[data-countdown-wrap]");
+  const miniLabel = document.querySelector("[data-reveal-mini]");
+  const themeTape = document.querySelector("[data-theme-tape]");
+  const revealTitle = document.querySelector("[data-reveal-title]");
+  const pad = (n) => String(n).padStart(2, "0");
+  let cdTimer = null;
+  function setThemeTape(text, color) {
+    if (!themeTape) return;
+    themeTape.classList.remove("tape--red", "tape--black", "tape--white");
+    themeTape.classList.add(color);
+    const face = faceOf(themeTape);
+    face.textContent = text;
+    delete face.dataset.split;
   }
-  fitTitles();
+  function setTitle(text) {
+    if (!revealTitle) return;
+    revealTitle.innerHTML = text.split(" ").map((w) => `<span class="w"><span>${esc(w)}</span></span>`).join(" ");
+  }
+  function tickReveal() {
+    if (Number.isNaN(revealStart)) return;
+    const now = Date.now();
+    if (now < revealStart) {
+      let left = Math.floor((revealStart - now) / 1000);
+      const d = Math.floor(left / 86400); left -= d * 86400;
+      const h = Math.floor(left / 3600); left -= h * 3600;
+      const m = Math.floor(left / 60);
+      const sec = left - m * 60;
+      const vals = { d, h, m, s: sec };
+      boxes.forEach((box) => {
+        for (const k of ["d", "h", "m", "s"]) {
+          const cell = box.querySelector(`[data-cd="${k}"]`);
+          if (!cell) continue;
+          const face = faceOf(cell);
+          const next = pad(vals[k]);
+          if (face.textContent !== next) {
+            face.textContent = next;
+            if (window.gsap && !reduceMotion.matches && k !== "s") gsap.fromTo(face, { scale: 1.25 }, { scale: 1, duration: 0.3, ease: "back.out(3)" });
+          }
+        }
+      });
+      return;
+    }
+    clearInterval(cdTimer);
+    boxes.forEach((b) => (b.hidden = true));
+    if (miniWrap) miniWrap.dataset.state = "over";
+    if (now < revealEnd) {
+      setTitle("A revelação é agora.");
+      if (cdStatus) cdStatus.textContent = "A abertura está acontecendo neste momento.";
+      if (miniLabel) miniLabel.textContent = "A revelação do tema é agora";
+      setThemeTape("Revelando agora", "tape--red");
+    } else if (reveal.tema && reveal.tema.trim()) {
+      setTitle("O tema foi revelado.");
+      if (cdStatus) cdStatus.textContent = `Revelado na abertura de ${reveal.dia.toLowerCase()}.`;
+      if (miniLabel) miniLabel.textContent = `Tema revelado: ${reveal.tema.trim()}`;
+      setThemeTape(reveal.tema.trim(), "tape--black");
+    } else {
+      setTitle("O tema já foi revelado.");
+      if (cdStatus) cdStatus.textContent = `A revelação aconteceu em ${reveal.dia.toLowerCase()}.`;
+      if (miniLabel) miniLabel.textContent = "O tema já foi revelado";
+      setThemeTape("Revelado em 26/10", "tape--white");
+    }
+  }
   tickReveal();
-  if (cdBox && !cdBox.hidden) cdTimer = setInterval(tickReveal, 1000);
-  let titleTimer;
-  addEventListener("resize", () => { clearTimeout(titleTimer); titleTimer = setTimeout(fitTitles, 150); });
-  if (document.fonts) document.fonts.ready.then(fitTitles);
+  if (!boxes.every((b) => b.hidden)) cdTimer = setInterval(tickReveal, 1000);
 
-  /* ---------- Masthead state + active section ---------- */
-  const masthead = document.querySelector("[data-masthead]");
-  const onScroll = () => masthead.classList.toggle("is-scrolled", window.scrollY > 8);
-  onScroll();
-  addEventListener("scroll", onScroll, { passive: true });
+  /* ---------- Masthead: progress ruler, active section ---------- */
+  const rulerFill = document.querySelector("[data-ruler]");
+  let rulerQueued = false;
+  function updateRuler() {
+    rulerQueued = false;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    rulerFill.style.setProperty("--p", max > 0 ? Math.min(1, scrollY / max).toFixed(4) : 0);
+  }
+  addEventListener("scroll", () => { if (!rulerQueued) { rulerQueued = true; requestAnimationFrame(updateRuler); } }, { passive: true });
+  updateRuler();
 
-  const navLinks = [...document.querySelectorAll(".nav-list a")];
-  const byId = new Map(navLinks.map((a) => [a.getAttribute("href").slice(1), a]));
+  const navLinks = [...document.querySelectorAll(".nav-list a, .toc a")];
+  const linksById = new Map();
+  navLinks.forEach((a) => {
+    const id = a.getAttribute("href").slice(1);
+    if (!linksById.has(id)) linksById.set(id, []);
+    linksById.get(id).push(a);
+  });
   const sectionObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((en) => {
         if (!en.isIntersecting) return;
-        navLinks.forEach((a) => a.removeAttribute("aria-current"));
-        const link = byId.get(en.target.id);
-        if (link) link.setAttribute("aria-current", "true");
+        const group = en.target.classList.contains("rule") ? ".toc a" : ".nav-list a";
+        document.querySelectorAll(group).forEach((a) => a.removeAttribute("aria-current"));
+        (linksById.get(en.target.id) || []).forEach((a) => a.setAttribute("aria-current", "true"));
       });
     },
-    { rootMargin: "-45% 0px -50% 0px" }
+    { rootMargin: "-40% 0px -55% 0px" }
   );
-  document.querySelectorAll("main > section[id]").forEach((s) => sectionObserver.observe(s));
+  document.querySelectorAll("main > section[id], .rule[id]").forEach((s) => sectionObserver.observe(s));
 
   /* ---------- Mobile menu ---------- */
   const menu = document.getElementById("menu");
@@ -398,7 +402,7 @@
   toggle.addEventListener("click", () => setMenu(menu.hidden));
   closeBtn.addEventListener("click", () => setMenu(false));
   menu.addEventListener("click", (e) => {
-    if (e.target.closest("a")) {
+    if (e.target.closest("a[href]")) {
       menu.hidden = true;
       toggle.setAttribute("aria-expanded", "false");
       document.body.style.overflow = "";
@@ -406,9 +410,8 @@
   });
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !menu.hidden) setMenu(false);
-    // keep Tab inside the open menu
     if (e.key === "Tab" && !menu.hidden) {
-      const f = [...menu.querySelectorAll("a, button")];
+      const f = [...menu.querySelectorAll("a[href], button")];
       const first = f[0], last = f[f.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
@@ -416,7 +419,7 @@
   });
   matchMedia("(min-width: 1241px)").addEventListener("change", (m) => { if (m.matches && !menu.hidden) setMenu(false); });
 
-  /* ---------- Course line: straight legs between controls, edge to edge ---------- */
+  /* ---------- Course line: straight legs between controls ---------- */
   const course = document.querySelector(".course");
   const courseSvg = course.querySelector(".course-line");
   let coursePath = null;
@@ -431,14 +434,21 @@
     for (let i = 0; i < nums.length - 1; i++) {
       const a = nums[i], b = nums[i + 1];
       const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy);
-      // A row change in the same column would cut through the step's text:
-      // run that leg out along the page margin instead.
+      // A row change in the same column would cut through the step's text: run it out along the margin.
       if (!stacked && Math.abs(dx) < a.r && Math.abs(dy) > a.r * 2) {
         const right = a.x > box.width / 2;
         const edge = right ? box.width + 20 : -20;
         const k = right ? 1 : -1, c = 14;
         d += `M${(a.x + k * a.r).toFixed(1)} ${a.y.toFixed(1)}H${(edge - k * c).toFixed(1)}Q${edge} ${a.y.toFixed(1)} ${edge} ${(a.y + c).toFixed(1)}`
           + `V${(b.y - c).toFixed(1)}Q${edge} ${b.y.toFixed(1)} ${(edge - k * c).toFixed(1)} ${b.y.toFixed(1)}H${(b.x + k * b.r).toFixed(1)}`;
+        continue;
+      }
+      // Next row, back at the left: run along the margin, then the gap above the new row.
+      if (!stacked && dx < -a.r && dy > a.r * 2) {
+        const edge = box.width + 20, c = 14, gapY = b.y - b.r - 28;
+        d += `M${(a.x + a.r).toFixed(1)} ${a.y.toFixed(1)}H${(edge - c).toFixed(1)}Q${edge} ${a.y.toFixed(1)} ${edge} ${(a.y + c).toFixed(1)}`
+          + `V${(gapY - c).toFixed(1)}Q${edge} ${gapY.toFixed(1)} ${(edge - c).toFixed(1)} ${gapY.toFixed(1)}H${(b.x + c).toFixed(1)}`
+          + `Q${b.x.toFixed(1)} ${gapY.toFixed(1)} ${b.x.toFixed(1)} ${(gapY + c).toFixed(1)}V${(b.y - b.r).toFixed(1)}`;
         continue;
       }
       if (len < a.r + b.r) continue;
@@ -455,8 +465,91 @@
   addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(drawCourse, 120); });
   if (document.fonts) document.fonts.ready.then(drawCourse);
 
-  /* ---------- Punch helper: split text into letters ---------- */
-  // Real embossers never land every letter on the same line: each one sits a fraction off.
+  /* ---------- Fig. 1: the week model. SVG drawing first; WebGL replaces it where it can ---------- */
+  const modelData = days.map((d) => {
+    const ev = d.events[0];
+    const kind = !ev ? "empty" : ev.marco ? "deadline" : /apresenta/i.test(ev.titulo) ? "final" : "dated";
+    return {
+      num: d.num,
+      short: d.name.slice(0, 3).replace(/^./, (c) => c.toUpperCase()),
+      kind,
+      date: ev ? `${d.name.slice(0, 3).replace(/^./, (c) => c.toUpperCase())} ${d.num}/10${ev.hora ? " · " + ev.hora : ""}` : "",
+      title: ev ? (ev.marco ? "Inscrições encerram" : /apresenta/i.test(ev.titulo) ? "Pitch final" : ev.titulo) : "",
+    };
+  });
+  const stage = document.querySelector("[data-model-stage]");
+  function drawModelSvg() {
+    // Isometric drawing of the same five volumes; dated days solid, the rest dashed wireframe.
+    const W = 640, H = 560, s = 44;
+    const cx = 290, cy = 350;
+    const iso = (x, y, z) => [cx + (x - z) * Math.cos(Math.PI / 6) * s, cy + (x + z) * Math.sin(Math.PI / 6) * s - y * s];
+    const heights = { empty: 0.7, dated: 2.4, deadline: 3.2, final: 4 };
+    const fills = { dated: ["#2b2d30", "#161718", "#0d0e0f"], deadline: ["#e0393d", "#cd191e", "#a51216"], final: ["#2c9a45", "#1f7f33", "#16632a"] };
+    let grid = "";
+    for (let i = -3; i <= 3; i++) {
+      const a = iso(i * 1.2, 0, -5), b = iso(i * 1.2, 0, 5);
+      const c = iso(-5, 0, i * 1.2), d = iso(5, 0, i * 1.2);
+      grid += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}"/><line x1="${c[0]}" y1="${c[1]}" x2="${d[0]}" y2="${d[1]}"/>`;
+    }
+    const vols = modelData.map((m, i) => {
+      const x = (i - 2) * 1.55 - 0.5, z = (i - 2) * -0.4 - 0.5, w = 1, h = heights[m.kind];
+      const P = (dx, dy, dz) => iso(x + dx, dy, z + dz).map((v) => v.toFixed(1)).join(",");
+      const top = [P(0, h, 0), P(w, h, 0), P(w, h, w), P(0, h, w)].join(" ");
+      const left = [P(0, 0, w), P(w, 0, w), P(w, h, w), P(0, h, w)].join(" ");
+      const right = [P(w, 0, 0), P(w, 0, w), P(w, h, w), P(w, h, 0)].join(" ");
+      const label = iso(x + w / 2, 0, z + w + 0.7);
+      const day = `<text class="svg-day" x="${label[0].toFixed(1)}" y="${label[1].toFixed(1)}">${esc(m.short.toUpperCase())} ${m.num}</text>`;
+      if (m.kind === "empty") {
+        return `<g class="svg-wire"><polygon points="${top}"/><polygon points="${left}"/><polygon points="${right}"/></g>${day}`;
+      }
+      const f = fills[m.kind];
+      return `<g class="svg-solid"><polygon points="${right}" fill="${f[2]}"/><polygon points="${left}" fill="${f[1]}"/><polygon points="${top}" fill="${f[0]}"/></g>${day}`;
+    });
+    const labels = modelData
+      .map((m, i) => {
+        if (m.kind === "empty") return "";
+        const x = (i - 2) * 1.55 - 0.5, z = (i - 2) * -0.4 - 0.5;
+        const p = iso(x + 0.5, heights[m.kind] + 0.25, z + 0.5);
+        // Labels fan upward from left to right, like the WebGL version, so they never collide.
+        const lift = { dated: 112, deadline: 62, final: 18 }[m.kind];
+        const lx = p[0], ly = p[1] - lift;
+        const color = m.kind === "deadline" ? "#cd191e" : m.kind === "final" ? "#1f7f33" : "#17181a";
+        return `<g class="svg-label"><line x1="${p[0].toFixed(1)}" y1="${p[1].toFixed(1)}" x2="${lx.toFixed(1)}" y2="${ly.toFixed(1)}" stroke="${color}"/>
+          <text x="${(lx + 6).toFixed(1)}" y="${(ly - 16).toFixed(1)}" class="svg-l-date" fill="${color}">${esc(m.date)}</text>
+          <text x="${(lx + 6).toFixed(1)}" y="${(ly + 4).toFixed(1)}" class="svg-l-title">${esc(m.title)}</text></g>`;
+      })
+      .join("");
+    const vb = matchMedia("(max-width: 600px)").matches ? `0 175 ${W} 380` : `0 0 ${W} ${H}`;
+    stage.innerHTML = `<svg class="model-svg" viewBox="${vb}" role="img" aria-label="Maquete da semana: segunda 26 revelação do tema; quarta 28 encerramento das inscrições às 23h59; sexta 30 pitch final.">
+      <g class="svg-grid">${grid}</g>${vols.join("")}${labels}</svg>`;
+  }
+  drawModelSvg();
+  // On phones the drawing is too small for its labels: the same three facts follow it as a legend.
+  const legend = document.createElement("ul");
+  legend.className = "model-legend";
+  legend.innerHTML = modelData
+    .filter((m) => m.kind !== "empty")
+    .map((m) => `<li class="ml-${m.kind}"><span class="ml-date">${esc(m.date)}</span><span class="ml-title">${esc(m.title)}</span></li>`)
+    .join("");
+  stage.after(legend);
+
+  const wantsWebGL = () => {
+    if (reduceMotion.matches || !matchMedia("(min-width: 900px)").matches) return false;
+    try {
+      const c = document.createElement("canvas");
+      return !!(c.getContext("webgl2") || c.getContext("webgl"));
+    } catch { return false; }
+  };
+  if (wantsWebGL()) {
+    const load = () =>
+      import("./model.js")
+        .then((mod) => mod.mountWeekModel(stage, modelData))
+        .catch(() => { /* keep the SVG drawing */ });
+    if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 1500 });
+    else setTimeout(load, 300);
+  }
+
+  /* ---------- Punch helper ---------- */
   const jitter = (c, i) => ((hash(c + i) - 0.5) * 0.05).toFixed(3) + "em";
   const punchRun = (text) =>
     `<span class="ch-run" aria-hidden="true">${[...text]
@@ -483,20 +576,17 @@
   const DEFAULT = "Sua equipe";
   const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   let lastValue = "";
-
-  // The character wheel: the letter just punched turns to the pointer.
   wheel.innerHTML = LETTERS.map((l, i) => {
     const a = (i / LETTERS.length) * Math.PI * 2 - Math.PI / 2;
     return `<text x="${(Math.cos(a) * 46).toFixed(1)}" y="${(Math.sin(a) * 46).toFixed(1)}" data-l="${l}">${l}</text>`;
   }).join("") + '<circle r="30" fill="#2b2e33"/><circle r="5" fill="#4b5158"/>';
   function turnWheel(ch) {
-    const base = ch.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+    const base = ch.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase();
     const i = LETTERS.indexOf(base);
     if (i < 0) return;
     wheel.style.rotate = `${-(i / LETTERS.length) * 360}deg`;
     wheel.querySelectorAll("text").forEach((t) => t.classList.toggle("is-on", t.dataset.l === base));
   }
-
   function renderTape() {
     const value = input.value.replace(/\s+/g, " ").slice(0, 18);
     const shown = value.trim() ? value : DEFAULT;
@@ -517,15 +607,12 @@
   }
   input.addEventListener("input", renderTape);
   renderTape();
-
   form.querySelectorAll('input[name="cor"]').forEach((r) =>
     r.addEventListener("change", () => {
       out.classList.remove("tape--black", "tape--green", "tape--blue", "tape--red");
       out.classList.add(`tape--${r.value}`);
     })
   );
-
-  // Cut: the strip leaves the slot and drops onto the bench as a finished label.
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const value = input.value.replace(/\s+/g, " ").trim().slice(0, 18);
@@ -537,12 +624,11 @@
     label.setAttribute("role", "img");
     label.setAttribute("aria-label", `Etiqueta cortada: ${value}`);
     tapeify(label);
-    const rot = ((hash(value) - 0.5) * 7).toFixed(1);
-    label.style.setProperty("--r", `${rot}deg`);
+    label.style.setProperty("--r", `${((hash(value) - 0.5) * 7).toFixed(1)}deg`);
     tray.prepend(label);
     while (tray.children.length > 3) tray.lastElementChild.remove();
     if (window.gsap && !reduceMotion.matches) {
-      gsap.fromTo(label, { y: -70, opacity: 0, rotate: 0 }, { y: 0, opacity: 1, rotate: 0, duration: 0.55, ease: "bounce.out" });
+      gsap.fromTo(label, { y: -70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "bounce.out" });
       gsap.fromTo(out, { x: 0 }, { x: 40, opacity: 0, duration: 0.18, ease: "power2.in", onComplete: () => gsap.set(out, { x: -20, opacity: 0 }) });
       gsap.to(out, { x: 0, opacity: 1, duration: 0.35, delay: 0.3, ease: "power3.out" });
     }
@@ -583,85 +669,74 @@
     const chars = segs.flatMap((sg) => splitChars(sg.querySelector(".tape-face")));
     const strip = document.querySelector(".hero-strip");
 
-    // Entrance: tape feeds out of the label maker, letters punch in order, the rest is stuck on.
+    // Entrance: the tape feeds out, the letters punch in order, then the sheet fills in.
     const tl = gsap.timeline({ defaults: { ease: "power3.out" }, onStart: () => root.classList.remove("motion") });
     gsap.set(chars, { opacity: 0 });
     if (narrow) {
       gsap.set(segs, { clipPath: "inset(0 100% 0 0)" });
-      tl.to(segs, { clipPath: "inset(0 0% 0 0)", duration: 0.45, stagger: 0.35, ease: "power2.inOut" }, 0);
+      tl.to(segs, { clipPath: "inset(0 0% 0 0)", duration: 0.4, stagger: 0.3, ease: "power2.inOut" }, 0);
     } else {
       gsap.set(strip, { clipPath: "inset(0 100% 0 0)" });
-      tl.to(strip, { clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "power2.inOut" }, 0);
+      tl.to(strip, { clipPath: "inset(0 0% 0 0)", duration: 0.6, ease: "power2.inOut" }, 0);
     }
-    tl.fromTo(chars, { opacity: 0, scale: 1.35, y: -4 }, { opacity: 1, scale: 1, y: 0, duration: 0.18, stagger: 0.055, ease: "back.out(3)" }, 0.12)
-      .fromTo(".hero-semana .tape", { opacity: 0, y: -26, rotate: -6 }, { opacity: 1, y: 0, rotate: 0, duration: 0.5, ease: "back.out(1.6)" }, "-=0.1")
-      .fromTo(".hero-edition, .hero-lede", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.08 }, "-=0.25")
-      .fromTo(".hero-actions", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 }, "-=0.35")
-      .fromTo(".hero-facts", { opacity: 0, x: 16 }, { opacity: 1, x: 0, duration: 0.6 }, "-=0.35")
+    tl.fromTo(chars, { opacity: 0, scale: 1.35, y: -4 }, { opacity: 1, scale: 1, y: 0, duration: 0.16, stagger: 0.045, ease: "back.out(3)" }, 0.1)
+      .fromTo(".hero-meta", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.5 }, 0.05)
+      .fromTo(".hero-statement .w > span", { yPercent: 110 }, { yPercent: 0, duration: 0.7, stagger: 0.05 }, "-=0.3")
+      .fromTo(".hero-lede, .hero-facts, .hero-actions, .mini-countdown", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.07 }, "-=0.45")
       .add(() => gsap.set([strip, ...segs], { clearProps: "clipPath" }));
 
-    // Section headings: a strip is pressed onto the surface as it arrives.
-    gsap.utils.toArray(".section-title .tape").forEach((t) => {
-      gsap.from(t, {
-        y: -18, scale: 1.06, opacity: 0, duration: 0.55, ease: "back.out(1.8)",
-        scrollTrigger: { trigger: t, start: "top 88%", once: true },
+    // Headlines rise word by word as their section arrives.
+    gsap.utils.toArray(".h2 [data-words], .h2[data-words]").forEach((h) => {
+      gsap.from(h.querySelectorAll(".w > span"), {
+        yPercent: 110, duration: 0.8, stagger: 0.06, ease: "power3.out",
+        scrollTrigger: { trigger: h, start: "top 88%", once: true },
       });
     });
-
-    // HACK + MARATONA = HACKATHON, one strip at a time.
-    gsap.from("[data-eq], .eq-op", {
-      opacity: 0, x: -14, duration: 0.4, stagger: 0.12, ease: "power3.out",
-      scrollTrigger: { trigger: ".equation", start: "top 85%", once: true },
+    gsap.utils.toArray(".chap").forEach((c) => {
+      gsap.from(c, { y: -14, rotate: -10, opacity: 0, duration: 0.5, ease: "back.out(2)", scrollTrigger: { trigger: c, start: "top 90%", once: true } });
     });
 
-    // The theme in the drawer is punched letter by letter when the cabinet comes into view.
+    // Problem → idea → solution: the arrows draw, the steps follow.
+    gsap.utils.toArray(".flow [data-draw]").forEach((p, i) => {
+      const len = p.getTotalLength();
+      gsap.fromTo(p, { strokeDasharray: len, strokeDashoffset: len }, {
+        strokeDashoffset: 0, duration: 0.9, delay: i * 0.25, ease: "power2.inOut",
+        scrollTrigger: { trigger: ".flow", start: "top 75%", once: true },
+      });
+    });
+    gsap.from(".flow-step", { opacity: 0, y: 16, duration: 0.6, stagger: 0.3, ease: "power3.out", scrollTrigger: { trigger: ".flow", start: "top 75%", once: true } });
+
+    // The secret drawer: the theme tape is punched, the drawer eases out a little with the scroll.
     const theme = document.querySelector("[data-punch-on-view]");
     if (theme) {
-      const tc = splitChars(theme);
-      gsap.from(tc, {
-        opacity: 0, scale: 1.4, duration: 0.16, stagger: 0.035, ease: "back.out(3)",
-        scrollTrigger: { trigger: theme, start: "top 85%", once: true },
-      });
+      gsap.from(splitChars(theme), { opacity: 0, scale: 1.4, duration: 0.16, stagger: 0.035, ease: "back.out(3)", scrollTrigger: { trigger: theme, start: "top 85%", once: true } });
     }
-    gsap.from(".drawer", {
-      y: 40, duration: 0.9, ease: "power3.out",
-      scrollTrigger: { trigger: ".challenge", start: "top 80%", once: true },
-    });
+    gsap.fromTo("[data-drawer]", { y: 50 }, { y: 0, ease: "none", scrollTrigger: { trigger: ".challenge", start: "top bottom", end: "top 20%", scrub: 0.6 } });
+    gsap.from(".countdown .cd-cell", { y: 30, opacity: 0, duration: 0.6, stagger: 0.08, ease: "power3.out", scrollTrigger: { trigger: ".countdown", start: "top 85%", once: true } });
 
-    // The course line is drawn as the visitor walks the route; controls light up as reached.
+    // The course line draws as the visitor walks the route.
     window.__courseTween = () => {
       if (!coursePath) return;
-      ScrollTrigger.getById("course") && ScrollTrigger.getById("course").kill();
+      const prev = ScrollTrigger.getById("course");
+      if (prev) prev.kill();
       const len = coursePath.getTotalLength();
       gsap.set(coursePath, { strokeDasharray: len, strokeDashoffset: len });
-      gsap.to(coursePath, {
-        strokeDashoffset: 0, ease: "none",
-        scrollTrigger: { id: "course", trigger: ".course", start: "top 75%", end: "bottom 60%", scrub: 0.6 },
-      });
+      gsap.to(coursePath, { strokeDashoffset: 0, ease: "none", scrollTrigger: { id: "course", trigger: ".course", start: "top 75%", end: "bottom 60%", scrub: 0.6 } });
     };
     window.__courseTween();
-    gsap.utils.toArray(".control").forEach((c) => {
-      gsap.from(c.querySelector(".control-num"), {
-        scale: 0.6, opacity: 0, duration: 0.4, ease: "back.out(2.4)",
-        scrollTrigger: { trigger: c, start: "top 82%", once: true },
-      });
+    gsap.utils.toArray(".control-num").forEach((n) => {
+      gsap.from(n, { scale: 0.6, opacity: 0, duration: 0.4, ease: "back.out(2.4)", scrollTrigger: { trigger: n, start: "top 85%", once: true } });
     });
 
-    // Schedule slots slide in from the rail.
-    ScrollTrigger.batch(".slot", {
-      start: "top 90%", once: true,
-      onEnter: (els) => gsap.from(els, { opacity: 0, x: -16, duration: 0.45, stagger: 0.06, ease: "power3.out" }),
-    });
+    // The week: the rule draws across, then the days and their events drop in.
+    gsap.from(".week-day", { opacity: 0, y: 24, duration: 0.6, stagger: 0.09, ease: "power3.out", scrollTrigger: { trigger: ".week", start: "top 80%", once: true } });
+    gsap.from(".wd-event", { opacity: 0, y: -18, duration: 0.5, stagger: 0.12, delay: 0.35, ease: "back.out(1.8)", scrollTrigger: { trigger: ".week", start: "top 80%", once: true } });
 
-    // Rules: the sheet slides onto the bench.
-    gsap.from(".sheet", {
-      y: 60, rotate: -0.6, duration: 0.9, ease: "power3.out",
-      scrollTrigger: { trigger: ".sheet", start: "top 90%", once: true },
-    });
+    // The regulation sheet slides onto the bench.
+    gsap.from(".sheet", { y: 60, rotate: -0.5, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: ".sheet", start: "top 92%", once: true } });
 
     addEventListener("load", () => ScrollTrigger.refresh());
   }
-
   if (document.readyState === "complete" || document.readyState === "interactive") startMotion();
   else addEventListener("DOMContentLoaded", startMotion);
 })();

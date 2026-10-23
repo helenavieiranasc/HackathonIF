@@ -29,6 +29,42 @@
         ],
         "createdAt": "2026-10-22T01:37:48.119Z",
         "reason": "agent triage: the two hits are physical parts of the committed Rotuladora world (the metal label holder on the challenge drawer, the character wheel on the label maker), not nested content cards"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/**"
+        ],
+        "createdAt": "2026-10-23T03:35:38.168Z",
+        "reason": "agent triage: decision-page sketches only (git-ignored); Bespoke Stencil is the display face being proposed for the redesign and will be added to DESIGN.md when it ships"
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "site/styles.css"
+        ],
+        "createdAt": "2026-10-23T04:01:11.469Z",
+        "reason": "agent triage: the drawing-sheet grid is the hero ground of the Maquete da semana direction the user locked on the decision page (technical drawing of the week)"
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "site/index.html"
+        ],
+        "createdAt": "2026-10-23T04:01:12.363Z",
+        "reason": "agent triage: static file scan reads the small footer column headings; the rendered page (live scan) has 72px stencil h2 over 18px body and reports no hierarchy issue"
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "site/index.html"
+        ],
+        "createdAt": "2026-10-23T04:02:10.834Z",
+        "reason": "agent triage: same drawing-sheet hero grid as styles.css, read through the page; part of the user-locked Maquete da semana direction"
       }
     ]
   }

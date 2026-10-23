@@ -1,18 +1,21 @@
 ---
 name: Hackathon IFSP Jacareí
-description: Event site for the Semana de Tecnologia hackathon, labelled like lab equipment with embossed label-maker tape.
+description: Event site for the Semana de Tecnologia hackathon, drawn as a technical drawing of its own week and labelled with embossed label-maker tape.
 colors:
+  sheet: "#eef0f2"
   bench: "#e1e4e8"
   bench-deep: "#d4d8de"
+  paper: "#ffffff"
   steel: "#26292c"
   steel-face: "#31353a"
-  paper: "#ffffff"
   rule: "#c2c7ce"
   rule-dark: "#4a4f55"
   ink: "#17181a"
   ink-muted: "#4a4d52"
   ink-on-steel: "#eceeef"
   ink-on-steel-muted: "#b7bcc2"
+  green-ink: "#176a2a"
+  red-ink: "#b3161b"
   tape-black: "#161718"
   tape-green: "#1f7f33"
   tape-red: "#cd191e"
@@ -24,52 +27,90 @@ colors:
   machine-body: "#2b2e33"
   machine-well: "#17191c"
   wheel-well: "#1c1e22"
+  slot-well: "#101113"
   hardware-rim: "#4b5158"
   field-placeholder: "#8a9097"
-  holder-frame: "#8b9198"
+  cartridge-black: "#3a3d42"
   steel-post-dark: "#5b6168"
   steel-post-light: "#9aa1a8"
   steel-rod-light: "#c5cbd1"
   steel-rod-dark: "#7c838a"
-  cartridge-black: "#3a3d42"
   shadow-black: "#000000"
 typography:
+  display:
+    fontFamily: "Bespoke Stencil, Arial Narrow, Segoe UI, sans-serif"
+    fontSize: "clamp(2.25rem, 1.3rem + 3.6vw, 4.5rem)"
+    fontWeight: 800
+    lineHeight: 1.02
+    letterSpacing: "-0.01em"
+  hero-statement:
+    fontFamily: "Bespoke Stencil, Arial Narrow, Segoe UI, sans-serif"
+    fontSize: "clamp(1.9rem, 1.1rem + 2.2vw, 3rem)"
+    fontWeight: 800
+    lineHeight: 1.04
+    letterSpacing: "-0.01em"
+  figure-numeral:
+    fontFamily: "Bespoke Stencil, Arial Narrow, Segoe UI, sans-serif"
+    fontSize: "clamp(2.5rem, 1.6rem + 2.4vw, 4rem)"
+    fontWeight: 800
+    lineHeight: 1
+  headline:
+    fontFamily: "Bespoke Stencil, Arial Narrow, Segoe UI, sans-serif"
+    fontSize: "clamp(1.5rem, 1.2rem + 1vw, 2rem)"
+    fontWeight: 800
+    lineHeight: 1.15
+  title:
+    fontFamily: "Switzer, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(1.1875rem, 1.05rem + 0.5vw, 1.4375rem)"
+    fontWeight: 600
+    lineHeight: 1.25
+    letterSpacing: "-0.01em"
+  lead:
+    fontFamily: "Switzer, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(1.125rem, 1rem + 0.45vw, 1.375rem)"
+    fontWeight: 400
+    lineHeight: 1.5
+  body:
+    fontFamily: "Switzer, Segoe UI, system-ui, sans-serif"
+    fontSize: "1.125rem"
+    fontWeight: 400
+    lineHeight: 1.65
+  body-compact:
+    fontFamily: "Switzer, Segoe UI, system-ui, sans-serif"
+    fontSize: "1.0625rem"
+    fontWeight: 600
+    lineHeight: 1.3
+  detail:
+    fontFamily: "Switzer, Segoe UI, system-ui, sans-serif"
+    fontSize: "0.9375rem"
+    fontWeight: 400
+    lineHeight: 1.4
   tape-hero:
     fontFamily: "Sometype Mono, ui-monospace, Cascadia Mono, Consolas, monospace"
-    fontSize: "clamp(3.25rem, 0.6rem + 11.4vw, 14rem)"
+    fontSize: "clamp(3rem, 1rem + 4.4vw, 5.75rem)"
     fontWeight: 700
     lineHeight: 1
     letterSpacing: "0.1em"
   tape-hero-phone:
     fontFamily: "Sometype Mono, ui-monospace, Cascadia Mono, Consolas, monospace"
-    fontSize: "clamp(3.4rem, 1rem + 19vw, 6.5rem)"
+    fontSize: "clamp(3.2rem, 1rem + 17vw, 6rem)"
     fontWeight: 700
     lineHeight: 1
     letterSpacing: "0.1em"
-  tape-final:
+  tape-countdown:
     fontFamily: "Sometype Mono, ui-monospace, Cascadia Mono, Consolas, monospace"
-    fontSize: "clamp(1.5rem, 0.9rem + 2.4vw, 3rem)"
+    fontSize: "clamp(1.6rem, 0.6rem + 4.6vw, 5rem)"
     fontWeight: 700
     lineHeight: 1.35
     letterSpacing: "0.14em"
-  tape-plate:
+    fontFeature: "tnum"
+  tape-mini:
     fontFamily: "Sometype Mono, ui-monospace, Cascadia Mono, Consolas, monospace"
-    fontSize: "clamp(1.125rem, 0.7rem + 1.8vw, 2.25rem)"
+    fontSize: "clamp(1.25rem, 0.9rem + 1vw, 1.75rem)"
     fontWeight: 700
     lineHeight: 1.35
     letterSpacing: "0.14em"
-  tape-holder:
-    fontFamily: "Sometype Mono, ui-monospace, Cascadia Mono, Consolas, monospace"
-    fontSize: "clamp(1rem, 0.55rem + 2.2vw, 1.5rem)"
-    fontWeight: 700
-    lineHeight: 1.35
-    letterSpacing: "0.14em"
-  tape-m:
-    fontFamily: "Sometype Mono, ui-monospace, Cascadia Mono, Consolas, monospace"
-    fontSize: "clamp(1.25rem, 0.95rem + 1.2vw, 1.875rem)"
-    fontWeight: 700
-    lineHeight: 1.35
-    letterSpacing: "0.14em"
+    fontFeature: "tnum"
   tape-l:
     fontFamily: "Sometype Mono, ui-monospace, Cascadia Mono, Consolas, monospace"
     fontSize: "clamp(1.125rem, 0.9rem + 0.9vw, 1.5rem)"
@@ -82,50 +123,27 @@ typography:
     fontWeight: 700
     lineHeight: 1.35
     letterSpacing: "0.14em"
-  headline:
-    fontFamily: "Switzer, Segoe UI, system-ui, sans-serif"
-    fontSize: "clamp(1.75rem, 1.1rem + 2.8vw, 3.5rem)"
-    fontWeight: 500
-    lineHeight: 1.35
-    letterSpacing: "-0.02em"
-  body-large:
-    fontFamily: "Switzer, Segoe UI, system-ui, sans-serif"
-    fontSize: "clamp(1.1875rem, 1rem + 0.7vw, 1.5rem)"
-    fontWeight: 400
-    lineHeight: 1.45
-  body:
-    fontFamily: "Switzer, Segoe UI, system-ui, sans-serif"
-    fontSize: "1.0625rem"
-    fontWeight: 400
-    lineHeight: 1.6
-  title:
-    fontFamily: "Switzer, Segoe UI, system-ui, sans-serif"
-    fontSize: "1.125rem"
-    fontWeight: 600
-    lineHeight: 1.35
-  detail:
-    fontFamily: "Switzer, Segoe UI, system-ui, sans-serif"
-    fontSize: "0.9375rem"
-    fontWeight: 400
-    lineHeight: 1.6
-  numeral:
+  tape-time:
     fontFamily: "Sometype Mono, ui-monospace, Cascadia Mono, Consolas, monospace"
-    fontSize: "1.25rem"
+    fontSize: "0.875rem"
     fontWeight: 700
-  numeral-small:
-    fontFamily: "Sometype Mono, ui-monospace, Cascadia Mono, Consolas, monospace"
-    fontSize: "1rem"
-    fontWeight: 700
-  label-time:
+    lineHeight: 1.35
+    letterSpacing: "0.06em"
+  mono-date:
     fontFamily: "Sometype Mono, ui-monospace, Cascadia Mono, Consolas, monospace"
     fontSize: "0.8125rem"
     fontWeight: 700
-    letterSpacing: "0.08em"
-  label:
+    lineHeight: 1.3
+    letterSpacing: "0.02em"
+  mono-number:
+    fontFamily: "Sometype Mono, ui-monospace, Cascadia Mono, Consolas, monospace"
+    fontSize: "1rem"
+    fontWeight: 700
+  field-label:
     fontFamily: "Sometype Mono, ui-monospace, Cascadia Mono, Consolas, monospace"
     fontSize: "0.75rem"
     fontWeight: 700
-    letterSpacing: "0.12em"
+    letterSpacing: "0.14em"
 rounded:
   tape-body: "1px"
   sheet: "2px"
@@ -137,7 +155,7 @@ rounded:
   machine-bottom: "34px"
   machine: "22px 22px 34px 34px"
   pill: "999px"
-  control: "50%"
+  circle: "50%"
 spacing:
   s1: "8px"
   s2: "16px"
@@ -149,248 +167,293 @@ spacing:
   s8: "128px"
   gutter: "clamp(1rem, 0.4rem + 2.6vw, 3rem)"
   measure: "66ch"
+  header: "4.5rem"
 components:
   tape-action:
     backgroundColor: "{colors.tape-green}"
     textColor: "{colors.emboss}"
     typography: "{typography.tape-l}"
+    rounded: "{rounded.tape-body}"
     padding: "0.7em 1.2em 0.62em"
-  tape-nav:
+  tape-action-small:
+    backgroundColor: "{colors.tape-green}"
+    textColor: "{colors.emboss}"
+    typography: "{typography.tape-s}"
+    padding: "0.34em 0.95em 0.3em"
+  tape-action-unpublished:
+    backgroundColor: "{colors.tape-muted}"
+    textColor: "{colors.emboss}"
+    typography: "{typography.tape-l}"
+  tape-chapter:
     backgroundColor: "{colors.tape-black}"
     textColor: "{colors.emboss}"
     typography: "{typography.tape-s}"
-    padding: "0.5em 0.8em 0.45em"
-  tape-nav-current:
+    padding: "0.34em 0.95em 0.3em"
+  tape-chapter-on-dark:
     backgroundColor: "{colors.tape-white}"
     textColor: "{colors.ink}"
+    typography: "{typography.tape-s}"
+  tape-time:
+    backgroundColor: "{colors.tape-black}"
+    textColor: "{colors.emboss}"
+    typography: "{typography.tape-time}"
   tape-deadline:
     backgroundColor: "{colors.tape-red}"
     textColor: "{colors.emboss}"
-    typography: "{typography.tape-s}"
-  tape-link:
-    backgroundColor: "{colors.tape-blue}"
+    typography: "{typography.tape-time}"
+  tape-countdown:
+    backgroundColor: "{colors.tape-white}"
+    textColor: "{colors.ink}"
+    typography: "{typography.tape-countdown}"
+  tape-countdown-mini:
+    backgroundColor: "{colors.tape-black}"
     textColor: "{colors.emboss}"
+    typography: "{typography.tape-mini}"
+  tape-slot-blank:
+    backgroundColor: "transparent"
+    textColor: "{colors.paper}"
     typography: "{typography.tape-s}"
-  tape-link-unpublished:
-    backgroundColor: "{colors.tape-muted}"
-    textColor: "{colors.emboss}"
-    typography: "{typography.tape-s}"
-  tape-pending:
+  placeholder-marker:
     backgroundColor: "{colors.tape-yellow}"
     textColor: "{colors.ink}"
-    typography: "{typography.tape-s}"
-  placeholder-inline:
-    backgroundColor: "{colors.tape-yellow}"
+    padding: "0 0.2em"
+  link-out:
     textColor: "{colors.ink}"
-    rounded: "{rounded.sheet}"
-    padding: "0.12em 0.4em"
+    typography: "{typography.body}"
+    padding: "0.2rem 0"
+  nav-link:
+    textColor: "{colors.ink}"
+    padding: "8px 0"
+  nav-link-current:
+    textColor: "{colors.green-ink}"
+  course-control:
+    backgroundColor: "{colors.bench}"
+    textColor: "{colors.ink}"
+    typography: "{typography.mono-number}"
+    rounded: "{rounded.circle}"
+    size: "3.25rem"
+  faq-mark:
+    textColor: "{colors.ink}"
+    rounded: "{rounded.circle}"
+    size: "2.5rem"
+  faq-mark-open:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.paper}"
   labeler-input:
-    backgroundColor: "#17191c"
+    backgroundColor: "{colors.machine-well}"
     textColor: "{colors.emboss}"
     rounded: "{rounded.drawer}"
     height: "3.25rem"
     padding: "0 16px"
-  course-control:
-    backgroundColor: "{colors.bench}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.control}"
-    size: "3.25rem"
 ---
 
 # Design System: Hackathon IFSP Jacareí
 
 ## Overview
 
-**Creative North Star: "The Rotuladora"**
+**Creative North Star: "The Rotuladora in the Drawing Office"**
 
-The site is a lab bench where the organizers label everything with an embossed label maker. Every confirmed fact is a strip of tape with raised off-white letters punched into it; every unconfirmed fact is yellow tape still waiting for its letters. Tape is the only display voice: headings, navigation, actions, dates, statuses and the event name are all strips of vinyl, rotated a degree or two, cut with scissors, and lightly shadowed onto the surface they sit on. Running text stays quiet in Switzer on a cool laminate bench.
+The site is a technical drawing of its own week, made in an office where everything gets labelled with an embossed label maker. Drafting gives the structure: a light drawing sheet with a grid and registration marks, a figure of the week (Fig. 1) drawn as an axonometric model, leader lines, a measuring ruler, flow and course lines drawn while you scroll, and ruled tables. Tape is the signature, and it now marks only a small set of things: the HACKATHON strip, chapter numbers, countdown digits, schedule times, actions, team seats and the label maker. Headlines are in Bespoke Stencil, a stencil face like the lettering on a drawing, set in sentence case. All running text is Switzer.
 
-The world is built from four physical surfaces: the cool-gray bench (ground for most sections), a dark steel cabinet drawer for the challenge, a white punched paper sheet for the regulations, and a working label-maker machine for the final call. Depth comes from the objects themselves (tape thickness, a recessed label holder, a molded machine body), never from decorative gradients, glow or glassy layers. Density is moderate: generous section padding on an 8px module, ruled lists and tables for reference material, and tape doing the ranking by length and color.
+Each chapter sits on a real surface: the drawing sheet for the hero, the cool bench for most chapters, one full-bleed IFSP-green field (Quem participa), the dark steel drawer for the secret theme, white paper for "IA e projeto" and "Pitch", a paper regulation sheet laid on the bench, and an ink footer. Depth comes from the objects themselves: tape thickness, the drawer front, the paper sheet and the molded label maker. There are no decorative gradients, glows or glass panels. Density is moderate, on an 8px module, with generous chapter padding and ruled lists instead of cards.
 
-Motion is the act of labelling: tape feeds out of the machine, letters punch in sequence, heading strips are pressed onto the surface as they arrive, the participation route is drawn as a course line while the visitor scrolls, and controls answer with one firm press. Under reduced motion nothing moves and everything is already in place.
+Motion is drafting and labelling. Tape feeds out and its letters are punched one by one. Headline words rise into place. Technical lines draw themselves. The model rises, turns as you scroll and leans toward the pointer. The progress ruler measures the scroll, and countdown digits punch when they change. Under reduced motion nothing moves and the model is the static SVG drawing.
 
 **Key Characteristics:**
-- Embossed label tape as the single display primitive, with color carrying role.
-- Sometype Mono 700 uppercase for every tape; Switzer for everything a person reads at length.
-- Cool bench, dark steel, white paper: three surfaces, each a real material.
-- Tapes never wrap; long strips are punched as two or three stacked, counter-rotated strips.
-- Placeholders are visibly unfinished: yellow tape with a dashed underline.
-- Motion describes the label maker working, and is fully optional.
+- Drawing-office structure (sheet grid, registration marks, Fig. 1, leader lines, rulers, ruled tables) with label tape as the signature.
+- Three voices: Bespoke Stencil 800 for headlines, Switzer for reading, Sometype Mono only on tape, times and dates.
+- Tape is reserved for a closed list of roles; links are plain text, and placeholders are a yellow marker in the reading face.
+- Each chapter sits on a distinct real surface: sheet, bench, IFSP green, steel, paper, ink.
+- Only confirmed facts are drawn solid. Unconfirmed days are dashed wireframes, and unconfirmed text is marked in yellow.
+- All motion is optional and nothing essential waits for it.
 
 ## Colors
 
-A cool, neutral bench and steel palette in which saturated color appears only as tape, and every tape color is a role.
+The grounds are cool, neutral drafting and bench surfaces. Saturated color has two homes: role-colored tape, and the IFSP green and red used as text-safe inks.
 
 ### Primary
-- **IFSP Action Green** (tape-green): actions only. Registration ("Inscrever equipe") in the masthead, hero, mobile menu and final call; the cut button on the label machine; the course line and the rings of the numbered route controls. Deepened from the IFSP green so raised off-white letters hold 4.6:1.
+- **IFSP Action Green** (tape-green): action tapes ("Inscrever equipe" in the masthead, hero, menu and final call), the course line and the rings on the course controls, the Sex 30/10 volume in Fig. 1, the hero fact check marks, and the full-bleed ground of the Quem participa chapter, which carries white text.
+- **Green Ink** (green-ink): green for text on light grounds. Used for the current nav link, flow step numbers, STAR letters, the 1º place numeral, the last line of the AI statement and the final-pitch leader label.
 
 ### Secondary
-- **Plate Red** (tape-red): the Semana de Tecnologia plate in the hero and deadlines ("prazo" tapes, confirmed deadline dates). Nothing else.
-- **Pending Yellow** (tape-yellow): facts not yet confirmed by the organizers, status flags ("Versão provisória", "Resposta pendente", "Em breve"), inline placeholder swatches, the review pin, text selection, and the label machine's active highlights (wheel pointer, caret, selected cartridge).
+- **Deadline Red** (tape-red): time pressure. Used for deadline tapes ("Prazo" and the registration deadline), the time tape on the deadline event, the locked theme tape ("Trancado até 26/10", "Revelando agora"), the Qua 28/10 volume and its leader line, and the fill of the masthead progress ruler.
+- **Red Ink** (red-ink): red for text on light grounds. Used for the deadline event title in the week ruler and the deadline leader label in Fig. 1.
+- **Pending Yellow** (tape-yellow): facts that are not confirmed yet. Used for the inline placeholder marker, "Em breve" tapes, text selection, the opening agenda numbers in the drawer, and the label maker's active highlights (wheel pointer, current letter, caret, focus ring, selected cartridge).
 
 ### Tertiary
-- **Outbound Blue** (tape-blue): tapes that leave the site (official regulation, contact and social links) and the global focus outline.
-- **Unpublished Gray** (tape-muted): an outbound link tape whose URL is still a placeholder; shown disabled, followed by a yellow "Em breve" tape.
+- **Focus Blue** (tape-blue): the global focus outline (3px, 3px offset), the hover color of the rule anchor, and the blue label-maker cartridge.
+- **Unpublished Gray** (tape-muted): an action tape whose destination isn't published yet, shown disabled.
 
 ### Neutral
-- **Bench Laminate** (bench): page ground, with a faint 5% fractal-noise grain; also the masthead (at 86-94% opacity) and the mobile menu sheet.
-- **Bench Shadow** (bench-deep): punch holes in the paper sheet and the scrollbar track.
-- **Cabinet Steel** (steel) and **Drawer Face** (steel-face): the challenge section and its drawer front; the cabinet carries a fine 6px vertical brushed line.
-- **Sheet White** (paper): the regulation sheet, the IFSP logo plate and the footer.
-- **Rule Gray** (rule) / **Rule Dark** (rule-dark): 1px dividers on bench/paper and on steel.
-- **Bench Ink** (ink) and **Muted Ink** (ink-muted): text on light surfaces; ink also draws the 2-3px heavy rules that open lists, tables and rules.
-- **Steel Ink** (ink-on-steel) and **Muted Steel Ink** (ink-on-steel-muted): text on the cabinet and the machine.
-- **Black Tape** (tape-black): structure and navigation; section headings, nav, route step titles, motive titles, the FAQ toggle.
-- **White Tape** (tape-white): the current nav item and tapes on dark surfaces (machine badge, menu close).
-- **Raised Letter White** (emboss): the stretched-white plastic of punched letters on every dark tape.
+- **Drawing Sheet** (sheet): the hero ground under a 32px grid of 6% ink lines. Also the masthead (86–94% opacity) and the mobile menu.
+- **Bench Laminate** (bench): the page ground, with a faint 5% fractal grain, and the regulation chapter around the paper sheet.
+- **Bench Shadow** (bench-deep): the scrollbar track.
+- **Sheet White** (paper): the "IA e projeto" and "Pitch" chapters, the regulation sheet, and the logo plates. White text on the green field.
+- **Cabinet Steel** (steel) and **Drawer Face** (steel-face): the secret-theme chapter and its drawer.
+- **Rule Gray** (rule) / **Rule Dark** (rule-dark): 1px dividers on light grounds and on steel.
+- **Ink** (ink) and **Muted Ink** (ink-muted): text on light grounds. Ink also draws the 2–3px heavy rules that open lists and tables, the registration marks and the ruler ticks, and it is the footer ground.
+- **Steel Ink** (ink-on-steel) and **Muted Steel Ink** (ink-on-steel-muted): text on steel, on the ink footer and on the machine.
+- **Black Tape** (tape-black), **White Tape** (tape-white), **Raised Letter White** (emboss): tape vinyl and the stretched-white plastic of punched letters.
 
 ### Hardware Materials
-The label maker, the drawer hardware and the cartridges are molded plastic and pressed steel; these values shade those objects and appear nowhere else.
-- **Machine Housing** (machine-body): the label-maker body, under a sheen from 6% white to 18% black.
-- **Machine Well** (machine-well): the keyboard field and the cartridge bodies.
-- **Wheel Well** (wheel-well): the recess holding the character wheel.
-- **Hardware Rim** (hardware-rim): the field border and the cartridge rims.
-- **Field Placeholder** (field-placeholder): placeholder text in the machine field.
-- **Holder Frame** (holder-frame): the pressed-steel frame of the drawer label holder.
-- **Bar-Pull Steel** (steel-post-dark, steel-post-light, steel-rod-light, steel-rod-dark): the gradient stops of the bar pull's posts and rod.
-- **Black Cartridge Tongue** (cartridge-black): the tape tongue in the black cartridge swatch, lifted from tape-black so it reads in the dark well.
-- **Shadow Black** (shadow-black): the base of every shadow and shading layer, always at an alpha (0.08-0.75, see Elevation & Depth); never an opaque fill.
+These values shade the label maker and the drawer pull and appear nowhere else: machine-body (the housing, under a sheen from 6% white to 18% black), machine-well (the field and the cartridge bodies), wheel-well, slot-well (the exit groove), hardware-rim (the field border and cartridge rims), field-placeholder, cartridge-black (the black cartridge's tape tongue) and the bar-pull steel stops (steel-post-dark/light, steel-rod-light/dark).
+- **Shadow Black** (shadow-black): the base of every shadow and shading layer, always used at an alpha (0.06–0.75; see Elevation & Depth). It also makes the 16% tint behind the campus note on the green field and the machine sheet’s 18% fall-off. It is never an opaque fill.
 
 ### Named Rules
-**The Cartridge Rule.** A tape's color is its role: black structure and navigation, green actions, red the event plate and deadlines, yellow pending, blue outbound, gray unpublished, white on dark or current. No tape takes a color for decoration.
+**The Cartridge Rule.** A tape's color is its role: black for structure, chapters, times and required seats; green for actions; red for deadlines and the locked theme; yellow for pending; white for tape on dark grounds and the drawer countdown; gray for unpublished. No tape is colored for decoration.
 
-**The Red Is Pressure Rule.** Red appears on the Semana de Tecnologia plate and on deadlines only. A second use dilutes the one word under pressure.
+**The Text-Safe Ink Rule.** On light grounds, green and red text use green-ink and red-ink. tape-green and tape-red are reserved for vinyl, strokes, volumes and the green field.
 
-**The Color Lives In Tape Rule.** Surfaces stay neutral (bench, steel, paper). Saturated color enters the page only as tape, a placeholder swatch, the course line or a focus outline.
+**The Red Is Pressure Rule.** Red appears only where time pushes: deadlines, the locked theme and the scroll measured on the ruler. It is never used for emphasis or decoration.
 
 ## Typography
 
-**Display Font:** Sometype Mono 700 (with ui-monospace, Cascadia Mono, Consolas)
-**Body Font:** Switzer 400/500/600 (with Segoe UI, system-ui)
-**Label/Mono Font:** Sometype Mono 700, the same label-wheel face
+**Display Font:** Bespoke Stencil 800 (700 also loaded) (with Arial Narrow, Segoe UI)
+**Body Font:** Switzer 400 / 400 italic / 500 / 600 (with Segoe UI, system-ui)
+**Label/Mono Font:** Sometype Mono 700 (400 for latin only)
 
-Both families are self-hosted from `vendor/fonts` as woff2 (Sometype Mono 700 latin and latin-ext; Switzer 400, 400 italic, 500, 600), with the 700 mono and Switzer 400 preloaded.
+All three families are self-hosted woff2 files in `site/vendor/fonts`. Bespoke Stencil comes from Fontshare. Sometype Mono 700, Switzer 400 and Bespoke Stencil 800 are preloaded.
 
-**Character:** A fixed-pitch label-wheel face, always uppercase and widely tracked, does all the labelling; a calm neo-grotesk does all the explaining. The pairing reads as equipment tags on a technical manual.
+**Character:** Bespoke Stencil gives headlines the cut lettering of a technical drawing. Switzer is a calm neo-grotesk that does all the explaining. Sometype Mono is the label-wheel face and appears only where something is punched or measured.
 
 ### Hierarchy
-- **Tape Hero** (700, tape-hero clamp up to 14rem, line-height 1, 0.1em tracking): the HACKATHON strip only.
-- **Tape M** (700, tape-m, 0.14em): section headings and mobile menu items.
-- **Tape L** (700, tape-l, 0.14em): primary actions, the hero deadline, labels in the machine tray.
-- **Tape S** (700, 0.875rem, 0.14em): navigation, statuses, dates, inline tapes in lists and tables. The default tape size.
-- **Fluid tape endpoints in use:** phone hero 3.4rem to 6.5rem (HACKA / THON); final-call strips 1.5rem to 3rem; Semana plate 1.125rem to 2.25rem; drawer theme tape 1rem to tape L.
-- **Headline** (Switzer 500, clamp to 3.5rem, 1.35, -0.02em): the challenge question in the drawer, max 24ch.
-- **Body Large** (Switzer 400, clamp to 1.5rem, 1.45): ledes, section intros, summary paragraphs; 40-52ch.
-- **Body** (Switzer 400, 1.0625rem, 1.6): running text, max 66ch. Titles inside lists use Switzer 600 at 1.125-1.1875rem.
-- **Title** (Switzer 600, 1.125rem; rule titles 1.1875rem): schedule slot and rule titles.
-- **Detail** (Switzer 400, 0.9375rem): control details, link notes, the tray hint; mono 0.9375rem for rule numbers.
-- **Numeral** (Sometype Mono 700, 1.25rem): course control numbers and machine field input; 1rem is the low end of the drawer theme tape.
-- **Label Time** (Sometype Mono 700, 0.8125rem, 0.08em): schedule times and the review panel.
-- **Label** (Sometype Mono 700, 0.75rem, 0.12-0.14em, uppercase, muted ink): real field and column labels only (definition terms in the hero facts, the "Tema" holder label, table headers, footer column headings, the machine field label).
+- **Tape Hero** (Sometype 700, tape-hero, line-height 1, 0.1em): the HACKATHON strip only. Below 600px it becomes two strips, HACKA / THON (tape-hero-phone).
+- **Display** (Stencil 800, display, 1.02, max 18ch, or 22ch for wide headings): chapter headlines in sentence case, with a balanced wrap and the chapter tape inline before the words.
+- **Hero Statement** (Stencil 800, hero-statement, 1.04, max 15ch): the one statement under the HACKATHON strip.
+- **Figure Numeral** (Stencil 800, 2.5–4rem, 1): week-ruler day numbers, award places and the score scale (3–5rem). STAR letters are 2.75rem and the AI statement lines run up to 3.4rem.
+- **Headline** (Stencil 800, 1.5–2rem, 1.15): regulation rule titles, the confirmed judge (1.5–2.25rem), the mobile menu items (1.75–2.5rem), and the Fig. 1 leader titles (1.25rem) and flow steps (1.75rem).
+- **Title** (Switzer 600, title, 1.25): h3 headings, course step titles, reason titles and FAQ questions.
+- **Lead** (Switzer 400, lead, 1.5, 44–52ch): the hero lede, chapter intros, summaries and the reveal facts.
+- **Body** (Switzer 400, 1.125rem, 1.65, max 66ch): all running text. Notes are 1rem in muted ink.
+- **Body Compact** (Switzer 600, 1.0625rem, 1.3): short ruled entries, such as the hero fact rows, week-ruler event titles and award lines (at 400), and the phone mini-countdown digits.
+- **Detail** (Switzer 400–600, 0.9375rem): the figure caption, flow step text, control details, week meta and countdown labels.
+- **Tape S / L / Countdown / Mini** (Sometype 700, uppercase, 0.14em): chapter numbers (set at 1rem), actions, countdown digits with tabular figures.
+- **Tape Time** (Sometype 700, 0.875rem, 0.06em, **not uppercased**): schedule times in the official notation ("8h às 9h30") and the deadline value.
+- **Mono Date / Number** (Sometype 700, 0.75–1rem): Fig. 1 dates and day axis labels, legend dates, criterion and rule numbers, index counters, menu numbers, and the label maker's field labels (0.75rem, 0.14em, uppercase).
 
 ### Named Rules
-**The Two Voices Rule.** Sometype Mono 700 uppercase is for tape and field labels; Switzer is for sentences. Never set a paragraph in the tape face or a tape in Switzer.
+**The Three Voices Rule.** Stencil is for headlines, Switzer for sentences, and Sometype Mono only for tape, times, dates and numbers. A paragraph is never set in mono or stencil, and a heading is never set in mono caps.
 
-**The Never Wrap Rule.** Tapes are `white-space: nowrap`. A heading strip wider than its column is re-punched as two or three strips, split by words, stacked and counter-rotated (first about -1.4deg, next about +0.9deg and indented). On phones HACKATHON becomes HACKA / THON. Narrow screens step a tape down a size rather than let it wrap or overflow.
+**The Sentence Case Rule.** Stencil headlines are in sentence case and end with a period when they are statements ("O tema é segredo."). Uppercase belongs to tape alone, except time tapes, which keep the official notation.
+
+**The Never Wrap Rule.** Tapes are `white-space: nowrap`. A strip too wide for its column is punched as two counter-rotated strips (HACKA / THON) or steps down a size on narrow screens. Tape never wraps and never overflows.
 
 ## Layout
 
-Sections run full width with a fluid gutter and vertical padding of clamp(64px, 2.5rem + 4vw, 96px); the final call ends on 128px. Spacing follows an 8px module (s1-s8). Body text caps at 66ch. The page is left-anchored and asymmetric: the hero is a grid with the HACKATHON strip spanning, the red plate offset under it, lede and actions on the left and a facts column (deadline first, on a steeper rotation) at the right.
+Chapters run full width with the fluid gutter and vertical padding of clamp(64px, 2.5rem + 4vw, 128px). The final call ends on 128px. Spacing follows the 8px module (s1–s8). Running text caps at 66ch. Chapter layouts are asymmetric two-column grids with column gaps of 48–96px: text on one side and a figure, list or panel on the other. They stack at 900px.
 
-Reference content is ruled, not carded: lists and tables open with a 2px ink rule and separate rows with 1px rule lines; regulations flow in two columns (min 22rem) on the paper sheet; the schedule pairs a sticky heading column with a timeline of date tape, title and time. The participation route is a 4-column grid that snakes back on the second row (7 numbered controls joined by a green course line), becoming 2 columns at 1080px and a single column with the number at the left at 600px.
+- **Hero (drawing sheet):** at least the viewport minus the masthead, in two columns (0.95fr / 1.05fr). On the left: the meta line, the HACKATHON strip, the statement, the mini countdown, the lede, the actions, and a fact list ruled by a 2px ink top rule and 1px rule rows. On the right: Fig. 1 and its right-aligned caption. Registration marks sit 14px in from each corner. The hero stacks at 960px, and the marks disappear at 600px.
+- **Ruled, not carded:** facts tables, criteria, awards, reasons, the FAQ and the regulation all open with a 2px ink rule and separate rows with 1px rules. Columns are divided by 1px vertical rules.
+- **Course:** 7 steps in reading order on a 4-column grid with a return connector, joined by a 3px green line. It becomes 2 columns at 1080px and a single column at 600px, with the control number on the left.
+- **Week ruler:** 5 equal day columns under a 3px ink rule with tick marks, and each event pinned to its day. Below 900px it becomes a vertical ruler (a 3px ink spine, the day in a 5.5rem column, events beside it). Undated items follow in an "Ainda sem data" list.
+- **FAQ and regulation:** the FAQ intro column is sticky beside the accordion. The regulation is one readable column (max 70ch) next to a sticky 15rem index. Below 900px the index becomes a bordered box with an auto-fill grid.
 
-Breakpoints observed: 1680px (root font 112.5%), 1080px (nav collapses to a MENU tape; route to 2 columns), 960px (schedule stacks), 900px (motives, final call and footer stack), 860px (hero stacks), 760px (drawer stacks), 640px (sheet and criteria table compact), 600px (hero splits into two strips; route single column), 560/520/480/380px (slot, tape-note, machine wheel and tape size step-downs).
+Breakpoints observed: 1680px (root font 112.5%), 1240px (nav collapses to the Menu tape; footer stacks), 1080px (course 2 columns), 960px (hero and final call stack), 900px (most grids stack; WebGL model needs at least 900px), 760px (drawer compacts), 640px (sheet padding), 600px (hero strip splits; model legend replaces labels; flow becomes a list; course single column), 560/520/480/440/420/380px (step-downs for tape notes, machine wheel, mini countdown, action tapes and pending tapes).
 
 ## Elevation & Depth
 
-Depth belongs to the objects, never to decoration. Tape is lifted by a two-layer `filter: drop-shadow` (a tight contact edge plus a short soft cast) so the shadow follows the scissor-cut outline; its letters are raised by an SVG lighting filter, and its vinyl carries a faint top sheen and fine grain. Surfaces use real-material shadows: the paper sheet and logo plate sit with soft contact shadows, the drawer and machine have molded inset edges and a deep cast, the label holder and exit slot are recessed with inset shadows.
+Depth belongs to objects, never to decoration. Tape is lifted by a two-layer `filter: drop-shadow` that follows its scissor-cut outline. Its letters are raised by SVG lighting filters, and its vinyl carries a sheen and a fine grain. Surfaces use real-material shadows: the paper sheet rests with a soft contact shadow, the drawer has molded inset edges and a deep cast, the label maker sits on the bench, and the exit slot and character wheel are recessed. The drafting surfaces (sheet, bench, green field, white chapters, ink footer) are flat.
 
 ### Shadow Vocabulary
 - **Tape rest** (`drop-shadow(0 1px 0.6px rgb(0 0 0 / 0.35)) drop-shadow(0 5px 6px rgb(0 0 0 / 0.14))`): every tape at rest.
-- **Tape lift** (`drop-shadow(0 2px 1px rgb(0 0 0 / 0.3)) drop-shadow(0 10px 12px rgb(0 0 0 / 0.18))`): hover on interactive tape, with 1px rise and brightness 1.06.
-- **Tape pressed** (`drop-shadow(0 0.5px 0.4px rgb(0 0 0 / 0.4))`): active state, tape pushed 2px into the surface.
-- **Hero strip** (`drop-shadow(0 2px 1px rgb(0 0 0 / 0.35)) drop-shadow(0 18px 22px rgb(0 0 0 / 0.2))`): the HACKATHON tape only.
+- **Tape lift** (`drop-shadow(0 2px 1px rgb(0 0 0 / 0.3)) drop-shadow(0 10px 12px rgb(0 0 0 / 0.18))`): hover on interactive tape, with a 1px rise and brightness(1.06).
+- **Tape pressed** (`drop-shadow(0 0.5px 0.4px rgb(0 0 0 / 0.4))`): the active state, pushed 2px down over 90ms.
+- **Hero strip** (`drop-shadow(0 2px 1px rgb(0 0 0 / 0.35)) drop-shadow(0 14px 18px rgb(0 0 0 / 0.18))`): the HACKATHON strip only.
+- **Logo plate** (`box-shadow: 0 1px 2px rgb(0 0 0 / 0.12)`): the masthead logo plate.
 - **Paper sheet** (`box-shadow: 0 1px 2px rgb(0 0 0 / 0.08), 0 24px 40px -28px rgb(0 0 0 / 0.35)`): the regulation sheet.
-- **Drawer** (`box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08), inset 0 -2px 0 rgb(0 0 0 / 0.35), 0 18px 30px -18px rgb(0 0 0 / 0.7)`): the steel drawer front.
-- **Recess** (`box-shadow: inset 0 3px 5px rgb(0 0 0 / 0.55)` to `inset 0 4px 8px rgb(0 0 0 / 0.75)`; wheel `inset 0 3px 8px rgb(0 0 0 / 0.65)`): label holder, character wheel, exit slot.
-- **Machine** (`box-shadow: 0 2px 2px rgb(0 0 0 / 0.25), 0 30px 50px -28px rgb(0 0 0 / 0.65)`): the label-maker housing resting on the bench.
-- **Bar pull** (`box-shadow: 0 6px 8px -3px rgb(0 0 0 / 0.65)`): the drawer rod over its posts.
-- **Swatch edge** (`box-shadow: inset 0 -1px 0 rgb(0 0 0 / 0.18)`): the bottom edge of an inline placeholder swatch.
+- **Drawer** (`box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08), inset 0 -2px 0 rgb(0 0 0 / 0.35), 0 18px 30px -18px rgb(0 0 0 / 0.7)`): the steel drawer.
+- **Machine** (`box-shadow: 0 2px 2px rgb(0 0 0 / 0.25), 0 30px 50px -28px rgb(0 0 0 / 0.65)`): the label maker housing.
+- **Recess** (`inset 0 3px 8px rgb(0 0 0 / 0.65)` wheel; `inset 0 4px 8px rgb(0 0 0 / 0.75)` exit slot): the recessed hardware.
+- **Bar pull** (`box-shadow: 0 6px 8px -3px rgb(0 0 0 / 0.65)`): the drawer rod.
 - **Review panel** (`box-shadow: 0 20px 40px -20px rgb(0 0 0 / 0.5)`): the organizer-only placeholder review panel.
 
 ### Named Rules
-**The Light From Upper Left Rule.** Raised letters are lit by one distant light at azimuth 225deg through the SVG filters (#emboss-s for small tape, #emboss for default, #emboss-l and #emboss-xl with plastic-stress whitening for large tape). Tape depth never uses box-shadow or text-shadow bevels.
+**The Light From Upper Left Rule.** Raised letters are lit by one distant light at azimuth 225deg, through four filters: #emboss-s for small tape, #emboss as the default, and #emboss-l and #emboss-xl (with plastic-stress whitening) for countdown, label maker and hero tape. Tape depth never comes from box-shadow or text-shadow bevels.
 
-**The Vinyl Skin Rule.** Every tape body carries the same skin: a 96px fractal-noise grain at 9% and a sheen fading from 20% white at the top to 12% black at the bottom. Gradients elsewhere only shade a physical material (machine body, bar pull, punch holes, brushed steel); none decorates, and nothing glows.
+**The Material Gradient Rule.** Gradients only shade a physical material: tape sheen, the machine body, the steel pull, and the yellow marker band. None is decorative, and nothing glows. The only blur is the functional sticky masthead (10px over the sheet).
 
 ## Shapes
 
-Tape ends are scissor cuts: a clip-path polygon slants the left and right ends by a per-strip amount (0.06-0.36em) hashed from the tape's text, so every strip is cut differently and identically on every visit. Tape corners are near-square (1px on the body, 3px tape radius on square tape tiles such as the FAQ toggle and on the label-holder frame). Every strip sits at a small rotation, typically between -3deg and +1.6deg, alternating sign between neighbours. Paper, the logo plate and inline swatches are 2px; the review panel and the cartridge base 4px; the drawer, field and slots 6px; cartridge tops 8px; the bar-pull rod is a full pill (999px) and the character wheel a circle; the label machine is molded (22px top, 34px bottom). Route controls are circles with a 3px green ring. The paper sheet has three binder punch holes in its left margin.
+Tape ends are scissor cuts: a clip-path slants each end by 0.06–0.36em, hashed from the tape's text, so every strip is cut differently but identically on every visit. Tape bodies have 1px corners and sit at small rotations between -3deg (chapter tapes) and +1.5deg, alternating between neighbours. Drafting marks are geometric and hairline: 1.5px registration circles with crosshairs, ruler ticks every 16px and 80px, the 32px sheet grid, and 2px leader lines with a colored left rule on the labels. Paper and plates have 2px corners, the review panel 4px, the drawer, field and slot 6px, and cartridge tops 8px. The label maker is molded (machine-top 22px, machine-bottom 34px), the drawer rod is a pill, and course controls, the FAQ mark and the character wheel are circles.
 
 ## Components
 
 ### Tape (the primitive)
-Embossed vinyl strip; the unit every display element is made of.
-- **Anatomy:** outer tape (shadow, rotation, press state) > tape body (vinyl color, skin, scissor-cut clip-path) > tape face (letters raised by the emboss filter). main.js builds body and face around the text of every tape; without JavaScript the strip still renders as flat colored tape.
-- **Type:** Sometype Mono 700, uppercase, 0.14em tracking, padding 0.34em 0.95em 0.3em, icons trail at 1em.
-- **Sizes:** s (default), m (headings), l (primary actions), and the hero size.
-- **Interactive tape:** hover rises 1px with tape lift; active presses down 2px with tape pressed (90ms); disabled at 55% opacity, no shadow.
+Embossed vinyl strip, reserved for the signature roles.
+- **Anatomy:** outer tape (shadow, rotation, press) > tape body (vinyl color, skin, scissor-cut clip-path) > tape face (letters raised by the emboss filter). main.js builds the body and face. Without JavaScript the tape still renders as a flat colored strip.
+- **Type:** Sometype Mono 700, uppercase, 0.14em, padding 0.34em 0.95em 0.3em. Icons trail at 1em.
+- **Reserved roles:** the HACKATHON strip, chapter numbers inside headings (01–11), countdown digits, schedule times, CTAs, team slots, the label maker (badge, cut, output, tray) and the Menu/Fechar controls.
+- **Interactive tape:** rises 1px on hover with tape lift, presses down 2px on active (90ms), and sits at 55% opacity when disabled.
 
-### Buttons and Actions
-- **Primary:** green tape at size L with an arrow icon, padding 0.7em 1.2em 0.62em, rotated about -0.6deg.
-- **Secondary:** a mono uppercase text link with a 2px underline at 0.35em offset; underline turns green on hover.
-- **Outbound:** blue tape with the external icon; unpublished outbound links become disabled gray tape followed by a yellow "Em breve" tape.
-- **Registration while the form URL is pending:** outside the registration block the CTA reads "Como se inscrever" and leads there; inside it, the form action is disabled gray tape plus a large yellow "Em breve" strip and a note that registration is not open through the site.
+### Buttons and Links
+- **Primary action:** green tape at size L with the arrow icon, padding 0.7em 1.2em 0.62em, rotated -0.6deg to -0.8deg. The masthead uses green tape at size S.
+- **Text link:** Switzer 600 with a 2px underline at a 0.3em offset. The underline turns green on hover.
+- **Outbound link:** plain text with the external icon (0.85em), Switzer 600, 2px underline. When unpublished it switches to muted ink and a dashed underline, followed by a yellow "em breve" marker.
+- **Registration while the form URL is pending:** outside the final call the CTA reads "Como se inscrever" and leads to it. Inside the final call it becomes a disabled gray tape followed by an "em breve" marker and a note.
 
 ### Placeholders
-- **Whole-value placeholder:** a value that is entirely a placeholder renders as yellow pending tape with ink letters and a dashed underline; above 520px, tapes larger than S also carry a small dashed "a confirmar" note inside the strip.
-- **Inline placeholder:** a placeholder inside a sentence renders as a yellow swatch in the tape face at 0.82em with a dashed underline, never as a full tape.
+- **Marker:** a sentence-case yellow band (85% tape-yellow from 12% to 92% of the line) in the reading face at weight 600, with ink text and a dashed 1.5px underline as the non-color cue. It never uses mono caps. Whole-value pending tapes (yellow tape, dashed underline, a small "a confirmar" note above 520px) remain for values that live on tape.
 
 ### Navigation
-- **Desktop:** a row of small black tapes at right of the logo plate; the current section turns to white tape. Registration is green tape at the far right.
-- **Below 1240px:** a black MENU tape opens a full-screen bench sheet listing tapes at size M, alternately rotated -1.2deg / +0.8deg, closed by a white tape.
+- **Masthead:** sticky, 4.5rem tall, sheet-colored with a blur. The white logo plate sits on the left, and plain Switzer 500 nav links on the right have an underline that grows from the left (220ms). The current link is in green-ink with the underline held. A green tape CTA sits at the far right.
+- **Progress ruler:** a measuring rule along the bottom of the masthead (ticks every 16px and 80px at 35% ink) whose red 3px fill scales with page scroll.
+- **Below 1240px:** a black Menu tape opens a full-screen sheet of numbered Stencil links (mono numbers 01–10), ruled by 1px lines and closed by a white Fechar tape.
 
-### Lists, Tables and the Course
-- Ruled rows on bench or paper; numbers and dates in the tape face with tabular figures. Rules are numbered and deep-linkable through a link icon; a targeted rule gets a faint yellow wash.
-- **Course controls:** 3.25rem circles with a green ring on bench, numbered in the tape face, joined by a 3px green course line.
+### Countdowns
+- **Mini countdown (hero):** a Switzer 600 label and four black tapes (tape-mini, tabular figures, #emboss-l) with muted unit letters. It links to the theme chapter and stays on one row on phones.
+- **Drawer countdown:** four white tapes (tape-countdown) with Switzer labels below, alternately rotated -1deg / +0.8deg. Changed digits punch in (scale 1.25 to 1, back-out).
+
+### Signature: Fig. 1 Week Model
+An axonometric model of Monday 26 to Friday 30 October on a ground grid. Confirmed days are solid volumes: black for dated, red for the deadline, green for the final. Unconfirmed days are dashed wireframes. Leader labels have a 2px left rule and a vertical leader: a mono date over a Stencil title, in red-ink or green-ink for the deadline and final. The model is WebGL (Three.js) at 900px and wider when motion is allowed, and a static SVG drawing otherwise. Below 600px the labels give way to a ruled legend with color squares. A caption in Detail reads "Fig. 1 · …".
+
+### Flow Diagram, Course and Week Ruler
+- **Flow:** problem → idea → solution as Stencil 1.75rem step words with green-ink mono numbers, linked by 2px ink arcs with arrowheads. Below 600px it becomes a plain list.
+- **Course:** 3.25rem circular controls with a 3px green ring on bench and a mono number, a Switzer 600 title and a muted body, joined by a 3px green round-capped line.
+- **Week ruler:** day name in Switzer, day number in Stencil (empty days muted), events with a time tape (black, or red for the deadline), a Switzer 600 title and a Detail meta line.
+
+### Lists and Tables
+- **Facts table:** a dt/dd grid (9rem minimum label column), 2px top rule and 1px row rules.
+- **STAR list:** green-ink Stencil letters in a 3.25rem column with the step name in 600 and the text muted.
+- **Criteria, panel and awards:** criteria are ruled rows with mono numbers. The panel shows the confirmed judge in Stencil, with pending seats as markers. Awards are three ruled columns with Stencil place numerals (1º in green-ink).
+- **FAQ accordion:** a Switzer 600 question, a 2.5rem circular plus mark that turns 45deg and fills with ink when open, and the answer in Body. A pending answer carries a "Resposta pendente" marker.
 
 ### Signature: Secret-Theme Drawer
-Dark steel cabinet with a drawer front, a pressed-steel label holder (3px steel frame, 6px top lip, recessed black slot) holding the theme tape (red "Trancado até 26/10" before the reveal), and a bar pull on two posts. Inside the drawer: a countdown of four white tapes at size L (days, hours, minutes, seconds, tabular figures, labels in mono below), the reveal facts, and the opening agenda numbered in yellow. States: counting, "A revelação é agora" during the opening, revealed afterwards.
+A steel chapter with a drawer front (6px, molded shadow). It holds the "Tema" label with the theme tape (red while locked, black once revealed, white afterwards), a steel bar pull on two posts, the countdown, the reveal facts and the opening agenda with yellow mono numbers.
 
-### Team Slots and Blank Tape
-Required seats are black tapes ("Integrante 1-3"); optional seats are blank tape: no vinyl, a 2px dashed rule outline, muted letters, no emboss. Blank tape means "may stay empty", never "pending" (that is yellow).
-
-### Panel and Awards
-The confirmed judge is a black tape at size L; pending seats are small yellow pending tapes grouped below. Awards are three ruled columns: place on black tape, a green "Medalha" tape, a plus, and the pending prize.
+### Team Slots
+Required seats are black tapes ("Integrante 1–3"). Optional seats are blank tape: no vinyl, a 2px dashed outline in currentColor, no emboss. Blank means "may stay empty", never "pending".
 
 ### Signature: Regulation Sheet
-White paper with three binder punch holes, two-column numbered rules each opened by a 3px ink rule.
+White paper on the bench with a summary, an outbound link to the official regulation, a sticky numbered index (mono counters; the current item in ink 600), and numbered rules in a single column (max 70ch). Each rule has a 2px ink top rule, a Stencil title, a mono number and a link anchor.
 
 ### Signature: Label Maker
-A molded dark machine with a white "Rotuladora" badge tape, a character wheel (A-Z, active letter yellow under a yellow pointer), a recessed input (2px #4b5158 border, 6px radius, yellow caret and focus outline), color cartridges (black, green, blue, red swatches; selected one framed yellow), a green cut action with a scissors icon, and a recessed exit slot from which the punched tape feeds. Cut labels drop into a tray below.
+A molded machine with a white "Rotuladora" badge tape, a character wheel (A–Z, current letter yellow under a yellow pointer), a recessed mono input (2px rim, yellow caret and focus ring), four cartridges (black, green, blue, red; the selected one framed in yellow), a white "Cortar" tape with scissors, and a recessed exit slot where the punched tape feeds out. Cut labels drop into a tray below.
 
 ### Icons
-One stroke set at 24px viewBox, stroke 2.4, square caps, mitre joins, inheriting currentColor: arrow, external, link, plus, scissors. No other icons.
+One stroke set: 24px viewBox, stroke 2.4, square caps, mitre joins, currentColor. Six icons: arrow, external, link, check, plus, scissors. Nothing else.
 
 ### Official IFSP Logo
-Only the official campus signature (`site/assets/ifsp/ifsp-jacarei-cor.svg`: Instituto Federal · São Paulo · Campus Jacareí), always on a white base (the masthead plate and the paper footer), with clear space around it; the symbol is never smaller than 30px and the mark is never recolored, redrawn or set on tape.
+Use only the official campus signature (`site/assets/ifsp/ifsp-jacarei-cor.svg`), always on a white plate (masthead 168px, footer 250px) with clear space. The symbol is never smaller than 30px, and the mark is never recolored, redrawn or set on tape.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** make every new display element a tape and choose its color by role from the Cartridge Rule.
-- **Do** keep tapes on one line; re-punch long strips as two or three stacked, counter-rotated strips, or step down one size on narrow screens.
-- **Do** rotate tapes slightly (about -3deg to +1.6deg), alternating between neighbours, and let the per-strip hash cut each end.
-- **Do** render every unconfirmed fact as yellow pending tape (whole value) or a yellow inline swatch (inside a sentence), always with the dashed underline as the non-color cue.
-- **Do** raise letters only through the #emboss filters and lift tape only with the drop-shadow tokens.
-- **Do** keep motion to the label-maker grammar: feed out, punch letters, press headings on, draw the course line, one firm press on controls; with reduced motion, show everything in place.
+- **Do** set every chapter headline in Bespoke Stencil 800, in sentence case, with its chapter number as a small black tape inline (white tape on the green and steel chapters).
+- **Do** keep running text in Switzer at 1.125rem / 1.65 and within 66ch.
+- **Do** keep tape to its reserved roles and pick the color from the Cartridge Rule. Times on tape keep the official "8h às 9h30" notation.
+- **Do** mark unconfirmed text with the sentence-case yellow marker and its dashed underline, and draw unconfirmed days as dashed wireframes.
+- **Do** use green-ink and red-ink for colored text on light grounds.
+- **Do** rule reference content with a 2px ink top rule and 1px row rules.
+- **Do** keep motion to drafting and labelling (feed, punch, words rising, lines drawing, the ruler measuring) and show everything in place under reduced motion.
 - **Do** place the IFSP logo, complete and uncolored, on white with clear space.
 
 ### Don't:
-- **Don't** use red for anything other than the Semana de Tecnologia plate and deadlines.
+- **Don't** put links, navigation, statuses or headings on tape. Links are plain text, with the external icon when they leave the site.
+- **Don't** set placeholders, paragraphs or headings in mono caps.
+- **Don't** use red for anything that isn't a deadline, the locked theme or the progress ruler.
 - **Don't** wrap a tape onto two lines or let it overflow the viewport.
-- **Don't** bevel tape with box-shadow or text-shadow, or add decorative gradients, glows or glassy layers; the only blur is the functional sticky masthead over the bench.
-- **Don't** set running text in Sometype Mono or tape lettering in Switzer.
-- **Don't** present a placeholder as finished copy, or invent dates, prizes, rules or sponsors to fill one.
-- **Don't** recolor, crop, place on tape, or shrink the IFSP mark below a 30px symbol.
-- **Don't** add icons outside the five-icon stroke set or use glyphs as icons.
+- **Don't** bevel tape with box-shadow or text-shadow, or add decorative gradients, glows or glass panels.
+- **Don't** wrap content in cards. Reference material is ruled.
+- **Don't** present a placeholder as finished copy, or invent dates, prizes, rules or sponsors.
+- **Don't** recolor, crop, put on tape, or shrink the IFSP mark below a 30px symbol.
+- **Don't** add icons outside the six-icon stroke set or use glyphs as icons.

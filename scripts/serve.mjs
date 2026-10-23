@@ -1,9 +1,10 @@
 // Minimal static server for local development: `npm run dev` (no dependencies).
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
-import { extname, join, normalize, resolve } from "node:path";
+import { extname, join, normalize } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = resolve(new URL("../site", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
+const root = fileURLToPath(new URL("../site", import.meta.url));
 const port = Number(process.env.PORT) || 5180;
 const types = {
   ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8",

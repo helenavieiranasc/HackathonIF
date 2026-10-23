@@ -25,6 +25,8 @@ site/                 tudo o que vai para o ar
   index.html          estrutura das seções
   styles.css          tokens (cores, tipos, espaços, sombras, movimento) e layout
   main.js             lê content.js, monta listas, links, menu, contagem, rotuladora e animações
+  model.js            maquete 3D da semana (Three.js), carregada só em telas largas com animação permitida;
+                      nos demais casos main.js desenha a mesma maquete em SVG
   content.js          fonte única do conteúdo do evento
   assets/             favicon e marca oficial do campus Jacareí (SVG)
   vendor/             fontes, GSAP e Three.js hospedados localmente
