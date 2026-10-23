@@ -1,0 +1,35 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "site/index.html"
+        ],
+        "createdAt": "2026-10-22T01:26:27.143Z",
+        "reason": "agent triage: live-page scan of http://localhost:5173 (rendered with CSS/JS) reports no tight-leading; finding only appears in the static file scan"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "site/index.html"
+        ],
+        "createdAt": "2026-10-22T01:26:27.359Z",
+        "reason": "agent triage: live-page scan reports no cramped-padding; section separators are border-top rules above 48px+ of section padding"
+      },
+      {
+        "rule": "nested-cards",
+        "value": "*",
+        "files": [
+          "site/index.html"
+        ],
+        "createdAt": "2026-10-22T01:37:48.119Z",
+        "reason": "agent triage: the two hits are physical parts of the committed Rotuladora world (the metal label holder on the challenge drawer, the character wheel on the label maker), not nested content cards"
+      }
+    ]
+  }
+}

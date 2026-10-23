@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Hackathon 2026 · Semana de Tecnologia · IFSP campus Jacareí</title>
+  <meta name="description" content="Hackathon da Semana de Tecnologia do IFSP campus Jacareí, de 26 a 30 de outubro de 2026: para estudantes de todos os cursos, em equipes de 3 a 5. Tema revelado em 26/10, inscrições até 28/10.">
+  <meta name="theme-color" content="#e1e4e8">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="vendor/fonts/sometype-mono-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="vendor/fonts/switzer-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Entrance motion only when the visitor allows it; content stays visible otherwise.
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.documentElement.classList.add("motion");
+      setTimeout(function () { document.documentElement.classList.remove("motion"); }, 4000);
+    }
+  </script>
+</head>
+<body>
+  <!-- Raised-letter relief and icon set. The filters light each glyph from the upper left like embossed vinyl. -->
+  <svg class="defs" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <defs>
+      <filter id="emboss" x="-5%" y="-30%" width="110%" height="160%" color-interpolation-filters="sRGB">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="0.6" result="bump"/>
+        <feDiffuseLighting in="bump" surfaceScale="2.2" diffuseConstant="1.3" lighting-color="#fff" result="diff"><feDistantLight azimuth="225" elevation="52"/></feDiffuseLighting>
+        <feSpecularLighting in="bump" surfaceScale="2.2" specularConstant="0.55" specularExponent="20" lighting-color="#fff" result="spec"><feDistantLight azimuth="225" elevation="38"/></feSpecularLighting>
+        <feComposite in="SourceGraphic" in2="diff" operator="arithmetic" k1="1" result="shaded"/>
+        <feComposite in="spec" in2="SourceAlpha" operator="in" result="gloss"/>
+        <feComposite in="shaded" in2="gloss" operator="arithmetic" k2="1" k3="0.8" result="lit"/>
+        <feComposite in="lit" in2="SourceAlpha" operator="in" result="letters"/>
+        <feOffset in="SourceAlpha" dx="0.6" dy="1" result="o"/>
+        <feGaussianBlur in="o" stdDeviation="0.45" result="ob"/>
+        <feComposite in="ob" in2="SourceAlpha" operator="out" result="cast"/>
+        <feColorMatrix in="cast" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0" result="castDark"/>
+        <feMerge><feMergeNode in="castDark"/><feMergeNode in="letters"/></feMerge>
+      </filter>
+      <filter id="emboss-s" x="-5%" y="-30%" width="110%" height="160%" color-interpolation-filters="sRGB">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="0.35" result="bump"/>
+        <feDiffuseLighting in="bump" surfaceScale="1.3" diffuseConstant="1.3" lighting-color="#fff" result="diff"><feDistantLight azimuth="225" elevation="52"/></feDiffuseLighting>
+        <feSpecularLighting in="bump" surfaceScale="1.3" specularConstant="0.55" specularExponent="20" lighting-color="#fff" result="spec"><feDistantLight azimuth="225" elevation="38"/></feSpecularLighting>
+        <feComposite in="SourceGraphic" in2="diff" operator="arithmetic" k1="1" result="shaded"/>
+        <feComposite in="spec" in2="SourceAlpha" operator="in" result="gloss"/>
+        <feComposite in="shaded" in2="gloss" operator="arithmetic" k2="1" k3="0.8" result="lit"/>
+        <feComposite in="lit" in2="SourceAlpha" operator="in" result="letters"/>
+        <feOffset in="SourceAlpha" dx="0.5" dy="0.7" result="o"/>
+        <feGaussianBlur in="o" stdDeviation="0.25" result="ob"/>
+        <feComposite in="ob" in2="SourceAlpha" operator="out" result="cast"/>
+        <feColorMatrix in="cast" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0" result="castDark"/>
+        <feMerge><feMergeNode in="castDark"/><feMergeNode in="letters"/></feMerge>
+      </filter>
+      <filter id="emboss-l" x="-4%" y="-25%" width="108%" height="150%" color-interpolation-filters="sRGB">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="bump"/>
+        <feDiffuseLighting in="bump" surfaceScale="2.6" diffuseConstant="1.12" lighting-color="#fff" result="diff"><feDistantLight azimuth="225" elevation="56"/></feDiffuseLighting>
+        <feSpecularLighting in="bump" surfaceScale="2.6" specularConstant="0.3" specularExponent="24" lighting-color="#fff" result="spec"><feDistantLight azimuth="225" elevation="40"/></feSpecularLighting>
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="11" result="stress"/>
+        <feColorMatrix in="stress" type="matrix" values="0 0 0 0.16 0.86  0 0 0 0.16 0.86  0 0 0 0.16 0.85  0 0 0 0 1" result="stressGray"/>
+        <feComposite in="SourceGraphic" in2="diff" operator="arithmetic" k1="1" result="shaded"/>
+        <feComposite in="shaded" in2="stressGray" operator="arithmetic" k1="1" result="whitened"/>
+        <feComposite in="spec" in2="SourceAlpha" operator="in" result="gloss"/>
+        <feComposite in="whitened" in2="gloss" operator="arithmetic" k2="1" k3="0.6" result="lit"/>
+        <feComposite in="lit" in2="SourceAlpha" operator="in" result="letters"/>
+        <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="fat"/>
+        <feComposite in="fat" in2="SourceAlpha" operator="out" result="edge"/>
+        <feColorMatrix in="edge" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0" result="bleed"/>
+        <feOffset in="SourceAlpha" dx="1.1" dy="1.7" result="o"/>
+        <feGaussianBlur in="o" stdDeviation="0.8" result="ob"/>
+        <feComposite in="ob" in2="SourceAlpha" operator="out" result="cast"/>
+        <feColorMatrix in="cast" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0" result="castDark"/>
+        <feMerge><feMergeNode in="castDark"/><feMergeNode in="bleed"/><feMergeNode in="letters"/></feMerge>
+      </filter>
+      <filter id="emboss-xl" x="-4%" y="-25%" width="108%" height="150%" color-interpolation-filters="sRGB">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="1.7" result="bump"/>
+        <feDiffuseLighting in="bump" surfaceScale="3.6" diffuseConstant="1.12" lighting-color="#fff" result="diff"><feDistantLight azimuth="225" elevation="56"/></feDiffuseLighting>
+        <feSpecularLighting in="bump" surfaceScale="3.6" specularConstant="0.3" specularExponent="24" lighting-color="#fff" result="spec"><feDistantLight azimuth="225" elevation="40"/></feSpecularLighting>
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="11" result="stress"/>
+        <feColorMatrix in="stress" type="matrix" values="0 0 0 0.16 0.86  0 0 0 0.16 0.86  0 0 0 0.16 0.85  0 0 0 0 1" result="stressGray"/>
+        <feComposite in="SourceGraphic" in2="diff" operator="arithmetic" k1="1" result="shaded"/>
+        <feComposite in="shaded" in2="stressGray" operator="arithmetic" k1="1" result="whitened"/>
+        <feComposite in="spec" in2="SourceAlpha" operator="in" result="gloss"/>
+        <feComposite in="whitened" in2="gloss" operator="arithmetic" k2="1" k3="0.6" result="lit"/>
+        <feComposite in="lit" in2="SourceAlpha" operator="in" result="letters"/>
+        <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="fat"/>
+        <feComposite in="fat" in2="SourceAlpha" operator="out" result="edge"/>
+        <feColorMatrix in="edge" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0" result="bleed"/>
+        <feOffset in="SourceAlpha" dx="1.9" dy="2.9" result="o"/>
+        <feGaussianBlur in="o" stdDeviation="1.4" result="ob"/>
+        <feComposite in="ob" in2="SourceAlpha" operator="out" result="cast"/>
+        <feColorMatrix in="cast" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0" result="castDark"/>
+        <feMerge><feMergeNode in="castDark"/><feMergeNode in="bleed"/><feMergeNode in="letters"/></feMerge>
+      </filter>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+      <symbol id="i-external" viewBox="0 0 24 24"><path d="M8 6h10v10M18 6L6 18"/></symbol>
+      <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+      <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="7" r="3"/><circle cx="6" cy="17" r="3"/><path d="M8.5 8.8L20 18M8.5 15.2L20 6"/></symbol>
+    </defs>
+  </svg>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="masthead" data-masthead>
+    <a class="plate" href="#inicio" aria-label="Início">
+      <img src="assets/ifsp/ifsp-jacarei-cor.svg" width="168" height="60"
+           alt="Instituto Federal de São Paulo, campus Jacareí">
+    </a>
+    <nav class="nav" aria-label="Seções">
+      <ul class="nav-list">
+        <li><a class="tape tape--black tape--s" href="#tema">Tema</a></li>
+        <li><a class="tape tape--black tape--s" href="#quem-participa">Quem participa</a></li>
+        <li><a class="tape tape--black tape--s" href="#cronograma">Cronograma</a></li>
+        <li><a class="tape tape--black tape--s" href="#pitch">Pitch</a></li>
+        <li><a class="tape tape--black tape--s" href="#regulamento">Regulamento</a></li>
+        <li><a class="tape tape--black tape--s" href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <a class="tape tape--green tape--s nav-cta" data-link="inscricao" data-pending-label="Inscrição" href="#participe">Inscrever equipe</a>
+    <button class="tape tape--black tape--s menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </header>
+
+  <div class="menu" id="menu" hidden>
+    <nav aria-label="Menu">
+      <ul class="menu-list">
+        <li><a class="tape tape--black tape--m" href="#o-que-e">O que é</a></li>
+        <li><a class="tape tape--black tape--m" href="#quem-participa">Quem participa</a></li>
+        <li><a class="tape tape--black tape--m" href="#tema">Tema secreto</a></li>
+        <li><a class="tape tape--black tape--m" href="#projeto">IA e projeto</a></li>
+        <li><a class="tape tape--black tape--m" href="#como-funciona">Como funciona</a></li>
+        <li><a class="tape tape--black tape--m" href="#cronograma">Cronograma</a></li>
+        <li><a class="tape tape--black tape--m" href="#pitch">Pitch</a></li>
+        <li><a class="tape tape--black tape--m" href="#avaliacao">Banca e prêmios</a></li>
+        <li><a class="tape tape--black tape--m" href="#faq">FAQ</a></li>
+        <li><a class="tape tape--black tape--m" href="#regulamento">Regulamento</a></li>
+        <li><a class="tape tape--green tape--m" data-link="inscricao" data-pending-label="Como se inscrever" href="#participe">Inscrever equipe</a></li>
+      </ul>
+    </nav>
+    <button class="tape tape--white tape--s menu-close" type="button">Fechar</button>
+  </div>
+
+  <main id="conteudo">
+    <!-- A. Hero -->
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <h1 class="hero-title" id="hero-title">
+        <span class="sr-only">Hackathon</span>
+        <span class="hero-strip" aria-hidden="true"><span class="hero-seg"><span class="tape-face" data-punch>HACKA</span></span><span class="hero-seg"><span class="tape-face" data-punch>THON</span></span></span>
+      </h1>
+      <p class="hero-semana">
+        <span class="tape tape--red tape--m" data-stick>Semana de Tecnologia</span>
+      </p>
+      <p class="hero-edition"><span data-c="evento.edicao"></span> <span class="nowrap">· IFSP campus Jacareí</span></p>
+      <div class="hero-lede">
+        <p data-c="evento.descricao"></p>
+        <ul class="hero-chips" aria-label="Em resumo">
+          <li><span class="tape tape--white tape--s">Todos os cursos</span></li>
+          <li><span class="tape tape--white tape--s">Equipes de 3 a 5</span></li>
+          <li><span class="tape tape--green tape--s">IA liberada</span></li>
+        </ul>
+      </div>
+      <div class="hero-actions">
+        <a class="tape tape--green tape--l" data-link="inscricao" data-pending-label="Como se inscrever" href="#participe">Inscrever equipe <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="textlink" href="#tema">O tema é segredo</a>
+      </div>
+      <dl class="hero-facts">
+        <div><dt>Inscrições até</dt><dd><span class="tape tape--s" data-c="evento.prazoInscricao" data-tape="deadline"></span></dd></div>
+        <div><dt>Revelação do tema</dt><dd><span data-c="revelacao.dataCurta"></span> · 8h</dd></div>
+        <div><dt>Apresentações</dt><dd>Sex 30/10 · Auditório do campus</dd></div>
+      </dl>
+    </section>
+
+    <!-- B. O que é -->
+    <section class="section whatis" id="o-que-e" aria-labelledby="whatis-title">
+      <h2 class="section-title" id="whatis-title"><span class="tape tape--black tape--m" data-stick>O que é um hackathon</span></h2>
+      <p class="equation" aria-label="Hack mais maratona é igual a hackathon">
+        <span class="eq-group"><span class="tape tape--black tape--m" data-eq>Hack</span><span class="eq-op" aria-hidden="true">+</span></span>
+        <span class="eq-group"><span class="tape tape--black tape--m" data-eq>Maratona</span></span>
+        <span class="eq-group"><span class="eq-op" aria-hidden="true">=</span><span class="tape tape--green tape--m" data-eq>Hackathon</span></span>
+      </p>
+      <div class="whatis-text" data-list="sobre.texto"></div>
+      <ol class="motives" data-list="sobre.motivos"></ol>
+    </section>
+
+    <!-- B2. Quem participa -->
+    <section class="section who" id="quem-participa" aria-labelledby="who-title">
+      <h2 class="section-title" id="who-title"><span class="tape tape--black tape--m" data-stick>Quem participa</span></h2>
+      <div class="who-grid">
+        <div class="who-main">
+          <p class="who-call" data-c="participacao.chamada"></p>
+          <p class="who-text" data-c="participacao.texto"></p>
+          <ul class="skills" data-list="participacao.habilidades" aria-label="O que conta numa equipe"></ul>
+        </div>
+        <div class="who-team">
+          <p class="who-team-label">Sua equipe</p>
+          <ol class="team-slots" data-team aria-label="Equipes de 3 a 5 integrantes"></ol>
+          <p class="who-team-rule"><strong>Mínimo 3, máximo 5.</strong> Integrantes 4 e 5 são opcionais.</p>
+          <p class="who-campus">
+            <span class="tape tape--black tape--s">Só campus Jacareí</span>
+            <span data-c="participacao.restricao"></span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- C. Tema secreto -->
+    <section class="section challenge" id="tema" aria-labelledby="theme-title">
+      <h2 class="section-title" id="theme-title"><span class="tape tape--white tape--m" data-stick>Tema secreto</span></h2>
+      <div class="drawer" data-reveal>
+        <div class="drawer-top">
+          <div class="drawer-holder">
+            <span class="holder-label">Tema</span>
+            <span class="tape tape--red tape--l" data-theme-tape data-punch-on-view>Trancado até 26/10</span>
+          </div>
+          <span class="drawer-pull" aria-hidden="true"><span></span></span>
+        </div>
+        <div class="challenge-body">
+          <p class="challenge-question" data-reveal-title>O tema é segredo. <span class="nowrap">A revelação</span> tem data marcada.</p>
+          <div class="countdown" data-countdown aria-hidden="true">
+            <span class="cd-cell"><span class="tape tape--white tape--l" data-cd="d">00</span><span class="cd-label">dias</span></span>
+            <span class="cd-cell"><span class="tape tape--white tape--l" data-cd="h">00</span><span class="cd-label">horas</span></span>
+            <span class="cd-cell"><span class="tape tape--white tape--l" data-cd="m">00</span><span class="cd-label">min</span></span>
+            <span class="cd-cell"><span class="tape tape--white tape--l" data-cd="s">00</span><span class="cd-label">seg</span></span>
+          </div>
+          <p class="countdown-status" data-reveal-status>Contagem até a abertura, segunda-feira, 26 de outubro, às 8h.</p>
+          <dl class="reveal-facts">
+            <div><dt>Quando</dt><dd><span data-c="revelacao.dia"></span>, <span data-c="revelacao.horario"></span></dd></div>
+            <div><dt>Onde</dt><dd data-c="revelacao.local"></dd></div>
+          </dl>
+          <div class="reveal-agenda">
+            <p class="reveal-agenda-title">Na abertura</p>
+            <ol data-list="revelacao.pauta"></ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- D. IA e projeto -->
+    <section class="section ai" id="projeto" aria-labelledby="ai-title">
+      <h2 class="section-title" id="ai-title"><span class="tape tape--black tape--m" data-stick>IA e projeto</span></h2>
+      <div class="ai-grid">
+        <div class="ai-lead">
+          <p class="ai-lines" data-list="ia.frases"></p>
+          <span class="tape tape--green tape--l ai-stamp">IA permitida</span>
+        </div>
+        <div class="ai-body">
+          <div class="ai-text" data-list="ia.texto"></div>
+          <ul class="tag-row" data-list="ia.usos" aria-label="Usos possíveis da IA"></ul>
+          <p class="ai-note" data-c="ia.aviso"></p>
+        </div>
+        <div class="project">
+          <h3 class="project-title">O projeto</h3>
+          <ul class="tag-row" data-list="projeto.formatos" aria-label="Formatos possíveis"></ul>
+          <ul class="project-rules" data-list="projeto.regras"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- E. Como funciona -->
+    <section class="section route" id="como-funciona" aria-labelledby="route-title">
+      <h2 class="section-title" id="route-title"><span class="tape tape--black tape--m" data-stick>Como funciona</span></h2>
+      <p class="section-intro">Sete etapas, da inscrição à premiação.</p>
+      <div class="course">
+        <svg class="course-line" aria-hidden="true" focusable="false"></svg>
+        <ol class="course-list" data-list="etapas"></ol>
+      </div>
+    </section>
+
+    <!-- F. Cronograma -->
+    <section class="section schedule" id="cronograma" aria-labelledby="schedule-title">
+      <div class="schedule-head">
+        <h2 class="section-title" id="schedule-title"><span class="tape tape--black tape--m" data-stick>Cronograma</span></h2>
+        <p class="section-intro">Semana de 26 a 30 de outubro de 2026. Datas em fita amarela ainda serão definidas. Prazos sem volta levam a etiqueta vermelha “prazo”.</p>
+      </div>
+      <ol class="timeline" data-list="cronograma"></ol>
+    </section>
+
+    <!-- G. Pitch -->
+    <section class="section pitch" id="pitch" aria-labelledby="pitch-title">
+      <h2 class="section-title" id="pitch-title"><span class="tape tape--black tape--m" data-stick>Pitch</span></h2>
+      <div class="pitch-grid">
+        <div class="pitch-about">
+          <p class="pitch-lede" data-c="pitch.oQueE"></p>
+          <p><a class="textlink" data-link="pitch" href="#pitch">Saiba mais sobre pitch</a></p>
+          <dl class="pitch-facts">
+            <div><dt>Quando</dt><dd><span data-c="pitch.dia"></span>, <span data-c="pitch.horario"></span></dd></div>
+            <div><dt>Onde</dt><dd data-c="pitch.local"></dd></div>
+            <div><dt>Duração por equipe</dt><dd data-c="pitch.duracao"></dd></div>
+            <div><dt>Perguntas da banca</dt><dd data-c="pitch.perguntas"></dd></div>
+          </dl>
+        </div>
+        <div class="pitch-guide">
+          <h3 class="pitch-h">O que mostrar</h3>
+          <ol class="pitch-show" data-list="pitch.mostrar"></ol>
+          <h3 class="pitch-h">Um jeito de organizar: STAR</h3>
+          <p class="pitch-note">Uma sugestão de roteiro, não uma regra.</p>
+          <ol class="star" data-list="pitch.star"></ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- H. Banca, avaliação e prêmios -->
+    <section class="section scoring" id="avaliacao" aria-labelledby="scoring-title">
+      <h2 class="section-title" id="scoring-title"><span class="tape tape--black tape--m" data-stick>Banca e prêmios</span></h2>
+      <div class="scoring-grid">
+        <div class="score-rule">
+          <p class="score-scale"><span class="tape tape--black tape--l" data-c="avaliacao.escala" data-tape="plain"></span> <span>em cada critério</span></p>
+          <p class="score-weights" data-c="avaliacao.pesos"></p>
+          <h3 class="score-h">Critérios</h3>
+          <ol class="criteria-list" data-list="avaliacao.criterios"></ol>
+        </div>
+        <div class="panel">
+          <h3 class="score-h">Banca</h3>
+          <ul class="panel-list" data-list="avaliacao.banca"></ul>
+        </div>
+      </div>
+      <h3 class="score-h awards-h">Premiação</h3>
+      <ol class="awards" data-list="avaliacao.premios"></ol>
+    </section>
+
+    <!-- I. FAQ -->
+    <section class="section faq" id="faq" aria-labelledby="faq-title">
+      <h2 class="section-title" id="faq-title"><span class="tape tape--black tape--m" data-stick>Perguntas frequentes</span></h2>
+      <div class="faq-list" data-list="faq"></div>
+    </section>
+
+    <!-- J. Regulamento -->
+    <section class="section rules" id="regulamento" aria-labelledby="rules-title">
+      <h2 class="section-title" id="rules-title"><span class="tape tape--black tape--m" data-stick>Regulamento</span></h2>
+      <article class="sheet">
+        <div class="sheet-head">
+          <p class="sheet-flag" data-status="regulamento"><span class="tape tape--yellow tape--s">Edição 2026</span></p>
+          <p class="sheet-summary" data-c="regulamento.resumo"></p>
+          <p class="sheet-official">
+            <a class="tape tape--blue tape--s" data-link="regulamento" href="#regulamento">Regulamento oficial <svg class="icon" aria-hidden="true"><use href="#i-external"/></svg></a>
+          </p>
+        </div>
+        <ol class="rules-list" data-list="regulamento.secoes"></ol>
+      </article>
+    </section>
+
+    <!-- K. Chamada final -->
+    <section class="section final" id="participe" aria-labelledby="final-title">
+      <h2 class="final-title" id="final-title">
+        <span class="sr-only">Ponha o nome da sua equipe nisso.</span>
+        <span class="tape tape--black tape--m" aria-hidden="true">Ponha o nome</span>
+        <span class="tape tape--black tape--m" aria-hidden="true">da sua equipe</span>
+        <span class="tape tape--green tape--m" aria-hidden="true">nisso.</span>
+      </h2>
+      <div class="final-lede">
+        <p>Digite o nome da equipe, escolha a fita e corte a etiqueta. Depois, é hora da inscrição:</p>
+        <ul class="signup-steps">
+          <li>O líder da equipe preenche o formulário oficial com os dados de todos os integrantes.</li>
+          <li>Equipes de 3 a 5 estudantes do IFSP campus Jacareí.</li>
+          <li>Inscrições depois do prazo ou incompletas não são homologadas.</li>
+        </ul>
+      </div>
+      <form class="labeler" data-labeler autocomplete="off">
+        <div class="machine">
+          <p class="machine-badge"><span class="tape tape--white tape--s">Rotuladora</span></p>
+          <div class="machine-wheel" aria-hidden="true"><svg viewBox="-60 -60 120 120" data-wheel></svg><span class="wheel-pointer"></span></div>
+          <label class="labeler-field">
+            <span class="labeler-label">Nome da equipe</span>
+            <input type="text" name="equipe" maxlength="18" placeholder="Ex.: Os Gambiarras" spellcheck="false">
+          </label>
+          <fieldset class="labeler-colors">
+            <legend class="labeler-label">Fita</legend>
+            <label><input type="radio" name="cor" value="black" checked><span class="swatch swatch--black"></span><span class="sr-only">Preta</span></label>
+            <label><input type="radio" name="cor" value="green"><span class="swatch swatch--green"></span><span class="sr-only">Verde</span></label>
+            <label><input type="radio" name="cor" value="blue"><span class="swatch swatch--blue"></span><span class="sr-only">Azul</span></label>
+            <label><input type="radio" name="cor" value="red"><span class="swatch swatch--red"></span><span class="sr-only">Vermelha</span></label>
+          </fieldset>
+          <button class="tape tape--white tape--s machine-cut" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-scissors"/></svg> Cortar</button>
+          <div class="machine-slot">
+            <output class="labeler-out" aria-live="polite">
+              <span class="tape tape--black tape--l labeler-tape" data-tape-out>Sua equipe</span>
+            </output>
+          </div>
+        </div>
+        <div class="labeler-tray" data-tray aria-live="polite"></div>
+      </form>
+      <div class="final-actions">
+        <a class="tape tape--green tape--l" data-link="inscricao" data-pending-label="Formulário de inscrição" href="#participe">Inscrever equipe <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <p class="final-deadline">Inscrições até <span class="tape tape--s" data-c="evento.prazoInscricao" data-tape="deadline"></span></p>
+      </div>
+      <p class="link-note" id="nota-inscricao" data-link-note="inscricao" hidden>O formulário de inscrição ainda não foi publicado pela organização. As inscrições não estão abertas por este site.</p>
+    </section>
+  </main>
+
+  <!-- J. Rodapé -->
+  <footer class="footer">
+    <div class="footer-plate">
+      <img src="assets/ifsp/ifsp-jacarei-cor.svg" width="250" height="90" loading="lazy"
+           alt="Instituto Federal de São Paulo, campus Jacareí">
+    </div>
+    <div class="footer-cols">
+      <div>
+        <h2 class="footer-h">Evento</h2>
+        <p>Hackathon 2026 da <span data-c="evento.semana"></span><br>IFSP campus Jacareí<br><span data-c="evento.periodo"></span></p>
+        <p data-c="evento.edicaoSemana"></p>
+      </div>
+      <div>
+        <h2 class="footer-h">Links</h2>
+        <ul class="footer-links">
+          <li><a class="tape tape--blue tape--s" data-link="regulamento" href="#regulamento">Regulamento oficial</a></li>
+          <li><a class="tape tape--blue tape--s" data-link="semanaTecnologia" href="#inicio">Semana de Tecnologia</a></li>
+          <li><a class="tape tape--blue tape--s" data-link="campus" href="https://jcr.ifsp.edu.br/">IFSP campus Jacareí</a></li>
+          <li><a class="tape tape--blue tape--s" data-link="ifsp" href="https://ifsp.edu.br/">Portal do IFSP</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-h">Contato</h2>
+        <p data-c="contato.organizacao"></p>
+        <p data-c="contato.email"></p>
+        <ul class="footer-links" data-list="contato.redes"></ul>
+      </div>
+    </div>
+  </footer>
+
+  <aside class="review-pin" data-review hidden>
+    <a href="#" data-review-toggle></a>
+  </aside>
+
+  <script src="content.js"></script>
+  <script src="vendor/gsap/gsap.min.js" defer></script>
+  <script src="vendor/gsap/ScrollTrigger.min.js" defer></script>
+  <script src="main.js" defer></script>
+</body>
+</html>

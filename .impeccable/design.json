@@ -1,0 +1,682 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-21T23:10:00-03:00",
+  "title": "Design System: Hackathon IFSP Jacareí",
+  "extensions": {
+    "colorMeta": {
+      "bench": {
+        "role": "neutral",
+        "displayName": "Bench Laminate",
+        "canonical": "#e1e4e8",
+        "tonalRamp": [
+          "#21262b",
+          "#3a414b",
+          "#525d6b",
+          "#6a788b",
+          "#8c97a6",
+          "#aeb6c1",
+          "#d1d5dc",
+          "#f1f2f4"
+        ]
+      },
+      "bench-deep": {
+        "role": "neutral",
+        "displayName": "Bench Shadow",
+        "canonical": "#d4d8de"
+      },
+      "steel": {
+        "role": "neutral",
+        "displayName": "Cabinet Steel",
+        "canonical": "#26292c",
+        "tonalRamp": [
+          "#232629",
+          "#3d4247",
+          "#575e65",
+          "#717a83",
+          "#9299a0",
+          "#b2b8bd",
+          "#d3d6d9",
+          "#f1f2f3"
+        ]
+      },
+      "steel-face": {
+        "role": "neutral",
+        "displayName": "Drawer Face",
+        "canonical": "#31353a",
+        "tonalRamp": [
+          "#232629",
+          "#3d4248",
+          "#565d66",
+          "#707985",
+          "#9098a2",
+          "#b2b7be",
+          "#d3d6da",
+          "#f1f2f3"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Sheet White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5e5e5e",
+          "#7a7a7a",
+          "#999999",
+          "#b8b8b8",
+          "#d6d6d6",
+          "#f2f2f2"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule Gray",
+        "canonical": "#c2c7ce",
+        "tonalRamp": [
+          "#22262a",
+          "#3b414a",
+          "#545d69",
+          "#6d7888",
+          "#8e97a4",
+          "#b0b6bf",
+          "#d2d5db",
+          "#f1f2f4"
+        ]
+      },
+      "rule-dark": {
+        "role": "neutral",
+        "displayName": "Rule Dark",
+        "canonical": "#4a4f55"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Bench Ink",
+        "canonical": "#17181a",
+        "tonalRamp": [
+          "#242529",
+          "#3e4146",
+          "#595c64",
+          "#737882",
+          "#93979f",
+          "#b3b6bc",
+          "#d4d5d9",
+          "#f1f2f3"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "#4a4d52",
+        "tonalRamp": [
+          "#242628",
+          "#3f4146",
+          "#5a5d63",
+          "#747981",
+          "#94989e",
+          "#b4b7bb",
+          "#d4d6d8",
+          "#f2f2f3"
+        ]
+      },
+      "ink-on-steel": {
+        "role": "neutral",
+        "displayName": "Steel Ink",
+        "canonical": "#eceeef",
+        "tonalRamp": [
+          "#23272a",
+          "#3d4448",
+          "#566166",
+          "#707e85",
+          "#909ca2",
+          "#b1babe",
+          "#d3d7da",
+          "#f1f3f3"
+        ]
+      },
+      "ink-on-steel-muted": {
+        "role": "neutral",
+        "displayName": "Muted Steel Ink",
+        "canonical": "#b7bcc2"
+      },
+      "tape-black": {
+        "role": "neutral",
+        "displayName": "Black Tape",
+        "canonical": "#161718",
+        "tonalRamp": [
+          "#252628",
+          "#3f4245",
+          "#5a5e62",
+          "#757a80",
+          "#95999d",
+          "#b4b8bb",
+          "#d4d6d8",
+          "#f2f2f3"
+        ]
+      },
+      "tape-green": {
+        "role": "primary",
+        "displayName": "IFSP Action Green",
+        "canonical": "#1f7f33",
+        "tonalRamp": [
+          "#0f3d19",
+          "#1a6b2b",
+          "#25983d",
+          "#30c54f",
+          "#5bd775",
+          "#8ce39e",
+          "#bdefc8",
+          "#ebfaee"
+        ]
+      },
+      "tape-red": {
+        "role": "secondary",
+        "displayName": "Plate Red",
+        "canonical": "#cd191e",
+        "tonalRamp": [
+          "#44080a",
+          "#760e11",
+          "#a81519",
+          "#da1b20",
+          "#e9494e",
+          "#ef8083",
+          "#f6b6b8",
+          "#fce8e9"
+        ]
+      },
+      "tape-yellow": {
+        "role": "secondary",
+        "displayName": "Pending Yellow",
+        "canonical": "#f2c200",
+        "tonalRamp": [
+          "#4d3d00",
+          "#856a00",
+          "#bd9700",
+          "#f5c400",
+          "#ffd733",
+          "#ffe370",
+          "#ffefad",
+          "#fffae5"
+        ]
+      },
+      "tape-blue": {
+        "role": "tertiary",
+        "displayName": "Outbound Blue",
+        "canonical": "#1f4fb5",
+        "tonalRamp": [
+          "#0b1d41",
+          "#133171",
+          "#1c46a1",
+          "#245bd1",
+          "#517fe1",
+          "#85a5ea",
+          "#b9ccf3",
+          "#e9effb"
+        ]
+      },
+      "tape-muted": {
+        "role": "tertiary",
+        "displayName": "Unpublished Gray",
+        "canonical": "#5c6168",
+        "tonalRamp": [
+          "#242629",
+          "#3e4246",
+          "#595d64",
+          "#737982",
+          "#93989f",
+          "#b3b7bc",
+          "#d4d6d9",
+          "#f1f2f3"
+        ]
+      },
+      "tape-white": {
+        "role": "neutral",
+        "displayName": "White Tape",
+        "canonical": "#f4f4f0",
+        "tonalRamp": [
+          "#2c2c20",
+          "#4d4d38",
+          "#6d6d50",
+          "#8d8d68",
+          "#a9a989",
+          "#c3c3ad",
+          "#dcdcd0",
+          "#f4f4f0"
+        ]
+      },
+      "emboss": {
+        "role": "neutral",
+        "displayName": "Raised Letter White",
+        "canonical": "#f4f4f0"
+      },
+      "machine-body": {
+        "role": "neutral",
+        "displayName": "Machine Housing",
+        "canonical": "#2b2e33"
+      },
+      "machine-well": {
+        "role": "neutral",
+        "displayName": "Machine Well",
+        "canonical": "#17191c"
+      },
+      "wheel-well": {
+        "role": "neutral",
+        "displayName": "Wheel Well",
+        "canonical": "#1c1e22"
+      },
+      "hardware-rim": {
+        "role": "neutral",
+        "displayName": "Hardware Rim",
+        "canonical": "#4b5158"
+      },
+      "field-placeholder": {
+        "role": "neutral",
+        "displayName": "Field Placeholder",
+        "canonical": "#8a9097"
+      },
+      "holder-frame": {
+        "role": "neutral",
+        "displayName": "Holder Frame",
+        "canonical": "#8b9198"
+      },
+      "steel-post-dark": {
+        "role": "neutral",
+        "displayName": "Bar-Pull Post Shade",
+        "canonical": "#5b6168"
+      },
+      "steel-post-light": {
+        "role": "neutral",
+        "displayName": "Bar-Pull Post Highlight",
+        "canonical": "#9aa1a8"
+      },
+      "steel-rod-light": {
+        "role": "neutral",
+        "displayName": "Bar-Pull Rod Highlight",
+        "canonical": "#c5cbd1"
+      },
+      "steel-rod-dark": {
+        "role": "neutral",
+        "displayName": "Bar-Pull Rod Shade",
+        "canonical": "#7c838a"
+      },
+      "cartridge-black": {
+        "role": "neutral",
+        "displayName": "Black Cartridge Tongue",
+        "canonical": "#3a3d42"
+      },
+      "shadow-black": {
+        "role": "neutral",
+        "displayName": "Shadow Black",
+        "canonical": "#000000"
+      }
+    },
+    "typographyMeta": {
+      "tape-hero": {
+        "displayName": "Tape Hero",
+        "purpose": "The HACKATHON strip only; splits into HACKA / THON below 600px."
+      },
+      "tape-m": {
+        "displayName": "Tape M",
+        "purpose": "Section headings and mobile menu items."
+      },
+      "tape-l": {
+        "displayName": "Tape L",
+        "purpose": "Primary actions, the hero deadline, labels in the machine tray."
+      },
+      "tape-s": {
+        "displayName": "Tape S",
+        "purpose": "Default tape: navigation, statuses, dates, inline tapes in lists and tables."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "The challenge question in the drawer, max 24ch."
+      },
+      "body-large": {
+        "displayName": "Body Large",
+        "purpose": "Ledes, section intros, summaries; 40-52ch."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text, max 66ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Real field and column labels only: hero fact terms, holder label, table headers, footer column headings, machine field label."
+      },
+      "tape-hero-phone": {
+        "displayName": "Tape Hero (phone)",
+        "purpose": "HACKA / THON strips below 600px."
+      },
+      "tape-final": {
+        "displayName": "Tape Final",
+        "purpose": "The three stacked strips of the final call heading."
+      },
+      "tape-plate": {
+        "displayName": "Tape Plate",
+        "purpose": "The red Semana de Tecnologia plate under HACKATHON."
+      },
+      "tape-holder": {
+        "displayName": "Tape Holder",
+        "purpose": "The theme tape inside the drawer label holder."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Schedule slot and rule titles."
+      },
+      "detail": {
+        "displayName": "Detail",
+        "purpose": "Control details, link notes, the tray hint."
+      },
+      "numeral": {
+        "displayName": "Numeral",
+        "purpose": "Course control numbers and the machine field input."
+      },
+      "numeral-small": {
+        "displayName": "Numeral Small",
+        "purpose": "Low end of the drawer theme tape."
+      },
+      "label-time": {
+        "displayName": "Label Time",
+        "purpose": "Schedule times and the review panel."
+      }
+    },
+    "shadows": [
+      {
+        "name": "tape-shadow",
+        "value": "drop-shadow(0 1px 0.6px rgb(0 0 0 / 0.35)) drop-shadow(0 5px 6px rgb(0 0 0 / 0.14))",
+        "purpose": "Every tape at rest (filter, follows the scissor-cut outline)."
+      },
+      {
+        "name": "tape-shadow-lift",
+        "value": "drop-shadow(0 2px 1px rgb(0 0 0 / 0.3)) drop-shadow(0 10px 12px rgb(0 0 0 / 0.18))",
+        "purpose": "Hover on interactive tape, with 1px rise and brightness(1.06)."
+      },
+      {
+        "name": "tape-shadow-pressed",
+        "value": "drop-shadow(0 0.5px 0.4px rgb(0 0 0 / 0.4))",
+        "purpose": "Active state: tape pushed 2px into the surface."
+      },
+      {
+        "name": "hero-strip",
+        "value": "drop-shadow(0 2px 1px rgb(0 0 0 / 0.35)) drop-shadow(0 18px 22px rgb(0 0 0 / 0.2))",
+        "purpose": "The HACKATHON tape only."
+      },
+      {
+        "name": "paper-sheet",
+        "value": "0 1px 2px rgb(0 0 0 / 0.08), 0 24px 40px -28px rgb(0 0 0 / 0.35)",
+        "purpose": "The regulation sheet resting on the bench."
+      },
+      {
+        "name": "drawer",
+        "value": "inset 0 1px 0 rgb(255 255 255 / 0.08), inset 0 -2px 0 rgb(0 0 0 / 0.35), 0 18px 30px -18px rgb(0 0 0 / 0.7)",
+        "purpose": "Steel drawer front."
+      },
+      {
+        "name": "recess",
+        "value": "inset 0 3px 5px rgb(0 0 0 / 0.55)",
+        "purpose": "Label holder, character wheel and exit slot (slot deepens to inset 0 4px 8px rgb(0 0 0 / 0.75))."
+      },
+      {
+        "name": "tape-skin",
+        "value": "96px fractal-noise grain at 9% white + linear-gradient(180deg, rgb(255 255 255 / 0.2) 0, rgb(255 255 255 / 0.05) 34%, rgb(255 255 255 / 0) 52%, rgb(0 0 0 / 0.12) 100%)",
+        "purpose": "Vinyl sheen and grain on every tape body; not a shadow but the only surface texture."
+      },
+      {
+        "name": "emboss",
+        "value": "SVG filters #emboss-s, #emboss, #emboss-l, #emboss-xl: feDiffuseLighting + feSpecularLighting, distant light azimuth 225deg, elevation 52-56deg, plus a short offset cast; -l and -xl add plastic-stress whitening and edge bleed",
+        "purpose": "Raises the letters on every tape face by size."
+      },
+      {
+        "name": "machine",
+        "value": "0 2px 2px rgb(0 0 0 / 0.25), 0 30px 50px -28px rgb(0 0 0 / 0.65)",
+        "purpose": "The label-maker housing resting on the bench (housing sheen ends at rgb(0 0 0 / 0.18))."
+      },
+      {
+        "name": "wheel-recess",
+        "value": "inset 0 3px 8px rgb(0 0 0 / 0.65), 0 1px 0 rgb(255 255 255 / 0.08)",
+        "purpose": "Character wheel well."
+      },
+      {
+        "name": "slot-recess",
+        "value": "inset 0 4px 8px rgb(0 0 0 / 0.75), inset 0 -1px 0 rgb(255 255 255 / 0.06)",
+        "purpose": "Exit slot the tape feeds from."
+      },
+      {
+        "name": "bar-pull",
+        "value": "0 6px 8px -3px rgb(0 0 0 / 0.65)",
+        "purpose": "Drawer rod over its posts."
+      },
+      {
+        "name": "swatch-edge",
+        "value": "inset 0 -1px 0 rgb(0 0 0 / 0.18)",
+        "purpose": "Bottom edge of an inline placeholder swatch."
+      },
+      {
+        "name": "review-panel",
+        "value": "0 20px 40px -20px rgb(0 0 0 / 0.5)",
+        "purpose": "Organizer-only placeholder review panel."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Settling rotations (FAQ toggle, character wheel)."
+      },
+      {
+        "name": "press",
+        "value": "90ms ease-out",
+        "purpose": "One firm press on interactive tape (translate), filter at 160ms."
+      },
+      {
+        "name": "tape-feed",
+        "value": "GSAP clip-path inset(0 100% 0 0) to inset(0 0 0 0), 0.7s power2.inOut (0.45s per strip, 0.35s stagger on phones)",
+        "purpose": "HACKATHON tape feeds out on load, then letters punch in sequence."
+      },
+      {
+        "name": "letter-punch",
+        "value": "GSAP scale 1.4-1.45 to 1, opacity 0.2/0 to 1, 0.16-0.22s back.out(3), 0.035s stagger",
+        "purpose": "Letters punched into tape (hero, drawer theme on view, label maker per keystroke)."
+      },
+      {
+        "name": "heading-press",
+        "value": "GSAP from y -18, scale 1.06, opacity 0, 0.55s back.out(1.8), once at top 88%",
+        "purpose": "Section heading strips pressed onto the surface as they arrive."
+      },
+      {
+        "name": "course-draw",
+        "value": "GSAP strokeDashoffset to 0, ScrollTrigger scrub 0.6, top 75% to bottom 60%",
+        "purpose": "The participation route's course line drawn as the visitor scrolls."
+      },
+      {
+        "name": "label-drop",
+        "value": "GSAP from y -70, 0.55s bounce.out",
+        "purpose": "A cut label falls into the tray below the machine."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce disables GSAP entrances and smooth scroll; transitions 0.01ms",
+        "purpose": "All content visible and in place without motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "xs",
+        "value": "380px"
+      },
+      {
+        "name": "machine-stack",
+        "value": "480px"
+      },
+      {
+        "name": "phone",
+        "value": "520px"
+      },
+      {
+        "name": "hero-split",
+        "value": "600px"
+      },
+      {
+        "name": "sheet-compact",
+        "value": "640px"
+      },
+      {
+        "name": "drawer-stack",
+        "value": "760px"
+      },
+      {
+        "name": "hero-stack",
+        "value": "860px"
+      },
+      {
+        "name": "stack",
+        "value": "900px"
+      },
+      {
+        "name": "schedule-stack",
+        "value": "960px"
+      },
+      {
+        "name": "nav-collapse",
+        "value": "1080px"
+      },
+      {
+        "name": "wide",
+        "value": "1680px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Action Tape",
+      "kind": "button",
+      "refersTo": "tape-action",
+      "description": "Green tape at size L for registration and the label maker cut; the only action color.",
+      "html": "<a class=\"ds-tape ds-tape--green ds-tape--l\" href=\"#\"><span class=\"ds-tape-body\">Inscrever equipe <svg class=\"ds-icon\" viewBox=\"0 0 24 24\"><path d=\"M4 12h15M13 6l6 6-6 6\"/></svg></span></a>",
+      "css": ".ds-tape { --bg: var(--tape-black, #161718); --fg: var(--emboss, #f4f4f0); display: inline-flex; color: var(--fg); font: 700 0.875rem/1.35 \"Sometype Mono\", ui-monospace, Consolas, monospace; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; white-space: nowrap; rotate: -0.6deg; filter: drop-shadow(0 1px 0.6px rgb(0 0 0 / 0.35)) drop-shadow(0 5px 6px rgb(0 0 0 / 0.14)); transition: translate 90ms ease-out, filter 160ms ease-out; cursor: pointer; } .ds-tape--green { --bg: var(--tape-green, #1f7f33); } .ds-tape--l { font-size: clamp(1.125rem, 0.9rem + 0.9vw, 1.5rem); } .ds-tape-body { display: inline-flex; align-items: center; gap: 0.6em; padding: 0.7em 1.2em 0.62em; background: linear-gradient(180deg, rgb(255 255 255 / 0.2) 0, rgb(255 255 255 / 0.05) 34%, rgb(255 255 255 / 0) 52%, rgb(0 0 0 / 0.12) 100%), var(--bg); clip-path: polygon(0.2em 0, 100% 0, calc(100% - 0.24em) 100%, 0 100%); border-radius: 1px; } .ds-icon { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: square; stroke-linejoin: miter; } .ds-tape:hover { translate: 0 -1px; filter: drop-shadow(0 2px 1px rgb(0 0 0 / 0.3)) drop-shadow(0 10px 12px rgb(0 0 0 / 0.18)) brightness(1.06); } .ds-tape:active { translate: 0 2px; filter: drop-shadow(0 0.5px 0.4px rgb(0 0 0 / 0.4)); } .ds-tape:focus-visible { outline: 3px solid #1f4fb5; outline-offset: 3px; }"
+    },
+    {
+      "name": "Navigation Tapes",
+      "kind": "nav",
+      "refersTo": "tape-nav",
+      "description": "Row of small black tapes; the current section becomes white tape.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-ntape\" href=\"#\"><span>Desafio</span></a><a class=\"ds-ntape is-current\" href=\"#\" aria-current=\"true\"><span>Cronograma</span></a><a class=\"ds-ntape\" href=\"#\"><span>FAQ</span></a></nav>",
+      "css": ".ds-nav { display: flex; gap: 0.625rem; align-items: center; padding: 16px; background: #e1e4e8; } .ds-ntape { --bg: #161718; --fg: #f4f4f0; color: var(--fg); font: 700 0.875rem/1.35 \"Sometype Mono\", ui-monospace, monospace; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; white-space: nowrap; filter: drop-shadow(0 1px 0.6px rgb(0 0 0 / 0.35)) drop-shadow(0 5px 6px rgb(0 0 0 / 0.14)); transition: translate 90ms ease-out, filter 160ms ease-out; } .ds-ntape span { display: inline-block; padding: 0.5em 0.8em 0.45em; background: linear-gradient(180deg, rgb(255 255 255 / 0.2), rgb(255 255 255 / 0) 52%, rgb(0 0 0 / 0.12)), var(--bg); clip-path: polygon(0.15em 0, 100% 0, calc(100% - 0.2em) 100%, 0 100%); } .ds-ntape.is-current { --bg: #f4f4f0; --fg: #17181a; } .ds-ntape:hover { translate: 0 -1px; } .ds-ntape:active { translate: 0 2px; } .ds-ntape:focus-visible { outline: 3px solid #1f4fb5; outline-offset: 3px; }"
+    },
+    {
+      "name": "Pending Tape",
+      "kind": "chip",
+      "refersTo": "tape-pending",
+      "description": "A whole-value placeholder: yellow tape, ink letters, dashed underline, and an 'a confirmar' note above 520px.",
+      "html": "<span class=\"ds-pending\"><span class=\"ds-pending-body\"><span class=\"ds-pending-face\">Data do evento</span><span class=\"ds-pending-note\">a confirmar</span></span></span>",
+      "css": ".ds-pending { display: inline-flex; rotate: -1deg; color: #17181a; font: 700 clamp(1.125rem, 0.9rem + 0.9vw, 1.5rem)/1.35 \"Sometype Mono\", ui-monospace, monospace; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; filter: drop-shadow(0 1px 0.6px rgb(0 0 0 / 0.35)) drop-shadow(0 5px 6px rgb(0 0 0 / 0.14)); } .ds-pending-body { display: inline-flex; align-items: center; gap: 0.6em; padding: 0.34em 0.95em 0.3em; background: linear-gradient(180deg, rgb(255 255 255 / 0.2), rgb(255 255 255 / 0) 52%, rgb(0 0 0 / 0.12)), #f2c200; clip-path: polygon(0.12em 0, 100% 0, calc(100% - 0.3em) 100%, 0 100%); } .ds-pending-face { text-decoration: underline dashed 1px; text-underline-offset: 0.3em; } .ds-pending-note { font-size: max(11px, 0.5em); letter-spacing: 0.08em; padding: 0.2em 0.5em; border: 1px dashed currentColor; border-radius: 2px; opacity: 0.85; } @media (max-width: 520px) { .ds-pending-note { display: none; } }"
+    },
+    {
+      "name": "Inline Placeholder",
+      "kind": "chip",
+      "refersTo": "placeholder-inline",
+      "description": "A placeholder inside a sentence: a yellow swatch in the tape face, never a full tape.",
+      "html": "<p class=\"ds-p\">Uma ideia, uma equipe e poucos dias. Tema: <mark class=\"ds-ph\">Tema do evento</mark>.</p>",
+      "css": ".ds-p { font: 400 1.0625rem/1.6 Switzer, \"Segoe UI\", system-ui, sans-serif; color: #17181a; max-width: 66ch; } .ds-ph { background: #f2c200; color: #17181a; font-family: \"Sometype Mono\", ui-monospace, monospace; font-weight: 700; font-size: 0.82em; letter-spacing: 0.06em; padding: 0.12em 0.4em; border-radius: 2px; white-space: nowrap; box-shadow: inset 0 -1px 0 rgb(0 0 0 / 0.18); text-transform: uppercase; text-decoration: underline dashed 1px; text-underline-offset: 0.25em; }"
+    },
+    {
+      "name": "Deadline Tape",
+      "kind": "chip",
+      "refersTo": "tape-deadline",
+      "description": "Red tape for deadlines only, at a steeper rotation.",
+      "html": "<span class=\"ds-deadline\"><span>Prazo</span></span>",
+      "css": ".ds-deadline { display: inline-flex; rotate: -2deg; color: #f4f4f0; font: 700 0.875rem/1.35 \"Sometype Mono\", ui-monospace, monospace; letter-spacing: 0.14em; text-transform: uppercase; filter: drop-shadow(0 1px 0.6px rgb(0 0 0 / 0.35)) drop-shadow(0 5px 6px rgb(0 0 0 / 0.14)); } .ds-deadline span { padding: 0.34em 0.95em 0.3em; background: linear-gradient(180deg, rgb(255 255 255 / 0.2), rgb(255 255 255 / 0) 52%, rgb(0 0 0 / 0.12)), #cd191e; clip-path: polygon(0.25em 0, 100% 0, calc(100% - 0.1em) 100%, 0 100%); }"
+    },
+    {
+      "name": "Labeler Input",
+      "kind": "input",
+      "refersTo": "labeler-input",
+      "description": "The label maker's recessed keyboard field on the dark machine body.",
+      "html": "<div class=\"ds-machine\"><label class=\"ds-label\" for=\"ds-team\">Nome da equipe</label><input id=\"ds-team\" class=\"ds-input\" placeholder=\"Ex.: Os Gambiarras\"></div>",
+      "css": ".ds-machine { padding: 24px 32px; background: #2b2e33; border-radius: 22px 22px 34px 34px; } .ds-label { display: block; font: 700 0.75rem \"Sometype Mono\", ui-monospace, monospace; letter-spacing: 0.14em; text-transform: uppercase; color: #b7bcc2; margin-bottom: 8px; } .ds-input { width: 100%; min-height: 3.25rem; padding: 0 16px; background: #17191c; color: #f4f4f0; border: 2px solid #4b5158; border-radius: 6px; font: 700 1.25rem \"Sometype Mono\", ui-monospace, monospace; letter-spacing: 0.12em; text-transform: uppercase; caret-color: #f2c200; } .ds-input::placeholder { color: #8a9097; text-transform: none; letter-spacing: 0.02em; font-weight: 400; } .ds-input:focus-visible { outline: 3px solid #f2c200; outline-offset: 2px; border-color: transparent; }"
+    },
+    {
+      "name": "Course Control",
+      "kind": "custom",
+      "refersTo": "course-control",
+      "description": "Numbered orienteering control on the participation route, joined by a green course line.",
+      "html": "<div class=\"ds-control\"><span class=\"ds-num\">1</span><span class=\"ds-ctitle\">Inscrição</span></div>",
+      "css": ".ds-control { display: grid; gap: 16px; justify-items: start; padding: 16px; background: #e1e4e8; } .ds-num { display: grid; place-items: center; width: 3.25rem; height: 3.25rem; border: 3px solid #1f7f33; border-radius: 50%; background: #e1e4e8; font: 700 1.25rem \"Sometype Mono\", ui-monospace, monospace; color: #17181a; } .ds-ctitle { rotate: -0.8deg; padding: 0.34em 0.95em 0.3em; background: #161718; color: #f4f4f0; font: 700 0.875rem/1.35 \"Sometype Mono\", ui-monospace, monospace; letter-spacing: 0.14em; text-transform: uppercase; filter: drop-shadow(0 1px 0.6px rgb(0 0 0 / 0.35)) drop-shadow(0 5px 6px rgb(0 0 0 / 0.14)); }"
+    },
+    {
+      "name": "Challenge Drawer Holder",
+      "kind": "card",
+      "refersTo": "",
+      "description": "Steel drawer front with a pressed-steel label holder holding the theme tape.",
+      "html": "<div class=\"ds-drawer\"><div class=\"ds-holder\"><span class=\"ds-hlabel\">Tema</span><span class=\"ds-htape\">Tema do evento</span></div></div>",
+      "css": ".ds-drawer { padding: 32px 48px 48px; background: #31353a; border-radius: 6px; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08), inset 0 -2px 0 rgb(0 0 0 / 0.35), 0 18px 30px -18px rgb(0 0 0 / 0.7); } .ds-holder { display: inline-grid; gap: 8px; justify-items: start; padding: 16px 24px 24px; border: 3px solid #8b9198; border-top-width: 6px; border-radius: 3px; background: #1b1d20; box-shadow: inset 0 3px 5px rgb(0 0 0 / 0.55), 0 1px 0 rgb(255 255 255 / 0.1); } .ds-hlabel { font: 700 0.75rem \"Sometype Mono\", ui-monospace, monospace; letter-spacing: 0.14em; text-transform: uppercase; color: #b7bcc2; } .ds-htape { rotate: -0.8deg; padding: 0.34em 0.95em 0.3em; background: #f2c200; color: #17181a; font: 700 1.5rem/1.35 \"Sometype Mono\", ui-monospace, monospace; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: underline dashed 1px; text-underline-offset: 0.3em; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Rotuladora",
+    "overview": "The site is a lab bench where the organizers label everything with an embossed label maker. Every confirmed fact is a strip of tape with raised off-white letters punched into it; every unconfirmed fact is yellow tape still waiting for its letters. Tape is the only display voice: headings, navigation, actions, dates, statuses and the event name are all strips of vinyl, rotated a degree or two, cut with scissors, and lightly shadowed onto the surface they sit on. Running text stays quiet in Switzer on a cool laminate bench.\n\nThe world is built from four physical surfaces: the cool-gray bench (ground for most sections), a dark steel cabinet drawer for the challenge, a white punched paper sheet for the regulations, and a working label-maker machine for the final call. Depth comes from the objects themselves (tape thickness, a recessed label holder, a molded machine body), never from decorative gradients, glow or glassy layers. Density is moderate: generous section padding on an 8px module, ruled lists and tables for reference material, and tape doing the ranking by length and color.\n\nMotion is the act of labelling: tape feeds out of the machine, letters punch in sequence, heading strips are pressed onto the surface as they arrive, the participation route is drawn as a course line while the visitor scrolls, and controls answer with one firm press. Under reduced motion nothing moves and everything is already in place.",
+    "keyCharacteristics": [
+      "Embossed label tape as the single display primitive, with color carrying role.",
+      "Sometype Mono 700 uppercase for every tape; Switzer for everything a person reads at length.",
+      "Cool bench, dark steel, white paper: three surfaces, each a real material.",
+      "Tapes never wrap; long strips are punched as two or three stacked, counter-rotated strips.",
+      "Placeholders are visibly unfinished: yellow tape with a dashed underline.",
+      "Motion describes the label maker working, and is fully optional."
+    ],
+    "rules": [
+      {
+        "name": "The Cartridge Rule",
+        "body": "A tape's color is its role: black structure and navigation, green actions, red the event plate and deadlines, yellow pending, blue outbound, gray unpublished, white on dark or current. No tape takes a color for decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Red Is Pressure Rule",
+        "body": "Red appears on the Semana de Tecnologia plate and on deadlines only. A second use dilutes the one word under pressure.",
+        "section": "colors"
+      },
+      {
+        "name": "The Color Lives In Tape Rule",
+        "body": "Surfaces stay neutral (bench, steel, paper). Saturated color enters the page only as tape, a placeholder swatch, the course line or a focus outline.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Sometype Mono 700 uppercase is for tape and field labels; Switzer is for sentences. Never set a paragraph in the tape face or a tape in Switzer.",
+        "section": "typography"
+      },
+      {
+        "name": "The Never Wrap Rule",
+        "body": "Tapes are `white-space: nowrap`. A heading strip wider than its column is re-punched as two or three strips, split by words, stacked and counter-rotated (first about -1.4deg, next about +0.9deg and indented). On phones HACKATHON becomes HACKA / THON. Narrow screens step a tape down a size rather than let it wrap or overflow.",
+        "section": "typography"
+      },
+      {
+        "name": "The Light From Upper Left Rule",
+        "body": "Raised letters are lit by one distant light at azimuth 225deg through the SVG filters (#emboss-s for small tape, #emboss for default, #emboss-l and #emboss-xl with plastic-stress whitening for large tape). Tape depth never uses box-shadow or text-shadow bevels.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Vinyl Skin Rule",
+        "body": "Every tape body carries the same skin: a 96px fractal-noise grain at 9% and a sheen fading from 20% white at the top to 12% black at the bottom. Gradients elsewhere only shade a physical material (machine body, bar pull, punch holes, brushed steel); none decorates, and nothing glows.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do make every new display element a tape and choose its color by role from the Cartridge Rule.",
+      "Do keep tapes on one line; re-punch long strips as two or three stacked, counter-rotated strips, or step down one size on narrow screens.",
+      "Do rotate tapes slightly (about -3deg to +1.6deg), alternating between neighbours, and let the per-strip hash cut each end.",
+      "Do render every unconfirmed fact as yellow pending tape (whole value) or a yellow inline swatch (inside a sentence), always with the dashed underline as the non-color cue.",
+      "Do raise letters only through the #emboss filters and lift tape only with the drop-shadow tokens.",
+      "Do keep motion to the label-maker grammar: feed out, punch letters, press headings on, draw the course line, one firm press on controls; with reduced motion, show everything in place.",
+      "Do place the IFSP logo, complete and uncolored, on white with clear space."
+    ],
+    "donts": [
+      "Don't use red for anything other than the Semana de Tecnologia plate and deadlines.",
+      "Don't wrap a tape onto two lines or let it overflow the viewport.",
+      "Don't bevel tape with box-shadow or text-shadow, or add decorative gradients, glows or glassy layers; the only blur is the functional sticky masthead over the bench.",
+      "Don't set running text in Sometype Mono or tape lettering in Switzer.",
+      "Don't present a placeholder as finished copy, or invent dates, prizes, rules or sponsors to fill one.",
+      "Don't recolor, crop, place on tape, or shrink the IFSP mark below a 30px symbol.",
+      "Don't add icons outside the five-icon stroke set or use glyphs as icons."
+    ]
+  }
+}

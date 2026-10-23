@@ -1,0 +1,21 @@
+# Dependências locais (o site não usa: bibliotecas ficam em site/vendor)
+node_modules/
+package-lock.json
+
+# Configurações e caches locais de ferramentas
+.gemini/
+.playwright-cli/
+.impeccable/config.local.json
+.impeccable/hook.cache.json
+.impeccable/questions/
+.impeccable/mocks/
+.impeccable/review/
+.impeccable/live/
+
+# Arquivos compactados duplicados das marcas oficiais (os PDFs ficam no repositório)
+brand/ifsp-originais/*.zip
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
