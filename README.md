@@ -1,6 +1,6 @@
-# Hackathon · Semana de Tecnologia · IFSP campus Jacareí
+# Hackathon · 23ª Semana Nacional de Ciência e Tecnologia · IFSP campus Jacareí
 
-Site de uma página (HTML, CSS e JavaScript estáticos, sem etapa de build) para o hackathon da Semana de Tecnologia do IFSP campus Jacareí.
+Site de uma página (HTML, CSS e JavaScript estáticos, sem etapa de build) para o hackathon da 23ª Semana Nacional de Ciência e Tecnologia do IFSP campus Jacareí.
 
 ## Rodar localmente
 
@@ -27,9 +27,10 @@ site/                 tudo o que vai para o ar
   main.js             lê content.js, monta listas, links, menu, contagem, rotuladora e animações
   model.js            maquete 3D da semana (Three.js), carregada só em telas largas com animação permitida;
                       nos demais casos main.js desenha a mesma maquete em SVG
-  content.js          fonte única do conteúdo do evento
+  content.js          conteúdo PÚBLICO do evento (fase antes do anúncio)
   assets/             favicon e marca oficial do campus Jacareí (SVG)
   vendor/             fontes, GSAP e Three.js hospedados localmente
+conteudo-pos-anuncio/ conteúdo trancado até o anúncio oficial (NÃO publicado)
 brand/                arquivos-fonte da marca IFSP baixados do portal oficial (não publicados)
 scripts/serve.mjs     servidor local
 .github/workflows/    publicação no GitHub Pages
@@ -37,9 +38,28 @@ PRODUCT.md, DESIGN.md contexto do produto e sistema visual (usados pelas ferrame
 .impeccable/          registros de direção visual (o que é local ou temporário fica no .gitignore)
 ```
 
+## Conteúdo trancado até o anúncio (26/10)
+
+Até a reunião de abertura (segunda, 26/10/2026, 8h às 9h30, Sala 2 do Bloco 1, com o Prof. Olavo), o site mostra só o que é público: o que é um hackathon, como montar a equipe, a contagem regressiva, a rotuladora e a maquete 3D da semana. Regulamento, regras do projeto, cronograma completo, pitch, banca, critérios, premiação e FAQ aparecem como gavetas trancadas, com cadeado e a etiqueta "Revelação em 26.10".
+
+**Como funciona o bloqueio**
+
+- O conteúdo trancado **não está no site publicado**: ele fica em `conteudo-pos-anuncio/content-completo.js`, fora da pasta `site/`. O GitHub Pages publica só `site/`, então nada disso chega ao navegador, nem no HTML, nem em `content.js`, nem em atributos escondidos.
+- Quem libera é a organização, com a chave `publicacao.liberado` em `site/content.js`. O relógio do visitante **nunca** destrava nada: ele só muda o texto da contagem (antes, durante e depois da reunião). Depois das 9h30, sem liberação, o site diz que o tema já foi revelado e que o conteúdo será publicado em breve.
+- Na maquete 3D, os dias ainda secretos (qua 28 e sex 30) aparecem com listras de advertência e "Revelado em 26.10", sem nenhum detalhe.
+
+**Para liberar depois do anúncio**
+
+1. Revise e complete `conteudo-pos-anuncio/content-completo.js` com o que foi anunciado (tema, regras, prêmios, banca...). O tema vai em `revelacao.tema` dentro de `site/content.js`, se quiserem mostrá-lo na fita.
+2. Copie o arquivo para `site/content-completo.js`.
+3. Em `site/content.js`, mude `publicacao.liberado` para `true`.
+4. Faça commit e push. As gavetas dão lugar aos capítulos completos (04 a 10), a maquete mostra os prazos reais e a chamada final ganha o bloco de inscrição.
+
+Atenção: o repositório é privado. Se ele ficar público antes da liberação, `conteudo-pos-anuncio/` (e a cópia antiga em `HackathonIF-main/`) passa a ser visível no GitHub; nesse caso, tire esses arquivos do repositório até a hora.
+
 ## Onde editar o conteúdo
 
-Todo o conteúdo do evento está em **`site/content.js`**. Não é preciso mexer no HTML.
+O conteúdo público está em **`site/content.js`**; o trancado, em `conteudo-pos-anuncio/content-completo.js`. Não é preciso mexer no HTML.
 
 - Texto entre colchetes, como `[LOCAL A DEFINIR]`, é um **marcador provisório**. Na página ele aparece em fita amarela, sublinhado em tracejado. Troque pelo texto oficial e o destaque some sozinho.
 - Um valor que é só o marcador vira uma fita amarela inteira; um marcador dentro de uma frase vira um trecho amarelo no meio do texto.
@@ -53,13 +73,13 @@ Todo o conteúdo do evento está em **`site/content.js`**. Não é preciso mexer
 
 Em `localhost` (ou com `?revisao` no endereço), uma fita amarela no canto inferior direito mostra quantos marcadores faltam. Clique nela para ver a lista. No console do navegador, `HACKATHON_PENDENTES()` devolve a mesma lista.
 
-Já confirmado: Semana de Tecnologia de 26 a 30/10/2026; revelação do tema na segunda 26/10, 8h às 9h30; inscrições até quarta 28/10, 23h59, feitas pelo líder; equipes de 3 a 5 estudantes do campus Jacareí (outros campi e instituições não participam); IA permitida; apresentações na sexta 30/10, 8h às 11h40, no auditório; notas de 0 a 10 com pesos iguais; medalha para 1º, 2º e 3º lugares; banca com o Prof. Raul Castanhari.
+Já confirmado e público: 23ª Semana Nacional de Ciência e Tecnologia, de 26 a 30/10/2026; revelação do tema na segunda 26/10, 8h às 9h30, na Sala 2 do Bloco 1, com apresentação do Prof. Olavo; equipes de 3 a 5 estudantes regularmente matriculados no IFSP campus Jacareí, de qualquer curso (outros campi e instituições não participam). Os demais fatos confirmados estão no arquivo do conteúdo trancado.
 
 Marcadores que a organização ainda precisa definir:
 
 | Área | Marcadores |
 |---|---|
-| Revelação do tema | local (`[LOCAL A DEFINIR]`) e, depois da abertura, o próprio tema (`revelacao.tema`) |
+| Revelação do tema | depois da abertura, o próprio tema (`revelacao.tema`) |
 | Inscrição | link do formulário (`[LINK DO FORMULÁRIO DE INSCRIÇÃO A DEFINIR]`), data de abertura das inscrições |
 | Desenvolvimento e entrega | período de desenvolvimento, regras e prazo de entrega |
 | Pitch | duração por equipe, tempo de perguntas da banca |
@@ -68,8 +88,7 @@ Marcadores que a organização ainda precisa definir:
 | Premiação | prêmio do 1º, 2º e 3º lugares (além da medalha) |
 | Resultado | data do resultado e da premiação |
 | FAQ | o que levar |
-| Evento | nº da edição da Semana de Tecnologia |
-| Links | regulamento oficial, página da Semana de Tecnologia |
+| Links | regulamento oficial, página da Semana Nacional de Ciência e Tecnologia |
 | Contato | organização, e-mail, redes sociais oficiais |
 
 Nada disso foi inventado: datas, prêmios, regras, patrocinadores e perfis sociais aparecem só quando a organização preencher.

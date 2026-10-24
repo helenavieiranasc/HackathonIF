@@ -2,21 +2,39 @@
    Loaded only on wide screens with motion allowed; the SVG drawing in main.js is the fallback. */
 import * as THREE from "./vendor/three/three.module.min.js";
 
-const HEIGHTS = { empty: 0.7, dated: 2.4, deadline: 3.2, final: 4 };
+const HEIGHTS = { empty: 0.7, dated: 2.4, deadline: 3.2, final: 4, locked: 2.9 };
 const COLORS = { dated: 0x1e2023, deadline: 0xcd191e, final: 0x1f7f33 };
-const LIFT = { dated: 120, deadline: 64, final: 14 };
-const LABEL_TONE = { dated: "", deadline: " model-label--red", final: " model-label--green" };
+// Labels fan upward from left to right (by order of labelled day) so they never overlap.
+const LIFTS = [120, 64, 14];
+const LABEL_TONE = { dated: "", deadline: " model-label--red", final: " model-label--green", locked: " model-label--locked" };
 
-export function mountWeekModel(stage, data) {
+// Days still under wraps are wrapped in caution stripes: present, but nothing to read.
+function cautionTexture() {
+  const c = document.createElement("canvas");
+  c.width = c.height = 64;
+  const g = c.getContext("2d");
+  g.fillStyle = "#f2c200";
+  g.fillRect(0, 0, 64, 64);
+  g.fillStyle = "#17181a";
+  for (let i = -64; i < 128; i += 32) {
+    g.beginPath();
+    g.moveTo(i, 0); g.lineTo(i + 16, 0); g.lineTo(i + 80, 64); g.lineTo(i + 64, 64);
+    g.closePath(); g.fill();
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.repeat.set(1, 2.6);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
+export function mountWeekModel(stage, data, description) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   const canvas = renderer.domElement;
   canvas.setAttribute("role", "img");
-  canvas.setAttribute(
-    "aria-label",
-    "Maquete da semana: segunda 26 revelação do tema; quarta 28 encerramento das inscrições às 23h59; sexta 30 pitch final."
-  );
+  canvas.setAttribute("aria-label", description || "Maquete da semana do hackathon.");
 
   const scene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 100);
@@ -52,7 +70,12 @@ export function mountWeekModel(stage, data) {
       line.computeLineDistances();
       holder.add(line);
     } else {
-      holder.add(new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: COLORS[m.kind], roughness: 0.6, metalness: 0.05 })));
+      const mat = m.kind === "locked"
+        ? [0, 1, 2, 3, 4, 5].map((f) => (f === 2 || f === 3
+            ? new THREE.MeshStandardMaterial({ color: 0x2b2d30, roughness: 0.7 })
+            : new THREE.MeshStandardMaterial({ map: cautionTexture(), roughness: 0.65 })))
+        : new THREE.MeshStandardMaterial({ color: COLORS[m.kind], roughness: 0.6, metalness: 0.05 });
+      holder.add(new THREE.Mesh(geo, mat));
       holder.add(new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x0b0c0d, transparent: true, opacity: 0.45 })));
     }
     model.add(holder);
@@ -70,7 +93,8 @@ export function mountWeekModel(stage, data) {
     if (m.kind !== "empty") {
       tag = document.createElement("span");
       tag.className = "model-label" + LABEL_TONE[m.kind];
-      tag.innerHTML = `<span class="ml-date"></span><span class="ml-title"></span><span class="ml-lead" aria-hidden="true"></span>`;
+      tag.innerHTML = `<span class="ml-date"></span><span class="ml-title"></span>${m.extra ? '<span class="ml-extra"></span>' : ""}<span class="ml-lead" aria-hidden="true"></span>`;
+      if (m.extra) tag.querySelector(".ml-extra").textContent = m.extra;
       tag.querySelector(".ml-date").textContent = m.date;
       tag.querySelector(".ml-title").textContent = m.title;
       labelLayer.appendChild(tag);
@@ -143,7 +167,7 @@ export function mountWeekModel(stage, data) {
       place(day, holder.position.x, 0, 0.95, 0, 8);
       if (tag) {
         // Labels fan upward from left to right so they never sit on top of each other.
-        const lift = LIFT[parts[i].m.kind];
+        const lift = LIFTS[labels.slice(0, i).filter((l) => l.tag).length] || 14;
         place(tag, holder.position.x, h * holder.scale.y, 0, 0, -lift - tag.offsetHeight);
         tag.style.setProperty("--lead", `${lift}px`);
         tag.style.opacity = holder.scale.y > 0.98 ? "1" : "0";
