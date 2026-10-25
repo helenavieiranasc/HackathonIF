@@ -1,134 +1,94 @@
 # Hackathon · 23ª Semana de Ciência e Tecnologia · IFSP campus Jacareí
 
-Site de uma página (HTML, CSS e JavaScript estáticos) para o hackathon da 23ª Semana de Ciência e Tecnologia do IFSP campus Jacareí. O projeto tem **duas versões**, e só uma vai ao ar de cada vez:
+Site do hackathon da 23ª Semana de Ciência e Tecnologia do IFSP campus Jacareí: uma página em HTML, CSS e JavaScript estáticos, publicada no GitHub Pages.
 
-| Versão | Fonte | O que mostra |
+**No ar:** https://helenavieiranasc.github.io/HackathonIF/
+
+## Duas versões, uma de cada vez
+
+O projeto tem duas versões. Só uma vai ao ar, escolhida em `release.json`.
+
+| Versão | Pasta | O que mostra |
 |---|---|---|
-| `pre-anuncio` (no ar agora) | `pre-anuncio/` + arquivos neutros de `site/` | apresentação e contagem, reunião de abertura (26/10/2026, 8h às 9h30, Sala 2, Bloco 1, Prof. Olavo), o que é um hackathon, equipes de 3 a 5, rotuladora, maquete 3D da semana e uma página trancada para o restante |
-| `completo` (depois do anúncio) | `site/` | o site inteiro: regras, pitch, banca, critérios, prêmios, FAQ, regulamento e inscrição |
+| `pre-anuncio` (no ar agora) | `pre-anuncio/` + arquivos neutros de `site/` | apresentação com contagem regressiva, data, horário, local e apresentador da reunião de abertura, o que é um hackathon, montagem de equipe (3 a 5 integrantes), maquete 3D da semana e uma página trancada para o restante |
+| `completo` (depois do anúncio) | `site/` | o site inteiro, com tudo o que for anunciado na reunião de abertura |
 
-## Rodar localmente
+**Reunião de abertura:** segunda-feira, 26/10/2026, das 8h às 9h30, Sala 2, Bloco 1, IFSP Jacareí. Apresentação: Prof. Olavo.
+
+## Rodar no computador
+
+Precisa só do Node 18 ou mais novo. Não há nada para instalar.
 
 ```bash
 npm run dev
 ```
 
-Gera `dist/` com a versão indicada em `release.json` e abre em http://localhost:5180. Para ver a versão completa localmente, sem mudar nada do que vai ao ar:
+Gera a pasta `dist/` com a versão indicada em `release.json` e abre em http://localhost:5180.
+
+Para ver a versão completa sem mudar o que está no ar:
 
 ```bash
 npm run dev:completo
 ```
 
-Não há dependências para instalar (Node 18+). `npm run build` só gera `dist/`.
+## Publicar
 
-## Publicar no GitHub Pages
+A cada push na branch `main`, o GitHub Actions (`.github/workflows/pages.yml`) roda `node scripts/build.mjs` e publica **somente a pasta `dist/`** no GitHub Pages. Em **Settings > Pages > Source**, a opção deve estar em **GitHub Actions**.
 
-O workflow `.github/workflows/pages.yml` roda `node scripts/build.mjs` a cada push na `main` e publica **somente `dist/`**. Em **Settings > Pages > Source**, escolha **GitHub Actions** (o Pages só funciona com o repositório público ou num plano pago).
+### Cache
 
-O GitHub Pages deixa o navegador guardar cada arquivo por 10 minutos. Para um deploy aparecer na hora, o build liga cada CSS e JS com uma impressão do conteúdo (`styles.css?v=1a2b3c4d5e`): arquivo que mudou é baixado de novo, arquivo igual continua no cache. Só a própria página (`index.html`) pode levar até 10 minutos para atualizar; um Ctrl+Shift+R resolve na hora.
+O GitHub Pages deixa o navegador guardar cada arquivo por até 10 minutos. Para que um deploy apareça na hora, o build liga cada CSS e JS com uma marca do conteúdo (`styles.css?v=1a2b3c4d5e`). Só a página em si pode levar alguns minutos para atualizar; **Ctrl+Shift+R** mostra a versão nova na hora.
 
-### Antes do anúncio: versão `pre-anuncio`
-
-`release.json` diz `"versao": "pre-anuncio"`. O build copia a página, o conteúdo e o script de `pre-anuncio/` e, de `site/`, só os arquivos sem texto do evento: `styles.css` (sem comentários), `model.js` (maquete 3D), `assets/` e `vendor/`. O `index.html`, o `content.js` e o `main.js` do site completo **não entram**. Não há conteúdo escondido por CSS nem dados guardados no navegador: o restante simplesmente não existe nesta versão.
-
-Depois de gerar, o build confere o próprio `dist/` e **falha** (e o deploy não acontece) se encontrar:
-
-- qualquer arquivo fora da lista da versão pré-anúncio (por exemplo, `main.js`);
-- qualquer frase do site completo que não faça parte da versão pré-anúncio (frases das seções do anúncio contam sempre, mesmo se alguém colar uma delas em `pre-anuncio/`);
-- termos reservados ao anúncio, como banca, critérios, prêmios, regulamento e o nome do jurado.
-
-### Na segunda-feira, depois do anúncio: versão `completo`
-
-1. Atualize `site/content.js` com o que foi anunciado (o tema vai em `revelacao.tema`, se quiserem mostrá-lo na fita).
-2. Em `release.json`, troque `"pre-anuncio"` por `"completo"`.
-3. Faça commit e push na `main`. O workflow gera e publica o site completo.
-
-O relógio do visitante nunca libera nada: ele só muda o texto da contagem (antes, durante e depois da reunião). Quem publica o restante é a organização, com o passo acima.
-
-Atenção: o repositório é privado. Se ficar público antes do anúncio, `site/` (e a cópia antiga em `HackathonIF-main/`) passa a ser legível no GitHub, mesmo sem ir ao ar.
-
-## Organização das pastas
+## Pastas
 
 ```
 release.json          qual versão vai ao ar: "pre-anuncio" ou "completo"
 pre-anuncio/          versão pré-anúncio
-  index.html          apresentação, o que é, equipes, rotuladora, revelação e a página trancada
-  content.js          só fatos públicos
-  pre.js              contagem, rotuladora, maquete, cadeado e animações
-  pre.css             linha da revelação e página trancada (sobre styles.css)
+  index.html          apresentação, o que é, equipes e página trancada
+  content.js          só informações públicas
+  pre.js              contagem, maquete 3D, cadeado e animações
+  pre.css             estilos próprios da versão pré-anúncio
 site/                 site completo (publicado só na versão "completo")
   index.html          estrutura das seções
-  styles.css          tokens (cores, tipos, espaços, sombras, movimento) e layout; usado pelas duas versões
-  main.js             lê content.js, monta listas, links, menu, contagem, rotuladora e animações
-  model.js            maquete 3D da semana (Three.js), usada pelas duas versões; carregada só em telas
-                      largas com animação permitida, nos demais casos a mesma maquete é desenhada em SVG
   content.js          todo o conteúdo do evento
-  assets/             favicon e marca oficial do campus Jacareí (SVG)
-  vendor/             fontes, GSAP e Three.js hospedados localmente
-dist/                 saída do build (não vai para o Git)
-brand/                arquivos-fonte da marca IFSP baixados do portal oficial (não publicados)
-scripts/build.mjs     gera dist/ e confere a versão pré-anúncio
-scripts/serve.mjs     servidor local de dist/
-.github/workflows/    publicação no GitHub Pages
-PRODUCT.md, DESIGN.md contexto do produto e sistema visual (usados pelas ferramentas de design)
-.impeccable/          registros de direção visual (o que é local ou temporário fica no .gitignore)
+  main.js             monta o conteúdo, menu, contagem, rotuladora e animações
+  styles.css          cores, tipos, espaços e layout (usado pelas duas versões)
+  model.js            maquete 3D da semana (Three.js, usada pelas duas versões)
+  assets/             favicon e marca oficial do campus Jacareí
+  vendor/             fontes, GSAP e Three.js hospedados no próprio site
+scripts/build.mjs     monta dist/ e confere a versão pré-anúncio
+scripts/serve.mjs     servidor local
+dist/                 resultado do build (não vai para o Git)
+brand/                arquivos originais da marca IFSP (não publicados)
 ```
-
-## A página trancada
-
-Ao fim da versão pré-anúncio, a página escurece: a parte aberta do site fica fosca atrás de um vidro e entra uma seção de tela inteira com um cadeado fechado, duas fitas de rotuladora "Trancado até 26.10" e a frase "O restante será revelado na segunda-feira." Ela não cita nem lista o que vem depois. O cadeado segue o ponteiro com profundidade; segurar (mouse, toque, Espaço ou Enter) puxa a alça e enche um anel em volta da fechadura, que volta com uma mola e uma resposta curta. Com `prefers-reduced-motion`, nada se move e um toque só mostra a resposta. Depois das 8h de 26/10 a frase vira "O restante será publicado em breve.", até a versão completa ir ao ar.
 
 ## Onde editar o conteúdo
 
-O conteúdo do site completo está em **`site/content.js`**; o da versão pré-anúncio, em `pre-anuncio/content.js` (só fatos públicos). Não é preciso mexer no HTML.
+Todo o texto fica nos arquivos `content.js`; não é preciso mexer no HTML.
 
-- Texto entre colchetes, como `[LOCAL A DEFINIR]`, é um **marcador provisório**. Na página ele aparece em fita amarela, sublinhado em tracejado. Troque pelo texto oficial e o destaque some sozinho.
-- Um valor que é só o marcador vira uma fita amarela inteira; um marcador dentro de uma frase vira um trecho amarelo no meio do texto.
-- Datas do cronograma: fita amarela enquanto for marcador, preta quando confirmada, vermelha se o item for um prazo (`marco: true`).
-- `confirmado: false` nas perguntas do FAQ mostra a etiqueta "Resposta pendente".
-- `exibir: false` esconde um item do cronograma.
-- **Revelação do tema:** `revelacao.inicio` e `revelacao.fim` controlam a contagem regressiva (fuso de Brasília). Durante a abertura, a seção mostra "A revelação é agora". Depois, se `revelacao.tema` for preenchido, o tema aparece na fita da gaveta.
-- **Links:** enquanto `links.inscricao` for um marcador, os botões dizem "Como se inscrever" e levam à seção de inscrição, onde o formulário aparece desativado com "em breve" e um aviso de que as inscrições não estão abertas por este site. Enquanto `links.regulamento` for um marcador, o botão aparece desativado. Quando a URL real (`https://...`) for colocada, tudo passa a funcionar sozinho.
+- `pre-anuncio/content.js`: o que está no ar agora (só informações públicas).
+- `site/content.js`: o site completo.
 
-### Conferir o que falta
+Texto entre colchetes, como `[E-MAIL A DEFINIR]`, é um **marcador provisório**: aparece destacado em amarelo até ser trocado pelo texto oficial. Rodando localmente, uma etiqueta amarela no canto da tela mostra quantos marcadores faltam; no console do navegador, `HACKATHON_PENDENTES()` lista todos.
 
-Em `localhost` (ou com `?revisao` no endereço), uma fita amarela no canto inferior direito mostra quantos marcadores faltam. Clique nela para ver a lista. No console do navegador, `HACKATHON_PENDENTES()` devolve a mesma lista.
+## O que o site faz
 
-Já confirmado e público: 23ª Semana de Ciência e Tecnologia, de 26 a 30/10/2026; revelação do tema na segunda-feira, 26/10/2026, das 8h às 9h30, na Sala 2, Bloco 1, do IFSP Jacareí, com apresentação do Prof. Olavo; equipes de 3 a 5 estudantes regularmente matriculados no IFSP campus Jacareí, de qualquer curso (outros campi e instituições não participam); datas da maquete (26/10 revelação, 28/10 fim das inscrições às 23h59, 30/10 apresentações das 8h às 11h40). Os demais fatos confirmados estão em `site/content.js`.
-
-Marcadores que a organização ainda precisa definir:
-
-| Área | Marcadores |
-|---|---|
-| Revelação do tema | depois da abertura, o próprio tema (`revelacao.tema`) |
-| Inscrição | link do formulário (`[LINK DO FORMULÁRIO DE INSCRIÇÃO A DEFINIR]`), data de abertura das inscrições |
-| Desenvolvimento e entrega | período de desenvolvimento, regras e prazo de entrega |
-| Pitch | duração por equipe, tempo de perguntas da banca |
-| Avaliação | critérios 1 a 3 e outros, se houver |
-| Banca | membros 2 a 5 |
-| Premiação | prêmio do 1º, 2º e 3º lugares (além da medalha) |
-| Resultado | data do resultado e da premiação |
-| FAQ | o que levar |
-| Links | regulamento oficial, página da 23ª Semana de Ciência e Tecnologia |
-| Contato | organização, e-mail, redes sociais oficiais |
-
-Nada disso foi inventado: datas, prêmios, regras, patrocinadores e perfis sociais aparecem só quando a organização preencher.
+- **Contagem regressiva** até 26/10/2026 às 8h, no horário de Brasília.
+- **Maquete 3D da semana** com as datas públicas. Funciona em celular, tablet e computador. Em aparelhos sem suporte a 3D, aparece um desenho da mesma maquete.
+- **Página trancada:** um cadeado fechado com a mensagem "O restante será revelado na segunda-feira.", sem citar o que vem depois. Segurar o cadeado puxa a alça e ele responde. Depois das 8h de 26/10, a frase muda para "O restante será publicado em breve.".
+- **Responsivo** de celulares de 280px a telas de 2560px, incluindo celular deitado.
 
 ## Identidade IFSP
 
-- A marca usada é a **assinatura oficial do campus Jacareí** (Instituto Federal · São Paulo · Campus Jacareí), baixada em https://ifsp.edu.br/component/content/article/141-comunicacao/manuais-da-comunicacao/242-identidade-visual (arquivo `Marca_IFSP_2015_Jcr_H.zip`) e convertida do PDF vetorial oficial para SVG (`site/assets/ifsp/ifsp-jacarei-cor.svg`) sem alterar formas ou cores. Os arquivos originais, incluindo a marca geral do IFSP e o manual, estão em `brand/`.
-- Regras seguidas, conforme o Manual de Aplicação da Marca IF (MEC, 2015): a marca fica sempre sobre base branca, com área de proteção de pelo menos um módulo, e o símbolo nunca fica abaixo de 30 px. Nada é rotacionado, recolorido, contornado ou usado como marca d'água.
-- O verde (#2f9e41) e o vermelho (#cd191e) institucionais inspiram as fitas. A fita verde usa um tom mais escuro (#1f7f33) para manter o contraste dos letreiros; a marca em si nunca é alterada.
+- A marca usada é a **assinatura oficial do campus Jacareí**, baixada do portal do IFSP e convertida do PDF vetorial oficial para SVG, sem alterar formas ou cores. Os arquivos originais e o manual estão em `brand/`.
+- Segue o Manual de Aplicação da Marca IF (MEC, 2015): marca sobre base branca, com área de proteção, sem rotação, recoloração ou contorno.
+- O verde e o vermelho institucionais inspiram as fitas de rotuladora do site; a marca em si nunca é alterada.
 
-## Acessibilidade e movimento
+## Acessibilidade
 
-- HTML semântico, títulos em ordem, link para pular ao conteúdo, foco visível e menu móvel com Esc e foco preso.
-- O FAQ usa `<details>`/`<summary>` nativos.
-- Marcadores pendentes não dependem só da cor: têm sublinhado tracejado ou a etiqueta "a confirmar".
-- Com `prefers-reduced-motion`, nenhuma animação é executada e todo o conteúdo aparece direto. Sem JavaScript, as animações também não rodam, mas os textos vindos de `content.js` não aparecem, porque o conteúdo é montado no navegador.
-
-## Limitações conhecidas
-
-- **Conteúdo montado por JavaScript.** Se for importante que buscadores ou usuários sem JS vejam as listas, vale gerar o HTML a partir de `content.js` em uma etapa de build.
-- **Autorização de uso da marca.** A edição anterior se declarava "iniciativa acadêmica independente". Confirmem com a comunicação do campus se o site pode usar a marca oficial ou se precisa de um aviso semelhante.
-- **Sem fotos.** Não há fotografias oficiais do evento, e nenhuma foi inventada. Quando houver fotos da edição anterior com autorização, elas podem entrar na seção "O que é".
+- HTML semântico, títulos em ordem, link para pular ao conteúdo, foco visível e menu de celular que fecha com Esc.
+- Com "reduzir movimento" ativado no aparelho, nada se mexe: a maquete aparece parada e o conteúdo, direto.
+- O cadeado funciona com mouse, toque, teclado (Espaço ou Enter) e leitor de tela.
+- **Conteúdo montado por JavaScript:** sem JavaScript, os textos de `content.js` não aparecem.
+- **Uso da marca:** confirmem com a comunicação do campus se o site pode usar a marca oficial.
+- **Sem fotos:** não há fotografias oficiais do evento, e nenhuma foi inventada.
