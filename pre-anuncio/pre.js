@@ -79,15 +79,21 @@
     else undated.push(c);
   });
 
-  /* ---------- Team slots: required seats are punched, optional ones are blank tape ---------- */
+  /* ---------- Team roster: required seats are punched tape, optional ones are empty slots,
+     and two dimension lines mark the minimum and the maximum, like a drawing ---------- */
   const team = document.querySelector("[data-team]");
   if (team && C.participacao) {
     const { minimo, maximo } = C.participacao;
-    team.innerHTML = Array.from({ length: maximo }, (_, i) =>
-      i < minimo
-        ? `<li><span class="tape tape--black tape--s">Integrante ${i + 1}</span></li>`
-        : `<li><span class="tape tape--blank tape--s">Opcional ${i + 1}</span></li>`
-    ).join("");
+    const rows = Array.from({ length: maximo }, (_, i) => {
+      const n = String(i + 1).padStart(2, "0");
+      const slot = i < minimo
+        ? `<span class="tape tape--black tape--m crew-tape">Integrante ${i + 1}</span>`
+        : `<span class="crew-empty">Opcional</span>`;
+      return `<li class="crew-row${i < minimo ? "" : " crew-row--opt"}" style="grid-row:${i + 1}"><span class="crew-num" aria-hidden="true">${n}</span>${slot}</li>`;
+    }).join("");
+    team.innerHTML = `<ol class="crew-slots" style="grid-row:1 / ${maximo + 1}" aria-label="Equipe de ${minimo} a ${maximo} integrantes: ${minimo} obrigatórios e ${maximo - minimo} opcionais">${rows}</ol>
+      <span class="crew-dim crew-dim--min" style="grid-row:1 / ${minimo + 1}" aria-hidden="true"><span>mín. ${minimo}</span></span>
+      <span class="crew-dim crew-dim--max" style="grid-row:1 / ${maximo + 1}" aria-hidden="true"><span>máx. ${maximo}</span></span>`;
   }
 
   /* ---------- Tape construction: every .tape gets a vinyl body and a raised face ---------- */
@@ -491,10 +497,14 @@
     gsap.from(".flow-step", { opacity: 0, y: 16, duration: 0.6, stagger: 0.3, ease: "power3.out", scrollTrigger: { trigger: ".flow", start: "top 75%", once: true } });
 
 
+    // The roster fills seat by seat, then the dimension lines draw the minimum and the maximum.
+    gsap.from(".crew-row", { x: -24, opacity: 0, duration: 0.5, stagger: 0.08, ease: "power3.out", scrollTrigger: { trigger: ".crew-board", start: "top 80%", once: true } });
+    gsap.from(".crew-dim", { scaleY: 0, transformOrigin: "50% 0%", duration: 0.7, stagger: 0.2, delay: 0.35, ease: "power2.inOut", scrollTrigger: { trigger: ".crew-board", start: "top 80%", once: true } });
+
     // Into the locked part: the open page behind frosts over and the padlock drops onto the bench.
     const veil = document.querySelector("[data-veil]");
     if (veil) {
-      gsap.fromTo(veil, { "--veil": 0 }, { "--veil": 1, ease: "none", scrollTrigger: { trigger: "#trancado", start: "top bottom", end: "top 10%", scrub: true } });
+      gsap.fromTo(veil, { "--veil": 0 }, { "--veil": 1, ease: "none", scrollTrigger: { trigger: "#trancado", start: "top 65%", end: "top 5%", scrub: true } });
     }
     gsap.from(".padlock", { y: -140, rotate: -10, opacity: 0, duration: 1.1, ease: "bounce.out", scrollTrigger: { trigger: "#trancado", start: "top 55%", once: true } });
     gsap.from(".padlock-tag", { scale: 1.6, opacity: 0, rotate: 30, duration: 0.5, delay: 0.9, ease: "back.out(2.4)", scrollTrigger: { trigger: "#trancado", start: "top 55%", once: true } });
