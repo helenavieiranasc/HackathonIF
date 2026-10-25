@@ -1,5 +1,5 @@
 /*
- * Fonte única de conteúdo do site do Hackathon IFSP Jacareí 2026.
+ * Fonte única de conteúdo do site do HackaIF 2026.
  *
  * Como editar:
  * - Texto entre colchetes, como "[E-MAIL A DEFINIR]", é um marcador provisório.
@@ -22,7 +22,7 @@ window.HACKATHON = {
     edicaoSemana: "",
     periodo: "26 a 30 de outubro de 2026",
     local: "IFSP campus Jacareí",
-    prazoInscricao: "Qua 28/10 · 23h59",
+    prazoInscricao: "Ter 27/10 · 23h59",
     tamanhoEquipe: "3 a 5 integrantes",
     descricao:
       "Uma semana, uma equipe e um problema de verdade. Junte gente de cursos diferentes, transforme uma ideia em solução e mostre o que vocês construíram.",
@@ -109,7 +109,7 @@ window.HACKATHON = {
   },
 
   etapas: [
-    { id: "inscricao", titulo: "Inscrição", texto: "O líder inscreve a equipe pelo formulário oficial, com os dados de todos os integrantes.", detalhe: "Até qua 28/10, 23h59" },
+    { id: "inscricao", titulo: "Inscrição", texto: "O líder inscreve a equipe pelo formulário oficial, com os dados de todos os integrantes.", detalhe: "Até ter 27/10, 23h59" },
     { id: "equipe", titulo: "Equipe", texto: "De 3 a 5 estudantes do campus Jacareí. Cursos diferentes são bem-vindos." },
     { id: "revelacao", titulo: "Revelação do tema", texto: "Na abertura, a organização apresenta o hackathon e revela o tema.", detalhe: "Seg 26/10, 8h às 9h30" },
     { id: "desenvolvimento", titulo: "Desenvolvimento", texto: "As equipes constroem a solução com a tecnologia que escolherem. IA liberada.", detalhe: "[PERÍODO A DEFINIR]" },
@@ -122,7 +122,7 @@ window.HACKATHON = {
   cronograma: [
     { titulo: "Abertura das inscrições", data: "[DATA A DEFINIR]", hora: "", exibir: true },
     { titulo: "Revelação do tema", data: "Seg 26/10", hora: "8h às 9h30", local: "Sala 2, Bloco 1", exibir: true },
-    { titulo: "Encerramento das inscrições", data: "Qua 28/10", hora: "até 23h59", marco: true, exibir: true },
+    { titulo: "Encerramento das inscrições", data: "Ter 27/10", hora: "até 23h59", marco: true, exibir: true },
     { titulo: "Desenvolvimento", data: "[PERÍODO A DEFINIR]", hora: "", exibir: true },
     { titulo: "Prazo de entrega", data: "[DATA A DEFINIR]", hora: "", marco: true, exibir: true },
     { titulo: "Apresentações finais e defesa dos projetos", data: "Sex 30/10", hora: "8h às 11h40", local: "Auditório do campus", exibir: true },
@@ -202,7 +202,7 @@ window.HACKATHON = {
     },
     {
       pergunta: "Até quando posso inscrever minha equipe?",
-      resposta: "Até quarta-feira, 28 de outubro, às 23h59. O líder envia o formulário oficial com os dados de todos os integrantes. Inscrições fora do prazo ou incompletas não são homologadas.",
+      resposta: "Até terça-feira, 27 de outubro, às 23h59. O líder envia o formulário oficial com os dados de todos os integrantes. Inscrições fora do prazo ou incompletas não são homologadas.",
       confirmado: true,
     },
     {
@@ -235,7 +235,7 @@ window.HACKATHON = {
 
   regulamento: {
     resumo:
-      "As regras do Hackathon IFSP Jacareí 2026. O que está em amarelo ainda será definido pela organização. Quando o documento oficial for publicado, ele prevalece sobre esta página.",
+      "As regras do HackaIF 2026. O que está em amarelo ainda será definido pela organização. Quando o documento oficial for publicado, ele prevalece sobre esta página.",
     oficialConfirmado: false,
     // Cada item é uma frase, ou { rotulo, valor } para um dado que ainda pode mudar.
     secoes: [
@@ -243,7 +243,7 @@ window.HACKATHON = {
         id: "evento",
         titulo: "O evento",
         itens: [
-          "O Hackathon faz parte da 23ª Semana de Ciência e Tecnologia do IFSP campus Jacareí e quer estimular a criatividade, o trabalho em equipe e a aplicação prática do que os estudantes aprendem nos cursos.",
+          "O HackaIF faz parte da 23ª Semana de Ciência e Tecnologia do IFSP campus Jacareí e quer estimular a criatividade, o trabalho em equipe e a aplicação prática do que os estudantes aprendem nos cursos.",
           "Hackathon é um evento colaborativo, intenso e com tempo limitado, em que equipes identificam um problema, desenvolvem uma ideia e constroem uma solução.",
         ],
       },
@@ -272,7 +272,7 @@ window.HACKATHON = {
         titulo: "A inscrição",
         itens: [
           "Um único representante, o líder da equipe, faz a inscrição pelo formulário oficial e informa os dados de todos os integrantes.",
-          { rotulo: "Prazo", valor: "quarta-feira, 28 de outubro de 2026, às 23h59" },
+          { rotulo: "Prazo", valor: "terça-feira, 27 de outubro de 2026, às 23h59" },
           "Inscrições enviadas depois do prazo ou com informações incompletas não serão homologadas.",
         ],
       },
