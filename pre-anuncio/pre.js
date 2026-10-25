@@ -316,7 +316,7 @@
       })
       .join("");
     const vb = matchMedia("(max-width: 600px)").matches ? `0 175 ${W} 380` : `0 0 ${W} ${H}`;
-    stage.innerHTML = `<svg class="model-svg" viewBox="${vb}" role="img" aria-label="Maquete da semana: segunda 26 revelação do tema; quarta 28 encerramento das inscrições às 23h59; sexta 30 pitch final.">
+    stage.innerHTML = `<svg class="model-svg" viewBox="${vb}" role="img" aria-label="Maquete da semana: segunda 26 revelação do tema; terça 27 encerramento das inscrições às 23h59; sexta 30 pitch final.">
       <g class="svg-grid">${grid}</g>${vols.join("")}${labels}</svg>`;
   }
   drawModelSvg();
