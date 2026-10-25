@@ -32,8 +32,9 @@
 }
 .locked-bg { position: absolute; inset: 0; z-index: -2; pointer-events: none; }
 /* Shapes of a page seen through frosted glass: colour and rhythm, no content at all. */
-.locked-ghost { position: absolute; inset: -8%; filter: blur(30px) saturate(1.15); opacity: 0.5; }
-.lg { position: absolute; border-radius: 4px; animation: lg-drift 16s ease-in-out infinite alternate; }
+.locked-ghost { position: absolute; inset: -8%; opacity: 0.5; }
+/* Each shape is blurred once and then only moved, so the GPU can slide it without redrawing. */
+.lg { position: absolute; border-radius: 4px; filter: blur(30px) saturate(1.15); will-change: transform; animation: lg-drift 16s ease-in-out infinite alternate; }
 .lg--a { left: 6%; top: 12%; width: 34%; height: 6%; background: var(--tape-green); rotate: -6deg; }
 .lg--b { left: 60%; top: 9%; width: 28%; height: 8%; background: var(--tape-red); rotate: 4deg; animation-delay: -5s; }
 .lg--c { left: 8%; top: 60%; width: 24%; height: 18%; background: #4f555c; animation-delay: -2s; }
@@ -42,17 +43,20 @@
 .lg--f { left: 58%; top: 36%; width: 28%; height: 2.4%; background: #9aa0a6; box-shadow: 0 4vh 0 #7d838a, 0 8vh 0 #6a7077; animation-delay: -3s; }
 .lg--g { left: 38%; top: 82%; width: 22%; height: 7%; background: var(--tape-yellow); rotate: -3deg; animation-delay: -6s; }
 .lg--h { left: 82%; top: 28%; width: 10%; height: 14%; background: var(--tape-blue); animation-delay: -10s; }
-@keyframes lg-drift { to { translate: 4% -5%; } }
+@keyframes lg-drift { to { transform: translate(4%, -5%); } }
 /* Vignette: keeps the message legible over whatever drifts behind it. */
 .locked-bg::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 55% at 50% 48%, rgb(11 12 13 / 0.2), rgb(11 12 13 / 0.82) 100%); }
 
 /* Label-maker bands crossing the dark, one near and crisp, one far and soft. */
-.locked-band { position: absolute; left: -25%; right: -25%; overflow: hidden; padding: 0.6rem 0; filter: drop-shadow(0 14px 18px rgb(0 0 0 / 0.5)); }
+.locked-band { position: absolute; left: -25%; right: -25%; overflow: hidden; overflow: clip visible; padding: 0.6rem 0; }
 .locked-band--1 { top: 9%; rotate: -7deg; }
-.locked-band--2 { bottom: 7%; rotate: 5deg; opacity: 0.75; filter: blur(1.2px) drop-shadow(0 10px 14px rgb(0 0 0 / 0.5)); }
-.locked-band-run { display: flex; gap: 0.7rem; width: max-content; animation: band-run 70s linear infinite; }
-.locked-band--2 .locked-band-run { animation-direction: reverse; animation-duration: 90s; }
-@keyframes band-run { to { translate: -50% 0; } }
+.locked-band--2 { bottom: 7%; rotate: 5deg; opacity: 0.75; }
+/* The strip carries its own shadow, so it slides as one finished layer. */
+.locked-band-run { display: flex; gap: 0.7rem; width: max-content; will-change: transform; filter: drop-shadow(0 14px 18px rgb(0 0 0 / 0.5)); animation: band-run 70s linear infinite; }
+.locked-band--2 .locked-band-run { filter: blur(1.2px) drop-shadow(0 10px 14px rgb(0 0 0 / 0.5)); animation-direction: reverse; animation-duration: 90s; }
+/* Off screen, the loops wait (pre.js marks the section while it is in view). */
+.locked:not(.is-live) .lg, .locked:not(.is-live) .locked-band-run { animation-play-state: paused; }
+@keyframes band-run { to { transform: translateX(-50%); } }
 
 .locked-inner { position: relative; display: grid; justify-items: center; gap: clamp(0.35rem, 1.6svh, var(--s2)); max-width: 44rem; text-align: center; }
 
@@ -86,7 +90,6 @@
 /* Short screens (phones held sideways): a smaller padlock so the message fits in one view. */
 @media (max-height: 520px) and (orientation: landscape) {
   .padlock-tag { right: -40%; top: 52%; font-size: 0.66rem; }
-}
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -372,6 +372,10 @@
     band.innerHTML = strip + strip;
     band.querySelectorAll(".tape").forEach(tapeify);
   });
+  // The drifting shapes and sliding tapes only run while the locked part is on screen.
+  if (locked && "IntersectionObserver" in window) {
+    new IntersectionObserver(([en]) => locked.classList.toggle("is-live", en.isIntersecting)).observe(locked);
+  } else if (locked) locked.classList.add("is-live");
   if (padlock) {
     const tilt = padlock.querySelector(".padlock-tilt");
     const ring = padlock.querySelector(".padlock-ring");
