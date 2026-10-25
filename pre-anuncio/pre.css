@@ -15,9 +15,10 @@
 /* ---------- The locked part: one padlock, mystery behind frosted glass ---------- */
 .locked {
   position: relative; isolation: isolate; overflow: hidden; contain: paint;
-  min-height: 100vh; min-height: 100svh;
+  --room: calc(100svh - var(--header-h) - var(--s2)); /* visible height under the header */
+  min-height: calc(100vh - var(--header-h) - var(--s2)); min-height: var(--room);
   display: grid; place-items: center;
-  padding: calc(var(--header-h) + var(--s6)) var(--gutter) var(--s7);
+  padding: clamp(var(--s3), 5svh, var(--s6)) var(--gutter);
   color: var(--ink-on-steel);
   background: radial-gradient(120% 85% at 50% 42%, #2b2e32 0%, #17181a 58%, #0b0c0d 100%);
 }
@@ -53,17 +54,17 @@
 .locked-band--2 .locked-band-run { animation-direction: reverse; animation-duration: 90s; }
 @keyframes band-run { to { translate: -50% 0; } }
 
-.locked-inner { position: relative; display: grid; justify-items: center; gap: var(--s2); max-width: 44rem; text-align: center; }
+.locked-inner { position: relative; display: grid; justify-items: center; gap: clamp(0.35rem, 1.6svh, var(--s2)); max-width: 44rem; text-align: center; }
 
 .padlock {
-  appearance: none; border: 0; background: none; padding: 0; margin-bottom: var(--s2);
+  appearance: none; border: 0; background: none; padding: 0; margin-bottom: clamp(0rem, 1.4svh, var(--s2));
   color: inherit; cursor: grab; perspective: 900px; touch-action: none; user-select: none;
   -webkit-user-select: none; -webkit-tap-highlight-color: transparent; border-radius: 28px;
 }
 .padlock.is-holding { cursor: grabbing; }
 .padlock:focus-visible { outline: 3px solid var(--tape-yellow); outline-offset: 10px; }
 .padlock-tilt {
-  position: relative; display: block; width: clamp(150px, 22vw, 230px);
+  position: relative; display: block; width: clamp(84px, min(40vw, 26svh), 230px);
   transform-style: preserve-3d; will-change: transform;
   filter: drop-shadow(0 34px 38px rgb(0 0 0 / 0.55)) drop-shadow(0 8px 10px rgb(0 0 0 / 0.4));
 }
@@ -72,8 +73,8 @@
 
 .locked-kicker { margin: 0; }
 .locked-title {
-  margin: 0; max-width: 18ch;
-  font: 700 clamp(2rem, 1.1rem + 3.4vw, 4rem)/1.04 var(--font-display);
+  margin: 0; max-width: 20ch;
+  font: 700 clamp(1.6rem, min(1.1rem + 3.4vw, 7svh), 4rem)/1.04 var(--font-display);
   letter-spacing: -0.03em; text-wrap: balance; color: #fff;
 }
 .locked-date { margin: 0; font: 700 var(--tape-l)/1.3 var(--font-tape); letter-spacing: 0.05em; color: var(--tape-yellow); }
@@ -82,12 +83,9 @@
 
 /* Short screens (phones held sideways): a smaller padlock so the message fits in one view. */
 @media (max-height: 520px) and (orientation: landscape) {
-  .locked { min-height: calc(100svh - var(--header-h)); padding-top: var(--s3); padding-bottom: var(--s3); }
-  .padlock { margin-bottom: 0; }
-  .padlock-tilt { width: 96px; }
-  .locked-inner { gap: var(--s1); }
-  .locked-title { max-width: 30ch; font-size: clamp(1.6rem, 1rem + 2.4vw, 2.4rem); }
+  .locked-title { max-width: 30ch; }
   .padlock-tag { right: -40%; top: 52%; font-size: 0.66rem; }
+}
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -305,6 +305,7 @@ button.tape:disabled { cursor: not-allowed; opacity: 0.55; translate: none; filt
   background-size: 32px 32px;
 }
 .hero {
+  overflow-x: clip; /* the 3D labels drift a little as the model turns with the scroll */
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
