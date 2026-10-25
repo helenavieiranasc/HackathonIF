@@ -25,6 +25,8 @@ Não há dependências para instalar (Node 18+). `npm run build` só gera `dist/
 
 O workflow `.github/workflows/pages.yml` roda `node scripts/build.mjs` a cada push na `main` e publica **somente `dist/`**. Em **Settings > Pages > Source**, escolha **GitHub Actions** (o Pages só funciona com o repositório público ou num plano pago).
 
+O GitHub Pages deixa o navegador guardar cada arquivo por 10 minutos. Para um deploy aparecer na hora, o build liga cada CSS e JS com uma impressão do conteúdo (`styles.css?v=1a2b3c4d5e`): arquivo que mudou é baixado de novo, arquivo igual continua no cache. Só a própria página (`index.html`) pode levar até 10 minutos para atualizar; um Ctrl+Shift+R resolve na hora.
+
 ### Antes do anúncio: versão `pre-anuncio`
 
 `release.json` diz `"versao": "pre-anuncio"`. O build copia a página, o conteúdo e o script de `pre-anuncio/` e, de `site/`, só os arquivos sem texto do evento: `styles.css` (sem comentários), `model.js` (maquete 3D), `assets/` e `vendor/`. O `index.html`, o `content.js` e o `main.js` do site completo **não entram**. Não há conteúdo escondido por CSS nem dados guardados no navegador: o restante simplesmente não existe nesta versão.

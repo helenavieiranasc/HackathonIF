@@ -11,6 +11,7 @@ import { cp, rm, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
+import { createHash } from "node:crypto";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const site = join(root, "site");
@@ -29,6 +30,7 @@ await mkdir(dist, { recursive: true });
 
 if (target === "completo") {
   await cp(site, dist, { recursive: true });
+  await bustCache();
 } else {
   // Shared files: no event copy in any of them.
   for (const f of ["styles.css", "model.js", ".nojekyll", "assets", "vendor"]) {
@@ -38,9 +40,36 @@ if (target === "completo") {
   const css = await readFile(join(dist, "styles.css"), "utf8");
   await writeFile(join(dist, "styles.css"), css.replace(/\/\*[\s\S]*?\*\//g, ""), "utf8");
   await cp(pre, dist, { recursive: true });
+  await bustCache();
   await checkPreBuild();
 }
 console.log(`dist/ pronto: versão "${target}".`);
+
+// GitHub Pages lets browsers keep each file for 10 minutes. Every stylesheet and script is
+// linked with a fingerprint of its content (styles.css?v=1a2b3c4d), so a new deploy is fetched
+// at once and an unchanged file stays cached. The 3D model is fingerprinted first, because the
+// page scripts import it.
+async function bustCache() {
+  const files = new Set(await readdir(dist));
+  const stamp = async (f) => createHash("sha256").update(await readFile(join(dist, f))).digest("hex").slice(0, 10);
+  const swap = async (f, pairs) => {
+    let text = await readFile(join(dist, f), "utf8");
+    for (const [from, to] of pairs) text = text.split(from).join(to);
+    await writeFile(join(dist, f), text, "utf8");
+  };
+  if (files.has("model.js")) {
+    const v = await stamp("model.js");
+    for (const js of ["main.js", "pre.js"]) if (files.has(js)) await swap(js, [['import("./model.js")', `import("./model.js?v=${v}")`]]);
+  }
+  const pairs = [];
+  for (const f of ["styles.css", "pre.css", "content.js", "main.js", "pre.js"]) {
+    if (!files.has(f)) continue;
+    const v = await stamp(f);
+    const attr = f.endsWith(".css") ? "href" : "src";
+    pairs.push([`${attr}="${f}"`, `${attr}="${f}?v=${v}"`]);
+  }
+  await swap("index.html", pairs);
+}
 
 async function walk(dir) {
   const out = [];
