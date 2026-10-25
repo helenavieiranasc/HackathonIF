@@ -115,12 +115,10 @@
       <ul class="nav-list">
         <li><a href="#o-que-e">O que é</a></li>
         <li><a href="#quem-participa">Equipes</a></li>
-        <li><a href="#nome">Nome da equipe</a></li>
-        <li><a href="#tema">Revelação</a></li>
         <li><a href="#trancado" class="nav-locked"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>O restante</a></li>
       </ul>
     </nav>
-    <a class="tape tape--red tape--s tape--time nav-cta" href="#tema">26.10 · 8h às 9h30</a>
+    <a class="tape tape--red tape--s tape--time nav-cta" href="#inicio">26.10 · 8h às 9h30</a>
     <button class="tape tape--black tape--s menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
     <div class="ruler" aria-hidden="true"><span class="ruler-fill" data-ruler></span></div>
   </header>
@@ -130,11 +128,9 @@
       <ol class="menu-list">
         <li><a href="#o-que-e"><span class="menu-num">01</span>O que é</a></li>
         <li><a href="#quem-participa"><span class="menu-num">02</span>Monte sua equipe</a></li>
-        <li><a href="#nome"><span class="menu-num">03</span>Nome da equipe</a></li>
-        <li><a href="#tema"><span class="menu-num">04</span>A revelação</a></li>
-        <li><a href="#trancado"><span class="menu-num">05</span>O restante</a></li>
+        <li><a href="#trancado"><span class="menu-num">03</span>O restante</a></li>
       </ol>
-      <p class="menu-cta"><a class="tape tape--red tape--l tape--time" href="#tema">26.10 · 8h às 9h30</a></p>
+      <p class="menu-cta"><a class="tape tape--red tape--l tape--time" href="#inicio">26.10 · 8h às 9h30</a></p>
     </nav>
     <button class="tape tape--white tape--s menu-close" type="button">Fechar</button>
   </div>
@@ -150,7 +146,7 @@
           <span class="hero-strip" aria-hidden="true"><span class="hero-seg"><span class="tape-face" data-punch>HACKA</span></span><span class="hero-seg"><span class="tape-face" data-punch>THON</span></span></span>
         </h1>
         <p class="hero-statement" data-words>O tema ainda é segredo.</p>
-        <a class="mini-countdown" href="#tema" data-countdown-wrap>
+        <p class="mini-countdown" data-countdown-wrap>
           <span class="mini-label" data-reveal-mini>A revelação começa em</span>
           <span class="mini-cells" data-countdown aria-hidden="true">
             <span class="tape tape--black tape--s" data-cd="d">00</span><i>d</i>
@@ -158,7 +154,7 @@
             <span class="tape tape--black tape--s" data-cd="m">00</span><i>min</i>
             <span class="tape tape--black tape--s" data-cd="s">00</span><i>s</i>
           </span>
-        </a>
+        </p>
         <p class="reveal-line">
           <span class="rl-when"><span data-c="revelacao.dataPonto"></span> · <span data-c="revelacao.horario"></span></span>
           <span class="rl-where"><span data-c="revelacao.sala"></span>, <span data-c="revelacao.bloco"></span> · IFSP Jacareí</span>
@@ -167,7 +163,7 @@
         <p class="hero-lede" data-c="evento.descricao"></p>
         <div class="hero-actions">
           <a class="tape tape--green tape--l" href="#quem-participa">Monte sua equipe <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <a class="textlink" href="#tema">Sobre a revelação</a>
+          <a class="textlink" href="#o-que-e">O que é um hackathon</a>
         </div>
         <ul class="hero-facts">
           <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Todos os cursos do IFSP Jacareí</li>
@@ -177,7 +173,6 @@
       </div>
       <figure class="week-model" data-model>
         <div class="model-stage" data-model-stage></div>
-        <figcaption class="model-caption">Fig. 1 · A semana do hackathon, <span class="nowrap">de 26 a 30 de outubro de 2026.</span> Só os dias com data confirmada aparecem sólidos.</figcaption>
       </figure>
       <span class="reg reg--bl" aria-hidden="true"></span><span class="reg reg--br" aria-hidden="true"></span>
     </section>
@@ -225,66 +220,7 @@
       </div>
     </section>
 
-    <!-- 03 -->
-    <section class="section final" id="nome" aria-labelledby="final-title">
-      <div class="final-copy">
-        <h2 class="h2" id="final-title"><span class="chap tape tape--black tape--s" aria-hidden="true">03</span><span data-words>Já tem nome para a equipe?</span></h2>
-        <p class="lead">Digite, escolha a fita e corte a etiqueta. Depois, leve o time para a revelação do tema.</p>
-      </div>
-      <form class="labeler" data-labeler autocomplete="off">
-        <div class="machine">
-          <p class="machine-badge"><span class="tape tape--white tape--s">Rotuladora</span></p>
-          <div class="machine-wheel" aria-hidden="true"><svg viewBox="-60 -60 120 120" data-wheel></svg><span class="wheel-pointer"></span></div>
-          <label class="labeler-field">
-            <span class="labeler-label">Nome da equipe</span>
-            <input type="text" name="equipe" maxlength="18" placeholder="Ex.: Os Gambiarras" spellcheck="false">
-          </label>
-          <fieldset class="labeler-colors">
-            <legend class="labeler-label">Fita</legend>
-            <label><input type="radio" name="cor" value="black" checked><span class="swatch swatch--black"></span><span class="sr-only">Preta</span></label>
-            <label><input type="radio" name="cor" value="green"><span class="swatch swatch--green"></span><span class="sr-only">Verde</span></label>
-            <label><input type="radio" name="cor" value="blue"><span class="swatch swatch--blue"></span><span class="sr-only">Azul</span></label>
-            <label><input type="radio" name="cor" value="red"><span class="swatch swatch--red"></span><span class="sr-only">Vermelha</span></label>
-          </fieldset>
-          <button class="tape tape--white tape--s machine-cut" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-scissors"/></svg> Cortar</button>
-          <div class="machine-slot">
-            <output class="labeler-out" aria-live="polite">
-              <span class="tape tape--black tape--l labeler-tape" data-tape-out>Sua equipe</span>
-            </output>
-          </div>
-        </div>
-        <div class="labeler-tray" data-tray aria-live="polite"></div>
-      </form>
-    </section>
-
-    <!-- 04 -->
-    <section class="section challenge" id="tema" aria-labelledby="theme-title">
-      <h2 class="h2" id="theme-title"><span class="chap tape tape--white tape--s" aria-hidden="true">04</span><span data-reveal-title data-words>O tema ainda é segredo.</span></h2>
-      <p class="theme-sub">A revelação acontece na <span data-c="revelacao.dia"></span>, das <span class="nowrap">8h às 9h30</span>.</p>
-      <div class="drawer" data-drawer>
-        <div class="drawer-top">
-          <div class="drawer-holder">
-            <span class="holder-label">Tema</span>
-            <span class="tape tape--red tape--l" data-theme-tape data-punch-on-view>Trancado até 26/10</span>
-          </div>
-        </div>
-        <div class="countdown" data-countdown aria-hidden="true">
-          <span class="cd-cell"><span class="tape tape--white tape--l" data-cd="d">00</span><span class="cd-label">dias</span></span>
-          <span class="cd-cell"><span class="tape tape--white tape--l" data-cd="h">00</span><span class="cd-label">horas</span></span>
-          <span class="cd-cell"><span class="tape tape--white tape--l" data-cd="m">00</span><span class="cd-label">minutos</span></span>
-          <span class="cd-cell"><span class="tape tape--white tape--l" data-cd="s">00</span><span class="cd-label">segundos</span></span>
-        </div>
-        <p class="countdown-status" data-reveal-status>Contagem até a reunião de abertura: segunda-feira, 26 de outubro, das 8h às 9h30.</p>
-        <dl class="reveal-facts reveal-facts--row">
-          <div><dt>Quando</dt><dd data-c="revelacao.dia"></dd></div>
-          <div><dt>Horário</dt><dd data-c="revelacao.horario"></dd></div>
-          <div><dt>Onde</dt><dd data-c="revelacao.local"></dd></div>
-          <div><dt>Apresentação</dt><dd data-c="revelacao.apresentador"></dd></div>
-        </dl>
-      </div>
-    </section>
-
-    <!-- 05: the rest of the site stays closed. Nothing behind the glass is real content. -->
+    <!-- 03: the rest of the site stays closed. Nothing behind the glass is real content. -->
     <section class="locked" id="trancado" aria-labelledby="locked-title" data-locked>
       <div class="locked-bg" aria-hidden="true">
         <div class="locked-ghost">

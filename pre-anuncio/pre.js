@@ -354,75 +354,6 @@
     return [...el.querySelectorAll(".ch")];
   }
 
-  /* ---------- The label maker ---------- */
-  const form = document.querySelector("[data-labeler]");
-  const out = form.querySelector("[data-tape-out]");
-  const outFace = faceOf(out);
-  const input = form.querySelector('input[name="equipe"]');
-  const cutBtn = form.querySelector(".machine-cut");
-  const tray = form.querySelector("[data-tray]");
-  const wheel = form.querySelector("[data-wheel]");
-  const DEFAULT = "Sua equipe";
-  const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-  let lastValue = "";
-  wheel.innerHTML = LETTERS.map((l, i) => {
-    const a = (i / LETTERS.length) * Math.PI * 2 - Math.PI / 2;
-    return `<text x="${(Math.cos(a) * 46).toFixed(1)}" y="${(Math.sin(a) * 46).toFixed(1)}" data-l="${l}">${l}</text>`;
-  }).join("") + '<circle r="30" fill="#2b2e33"/><circle r="5" fill="#4b5158"/>';
-  function turnWheel(ch) {
-    const base = ch.normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase();
-    const i = LETTERS.indexOf(base);
-    if (i < 0) return;
-    wheel.style.rotate = `${-(i / LETTERS.length) * 360}deg`;
-    wheel.querySelectorAll("text").forEach((t) => t.classList.toggle("is-on", t.dataset.l === base));
-  }
-  function renderTape() {
-    const value = input.value.replace(/\s+/g, " ").slice(0, 18);
-    const shown = value.trim() ? value : DEFAULT;
-    const grew = value.length > lastValue.length && value.startsWith(lastValue);
-    outFace.innerHTML = punchRun(shown);
-    out.setAttribute("aria-label", `Etiqueta: ${shown}`);
-    cutBtn.disabled = !value.trim();
-    if (grew) {
-      turnWheel(value.slice(-1));
-      if (window.gsap && !reduceMotion.matches) {
-        const chars = outFace.querySelectorAll(".ch");
-        const ch = chars[chars.length - 1];
-        if (ch) gsap.fromTo(ch, { scale: 1.45, opacity: 0.2 }, { scale: 1, opacity: 1, duration: 0.22, ease: "back.out(3)" });
-        gsap.fromTo(out, { x: -6 }, { x: 0, duration: 0.18, ease: "power2.out" });
-      }
-    }
-    lastValue = value;
-  }
-  input.addEventListener("input", renderTape);
-  renderTape();
-  form.querySelectorAll('input[name="cor"]').forEach((r) =>
-    r.addEventListener("change", () => {
-      out.classList.remove("tape--black", "tape--green", "tape--blue", "tape--red");
-      out.classList.add(`tape--${r.value}`);
-    })
-  );
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const value = input.value.replace(/\s+/g, " ").trim().slice(0, 18);
-    if (!value) return;
-    const color = form.querySelector('input[name="cor"]:checked').value;
-    const label = document.createElement("span");
-    label.className = `tape tape--${color} tape--l`;
-    label.textContent = value;
-    label.setAttribute("role", "img");
-    label.setAttribute("aria-label", `Etiqueta cortada: ${value}`);
-    tapeify(label);
-    label.style.setProperty("--r", `${((hash(value) - 0.5) * 7).toFixed(1)}deg`);
-    tray.prepend(label);
-    while (tray.children.length > 3) tray.lastElementChild.remove();
-    if (window.gsap && !reduceMotion.matches) {
-      gsap.fromTo(label, { y: -70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "bounce.out" });
-      gsap.fromTo(out, { x: 0 }, { x: 40, opacity: 0, duration: 0.18, ease: "power2.in", onComplete: () => gsap.set(out, { x: -20, opacity: 0 }) });
-      gsap.to(out, { x: 0, opacity: 1, duration: 0.35, delay: 0.3, ease: "power3.out" });
-    }
-  });
-
   /* ---------- The rest of the site: one closed padlock and nothing behind the glass ---------- */
   const locked = document.querySelector("[data-locked]");
   const padlock = document.querySelector("[data-padlock]");
@@ -559,13 +490,6 @@
     });
     gsap.from(".flow-step", { opacity: 0, y: 16, duration: 0.6, stagger: 0.3, ease: "power3.out", scrollTrigger: { trigger: ".flow", start: "top 75%", once: true } });
 
-    // The secret drawer: the theme tape is punched, the drawer eases out a little with the scroll.
-    const theme = document.querySelector("[data-punch-on-view]");
-    if (theme) {
-      gsap.from(splitChars(theme), { opacity: 0, scale: 1.4, duration: 0.16, stagger: 0.035, ease: "back.out(3)", scrollTrigger: { trigger: theme, start: "top 85%", once: true } });
-    }
-    gsap.fromTo("[data-drawer]", { y: 50 }, { y: 0, ease: "none", scrollTrigger: { trigger: ".challenge", start: "top bottom", end: "top 20%", scrub: 0.6 } });
-    gsap.from(".countdown .cd-cell", { y: 30, opacity: 0, duration: 0.6, stagger: 0.08, ease: "power3.out", scrollTrigger: { trigger: ".countdown", start: "top 85%", once: true } });
 
     // Into the locked part: the open page behind frosts over and the padlock drops onto the bench.
     const veil = document.querySelector("[data-veil]");
