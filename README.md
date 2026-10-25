@@ -1,6 +1,11 @@
-# Hackathon · 23ª Semana Nacional de Ciência e Tecnologia · IFSP campus Jacareí
+# Hackathon · 23ª Semana de Ciência e Tecnologia · IFSP campus Jacareí
 
-Site de uma página (HTML, CSS e JavaScript estáticos, sem etapa de build) para o hackathon da 23ª Semana Nacional de Ciência e Tecnologia do IFSP campus Jacareí.
+Site de uma página (HTML, CSS e JavaScript estáticos) para o hackathon da 23ª Semana de Ciência e Tecnologia do IFSP campus Jacareí. O projeto tem **duas versões**, e só uma vai ao ar de cada vez:
+
+| Versão | Fonte | O que mostra |
+|---|---|---|
+| `pre-anuncio` (no ar agora) | `pre-anuncio/` + arquivos neutros de `site/` | apresentação e contagem, reunião de abertura (26/10/2026, 8h às 9h30, Sala 2, Bloco 1, Prof. Olavo), o que é um hackathon, equipes de 3 a 5, rotuladora, maquete 3D da semana e uma página trancada para o restante |
+| `completo` (depois do anúncio) | `site/` | o site inteiro: regras, pitch, banca, critérios, prêmios, FAQ, regulamento e inscrição |
 
 ## Rodar localmente
 
@@ -8,58 +13,72 @@ Site de uma página (HTML, CSS e JavaScript estáticos, sem etapa de build) para
 npm run dev
 ```
 
-Abre em http://localhost:5180 e serve a pasta `site/`. Não há dependências para instalar: o servidor é `scripts/serve.mjs` (Node 18+).
+Gera `dist/` com a versão indicada em `release.json` e abre em http://localhost:5180. Para ver a versão completa localmente, sem mudar nada do que vai ao ar:
+
+```bash
+npm run dev:completo
+```
+
+Não há dependências para instalar (Node 18+). `npm run build` só gera `dist/`.
 
 ## Publicar no GitHub Pages
 
-1. Crie um repositório no GitHub e envie este projeto para a branch `main`.
-2. No repositório, abra **Settings > Pages** e, em **Build and deployment > Source**, escolha **GitHub Actions**.
-3. Pronto: a cada push na `main`, o workflow `.github/workflows/pages.yml` publica somente a pasta `site/`. O endereço aparece na aba **Actions** e em **Settings > Pages** (algo como `https://SEU-USUARIO.github.io/NOME-DO-REPOSITORIO/`).
+O workflow `.github/workflows/pages.yml` roda `node scripts/build.mjs` a cada push na `main` e publica **somente `dist/`**. Em **Settings > Pages > Source**, escolha **GitHub Actions** (o Pages só funciona com o repositório público ou num plano pago).
 
-Todos os caminhos do site são relativos, então ele funciona tanto nesse endereço com subpasta quanto num domínio próprio. O arquivo `site/.nojekyll` faz o GitHub servir os arquivos como estão.
+### Antes do anúncio: versão `pre-anuncio`
+
+`release.json` diz `"versao": "pre-anuncio"`. O build copia a página, o conteúdo e o script de `pre-anuncio/` e, de `site/`, só os arquivos sem texto do evento: `styles.css` (sem comentários), `model.js` (maquete 3D), `assets/` e `vendor/`. O `index.html`, o `content.js` e o `main.js` do site completo **não entram**. Não há conteúdo escondido por CSS nem dados guardados no navegador: o restante simplesmente não existe nesta versão.
+
+Depois de gerar, o build confere o próprio `dist/` e **falha** (e o deploy não acontece) se encontrar:
+
+- qualquer arquivo fora da lista da versão pré-anúncio (por exemplo, `main.js`);
+- qualquer frase do site completo que não faça parte da versão pré-anúncio (frases das seções do anúncio contam sempre, mesmo se alguém colar uma delas em `pre-anuncio/`);
+- termos reservados ao anúncio, como banca, critérios, prêmios, regulamento e o nome do jurado.
+
+### Na segunda-feira, depois do anúncio: versão `completo`
+
+1. Atualize `site/content.js` com o que foi anunciado (o tema vai em `revelacao.tema`, se quiserem mostrá-lo na fita).
+2. Em `release.json`, troque `"pre-anuncio"` por `"completo"`.
+3. Faça commit e push na `main`. O workflow gera e publica o site completo.
+
+O relógio do visitante nunca libera nada: ele só muda o texto da contagem (antes, durante e depois da reunião). Quem publica o restante é a organização, com o passo acima.
+
+Atenção: o repositório é privado. Se ficar público antes do anúncio, `site/` (e a cópia antiga em `HackathonIF-main/`) passa a ser legível no GitHub, mesmo sem ir ao ar.
 
 ## Organização das pastas
 
 ```
-site/                 tudo o que vai para o ar
+release.json          qual versão vai ao ar: "pre-anuncio" ou "completo"
+pre-anuncio/          versão pré-anúncio
+  index.html          apresentação, o que é, equipes, rotuladora, revelação e a página trancada
+  content.js          só fatos públicos
+  pre.js              contagem, rotuladora, maquete, cadeado e animações
+  pre.css             linha da revelação e página trancada (sobre styles.css)
+site/                 site completo (publicado só na versão "completo")
   index.html          estrutura das seções
-  styles.css          tokens (cores, tipos, espaços, sombras, movimento) e layout
+  styles.css          tokens (cores, tipos, espaços, sombras, movimento) e layout; usado pelas duas versões
   main.js             lê content.js, monta listas, links, menu, contagem, rotuladora e animações
-  model.js            maquete 3D da semana (Three.js), carregada só em telas largas com animação permitida;
-                      nos demais casos main.js desenha a mesma maquete em SVG
-  content.js          conteúdo PÚBLICO do evento (fase antes do anúncio)
+  model.js            maquete 3D da semana (Three.js), usada pelas duas versões; carregada só em telas
+                      largas com animação permitida, nos demais casos a mesma maquete é desenhada em SVG
+  content.js          todo o conteúdo do evento
   assets/             favicon e marca oficial do campus Jacareí (SVG)
   vendor/             fontes, GSAP e Three.js hospedados localmente
-conteudo-pos-anuncio/ conteúdo trancado até o anúncio oficial (NÃO publicado)
+dist/                 saída do build (não vai para o Git)
 brand/                arquivos-fonte da marca IFSP baixados do portal oficial (não publicados)
-scripts/serve.mjs     servidor local
+scripts/build.mjs     gera dist/ e confere a versão pré-anúncio
+scripts/serve.mjs     servidor local de dist/
 .github/workflows/    publicação no GitHub Pages
 PRODUCT.md, DESIGN.md contexto do produto e sistema visual (usados pelas ferramentas de design)
 .impeccable/          registros de direção visual (o que é local ou temporário fica no .gitignore)
 ```
 
-## Conteúdo trancado até o anúncio (26/10)
+## A página trancada
 
-Até a reunião de abertura (segunda, 26/10/2026, 8h às 9h30, Sala 2 do Bloco 1, com o Prof. Olavo), o site mostra só o que é público: o que é um hackathon, como montar a equipe, a contagem regressiva, a rotuladora e a maquete 3D da semana. Regulamento, regras do projeto, cronograma completo, pitch, banca, critérios, premiação e FAQ aparecem como gavetas trancadas, com cadeado e a etiqueta "Revelação em 26.10".
-
-**Como funciona o bloqueio**
-
-- O conteúdo trancado **não está no site publicado**: ele fica em `conteudo-pos-anuncio/content-completo.js`, fora da pasta `site/`. O GitHub Pages publica só `site/`, então nada disso chega ao navegador, nem no HTML, nem em `content.js`, nem em atributos escondidos.
-- Quem libera é a organização, com a chave `publicacao.liberado` em `site/content.js`. O relógio do visitante **nunca** destrava nada: ele só muda o texto da contagem (antes, durante e depois da reunião). Depois das 9h30, sem liberação, o site diz que o tema já foi revelado e que o conteúdo será publicado em breve.
-- Na maquete 3D, os dias ainda secretos (qua 28 e sex 30) aparecem com listras de advertência e "Revelado em 26.10", sem nenhum detalhe.
-
-**Para liberar depois do anúncio**
-
-1. Revise e complete `conteudo-pos-anuncio/content-completo.js` com o que foi anunciado (tema, regras, prêmios, banca...). O tema vai em `revelacao.tema` dentro de `site/content.js`, se quiserem mostrá-lo na fita.
-2. Copie o arquivo para `site/content-completo.js`.
-3. Em `site/content.js`, mude `publicacao.liberado` para `true`.
-4. Faça commit e push. As gavetas dão lugar aos capítulos completos (04 a 10), a maquete mostra os prazos reais e a chamada final ganha o bloco de inscrição.
-
-Atenção: o repositório é privado. Se ele ficar público antes da liberação, `conteudo-pos-anuncio/` (e a cópia antiga em `HackathonIF-main/`) passa a ser visível no GitHub; nesse caso, tire esses arquivos do repositório até a hora.
+Ao fim da versão pré-anúncio, a página escurece: a parte aberta do site fica fosca atrás de um vidro e entra uma seção de tela inteira com um cadeado fechado, duas fitas de rotuladora "Trancado até 26.10" e a frase "O restante será revelado na segunda-feira." Ela não cita nem lista o que vem depois. O cadeado segue o ponteiro com profundidade; segurar (mouse, toque, Espaço ou Enter) puxa a alça e enche um anel em volta da fechadura, que volta com uma mola e uma resposta curta. Com `prefers-reduced-motion`, nada se move e um toque só mostra a resposta. Depois das 8h de 26/10 a frase vira "O restante será publicado em breve.", até a versão completa ir ao ar.
 
 ## Onde editar o conteúdo
 
-O conteúdo público está em **`site/content.js`**; o trancado, em `conteudo-pos-anuncio/content-completo.js`. Não é preciso mexer no HTML.
+O conteúdo do site completo está em **`site/content.js`**; o da versão pré-anúncio, em `pre-anuncio/content.js` (só fatos públicos). Não é preciso mexer no HTML.
 
 - Texto entre colchetes, como `[LOCAL A DEFINIR]`, é um **marcador provisório**. Na página ele aparece em fita amarela, sublinhado em tracejado. Troque pelo texto oficial e o destaque some sozinho.
 - Um valor que é só o marcador vira uma fita amarela inteira; um marcador dentro de uma frase vira um trecho amarelo no meio do texto.
@@ -73,7 +92,7 @@ O conteúdo público está em **`site/content.js`**; o trancado, em `conteudo-po
 
 Em `localhost` (ou com `?revisao` no endereço), uma fita amarela no canto inferior direito mostra quantos marcadores faltam. Clique nela para ver a lista. No console do navegador, `HACKATHON_PENDENTES()` devolve a mesma lista.
 
-Já confirmado e público: 23ª Semana Nacional de Ciência e Tecnologia, de 26 a 30/10/2026; revelação do tema na segunda 26/10, 8h às 9h30, na Sala 2 do Bloco 1, com apresentação do Prof. Olavo; equipes de 3 a 5 estudantes regularmente matriculados no IFSP campus Jacareí, de qualquer curso (outros campi e instituições não participam). Os demais fatos confirmados estão no arquivo do conteúdo trancado.
+Já confirmado e público: 23ª Semana de Ciência e Tecnologia, de 26 a 30/10/2026; revelação do tema na segunda-feira, 26/10/2026, das 8h às 9h30, na Sala 2, Bloco 1, do IFSP Jacareí, com apresentação do Prof. Olavo; equipes de 3 a 5 estudantes regularmente matriculados no IFSP campus Jacareí, de qualquer curso (outros campi e instituições não participam); datas da maquete (26/10 revelação, 28/10 fim das inscrições às 23h59, 30/10 apresentações das 8h às 11h40). Os demais fatos confirmados estão em `site/content.js`.
 
 Marcadores que a organização ainda precisa definir:
 
@@ -88,7 +107,7 @@ Marcadores que a organização ainda precisa definir:
 | Premiação | prêmio do 1º, 2º e 3º lugares (além da medalha) |
 | Resultado | data do resultado e da premiação |
 | FAQ | o que levar |
-| Links | regulamento oficial, página da Semana Nacional de Ciência e Tecnologia |
+| Links | regulamento oficial, página da 23ª Semana de Ciência e Tecnologia |
 | Contato | organização, e-mail, redes sociais oficiais |
 
 Nada disso foi inventado: datas, prêmios, regras, patrocinadores e perfis sociais aparecem só quando a organização preencher.

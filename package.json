@@ -2,9 +2,13 @@
   "name": "hackathon-ifsp-jacarei",
   "version": "0.1.0",
   "private": true,
-  "description": "Site do Hackathon da Semana de Tecnologia do IFSP campus Jacareí (HTML/CSS/JS estático).",
+  "description": "Site do Hackathon da 23ª Semana de Ciência e Tecnologia do IFSP campus Jacareí (HTML/CSS/JS estático).",
   "type": "module",
   "scripts": {
-    "dev": "node scripts/serve.mjs"
+    "build": "node scripts/build.mjs",
+    "build:pre-anuncio": "node scripts/build.mjs pre-anuncio",
+    "build:completo": "node scripts/build.mjs completo",
+    "dev": "node scripts/build.mjs && node scripts/serve.mjs",
+    "dev:completo": "node scripts/build.mjs completo && node scripts/serve.mjs"
   }
 }

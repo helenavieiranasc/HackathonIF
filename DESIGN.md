@@ -1,6 +1,6 @@
 ---
 name: Hackathon IFSP Jacareí
-description: Event site for the 23ª Semana Nacional de Ciência e Tecnologia hackathon, drawn as a technical drawing of its own week and labelled with embossed label-maker tape.
+description: Event site for the 23ª Semana de Ciência e Tecnologia hackathon, drawn as a technical drawing of its own week and labelled with embossed label-maker tape.
 colors:
   sheet: "#eef0f2"
   bench: "#e1e4e8"

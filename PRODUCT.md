@@ -18,11 +18,11 @@ Students of the Federal Institute of São Paulo (IFSP), including many who have 
 
 ## Product Purpose
 
-The digital identity and main promotional experience of a student hackathon held during the 23ª Semana Nacional de Ciência e Tecnologia (SNCT) at IFSP campus Jacareí. It is where students discover the event, understand the challenge and rules, explore the schedule, and get excited to take part. Success: a student who had never considered a hackathon decides to join, and a contestant can find any rule or date without asking the organizers.
+The digital identity and main promotional experience of a student hackathon held during the 23ª Semana de Ciência e Tecnologia at IFSP campus Jacareí. It is where students discover the event, understand the challenge and rules, explore the schedule, and get excited to take part. Success: a student who had never considered a hackathon decides to join, and a contestant can find any rule or date without asking the organizers.
 
 ## Context
 
-- Campus: IFSP campus Jacareí. Host event: the 23ª Semana Nacional de Ciência e Tecnologia (2026). The site uses the official campus Jacareí signature of the IF mark.
+- Campus: IFSP campus Jacareí. Host event: the 23ª Semana de Ciência e Tecnologia (2026). The site uses the official campus Jacareí signature of the IF mark.
 - Organized within IFSP (Instituto Federal de Educação, Ciência e Tecnologia de São Paulo), a public federal institution. The official IFSP visual identity must be respected: logo used only in official variants, not distorted or recolored.
 - There was a previous edition: https://hackathon.ifsp.dev/regulamento. It is a content and functional reference only. The new site must not reproduce its layout, navigation, type, color treatment or aesthetic.
 
@@ -40,8 +40,8 @@ Confirmed:
 - One informational web surface, in pt-BR, explaining the event's objective and rules.
 
 Confirmed by the organizers (October 2026 brief):
-- Event week: 23ª Semana Nacional de Ciência e Tecnologia, IFSP campus Jacareí, 26 to 30 October 2026.
-- Theme is secret until the opening on Monday 26 October 2026, 8:00 to 9:30, Sala 2 do Bloco 1, presented by Prof. Olavo. The site must never reveal, guess or invent it.
+- Event week: 23ª Semana de Ciência e Tecnologia, IFSP campus Jacareí, 26 to 30 October 2026.
+- Theme is secret until the opening on Monday 26 October 2026, 8:00 to 9:30, Sala 2, Bloco 1, IFSP Jacareí, presented by Prof. Olavo. The site must never reveal, guess or invent it.
 - Registration: one team leader submits the official form for the whole team by Wednesday 28 October 2026, 23:59. Late or incomplete registrations are not approved.
 - Eligibility: teams of 3 to 5, every member regularly enrolled at IFSP campus Jacareí; students from other IFSP campuses or other institutions cannot take part. All courses welcome; programming expertise is not required.
 - AI tools are allowed (optional); projects must still be original and built during the event. Any technology/format; open-source libraries and public APIs allowed.
@@ -52,9 +52,9 @@ Confirmed by the organizers (October 2026 brief):
 Open decisions (not yet decided by the organizers; do not invent):
 - Registration form URL and opening date; development period; submission rules and deadline.
 - Pitch duration and question time; evaluation criteria; judges 2 to 5; prizes beyond the medals; results date; what to bring.
-- Contact details, organizing team name, social media, official regulation URL, SNCT page.
+- Contact details, organizing team name, social media, official regulation URL, page of the 23ª Semana de Ciência e Tecnologia.
 
-Pre-announcement phase (until the organizers release it): the published site carries only public facts (what a hackathon is, team formation, the reveal meeting, countdown, label maker, 3D week model). Rules, project instructions, full schedule, pitch, judges, criteria, awards and FAQ are shown as locked drawers and their content is kept out of `site/` entirely (`conteudo-pos-anuncio/content-completo.js`). Release is an organizer flag (`publicacao.liberado`), never the visitor's clock. The site does not suggest registering through it until an official registration link exists.
+Pre-announcement phase: two builds from one repository (`release.json`). The deployed `pre-anuncio` build contains only public facts (introduction and countdown, the opening meeting with its full 8:00–9:30 time range, room and presenter, what a hackathon is, teams of 3 to 5, the label maker, the 3D week model with its public dates) and one full-page locked experience for the rest, which never names what is coming. The full site lives in `site/` and is excluded from that build; `scripts/build.mjs` fails the build if any of its copy or files reach `dist/`. The organizers switch to the `completo` build after the announcement; the visitor's clock never unlocks anything.
 
 Until these are supplied, future work uses clearly marked placeholders (e.g. `[NOME DO EVENTO]`, `[REGRA A DEFINIR]`) that are obviously unfinished, never plausible-looking invented content.
 

@@ -1,4 +1,5 @@
-# Publica a pasta site/ no GitHub Pages a cada push na branch main.
+# Gera dist/ com a versão indicada em release.json e publica no GitHub Pages a cada push na main.
+# Antes do anúncio: "pre-anuncio" (o site completo fica fora do que vai ao ar). Depois: "completo".
 # Em Settings > Pages, escolha "Source: GitHub Actions".
 name: Publicar no GitHub Pages
 
@@ -24,9 +25,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # Na versão pré-anúncio, o build falha se algo do site completo aparecer em dist/.
+      - run: node scripts/build.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: dist
       - id: deployment
         uses: actions/deploy-pages@v4

@@ -3,31 +3,7 @@
 (function () {
   "use strict";
 
-  // Release gate. The full content (rules, prizes, judges...) is not part of the published site
-  // until the organizers set publicacao.liberado = true and ship content-completo.js.
-  // A visitor's clock never unlocks anything: it only changes the wording around the reveal.
-  const C0 = window.HACKATHON || {};
-  const pub = C0.publicacao || {};
-  function mergeContent(target, extra) {
-    Object.keys(extra).forEach((k) => {
-      const v = extra[k];
-      if (k === "agenda" && Array.isArray(target.agenda)) {
-        target.agenda = target.agenda.map((d) => v.find((x) => x.dia === d.dia) || d);
-      } else if (v && typeof v === "object" && !Array.isArray(v) && target[k] && typeof target[k] === "object") {
-        Object.assign(target[k], v);
-      } else target[k] = v;
-    });
-  }
-  if (pub.liberado) {
-    const sc = document.createElement("script");
-    sc.src = pub.arquivo || "content-completo.js";
-    sc.onload = () => { mergeContent(C0, window.HACKATHON_COMPLETO || {}); boot(!!window.HACKATHON_COMPLETO); };
-    sc.onerror = () => boot(false);
-    document.head.appendChild(sc);
-  } else boot(false);
-
-  function boot(LIBERADO) {
-  const C = C0;
+  const C = window.HACKATHON || {};
   const PH = /\[[^\]]+\]/;
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -55,55 +31,6 @@
   // Tape text: a placeholder strip shows its words without brackets.
   const tapeText = (s) => (isPlaceholder(s) ? esc(phText(s.replace(/[\[\]]/g, ""))) : esc(s));
 
-  /* ---------- Locked vault, or the released chapters in its place ---------- */
-  const vault = document.querySelector("[data-vault]");
-  const fullHolder = document.querySelector("[data-full-sections]");
-  const revealEndAt = Date.parse((C.revelacao || {}).fim);
-  if (LIBERADO && C.secoesHtml) {
-    if (fullHolder) fullHolder.outerHTML = C.secoesHtml;
-    if (vault) vault.remove();
-    const extra = document.querySelector("[data-final-extra]");
-    if (extra && C.inscricaoHtml) extra.innerHTML = C.inscricaoHtml;
-    const chap = document.querySelector("[data-final-chap]");
-    if (chap) chap.textContent = "11";
-    document.querySelectorAll("[data-locked-link]").forEach((a) => a.setAttribute("href", "#projeto"));
-  } else {
-    if (fullHolder) fullHolder.remove();
-    const grid = document.querySelector("[data-vault-grid]");
-    const after = Date.now() >= revealEndAt;
-    const stamp = after ? "Publicação em breve" : "Revelação em 26.10";
-    const when = after
-      ? "A revelação já aconteceu. A organização publica este conteúdo em breve."
-      : "Disponível após o anúncio oficial: segunda-feira, 26.10, depois da reunião das 8h às 9h30.";
-    if (grid) {
-      grid.innerHTML = (C.bloqueados || [])
-        .map(
-          (b) => `<li class="lockbox" id="${esc(b.id)}">
-            <button type="button" class="lock-face" aria-expanded="false" aria-controls="lock-${esc(b.id)}">
-              <span class="lock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path class="lock-shackle" d="M7.5 11V8a4.5 4.5 0 0 1 9 0v3"/><rect x="4.5" y="11" width="15" height="10" rx="1.5"/><path d="M12 14.8v2.6"/></svg></span>
-              <span class="lock-title">${esc(b.titulo)}</span>
-              <span class="lock-redacted" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="tape tape--yellow tape--s lock-stamp">${esc(stamp)}</span>
-            </button>
-            <p class="lock-note" id="lock-${esc(b.id)}" hidden>${esc(b.texto)} <span>${esc(when)}</span></p>
-          </li>`
-        )
-        .join("");
-      grid.addEventListener("click", (e) => {
-        const btn = e.target.closest(".lock-face");
-        if (!btn) return;
-        const note = document.getElementById(btn.getAttribute("aria-controls"));
-        const open = btn.getAttribute("aria-expanded") !== "true";
-        btn.setAttribute("aria-expanded", String(open));
-        note.hidden = !open;
-        const box = btn.closest(".lockbox");
-        box.classList.remove("is-shaking");
-        void box.offsetWidth;
-        box.classList.add("is-shaking");
-      });
-    }
-  }
-
   /* ---------- Simple fields ---------- */
   document.querySelectorAll("[data-c]").forEach((el) => {
     const v = get(el.dataset.c);
@@ -125,7 +52,6 @@
       items.map((m) => `<li><h3 class="motive-title">${esc(m.titulo)}</h3><p>${rich(m.texto)}</p></li>`).join(""),
 
     "revelacao.pauta": (items) => items.map((t) => `<li>${rich(t)}</li>`).join(""),
-    "participacao.dicas": (items) => items.map((t) => `<li>${rich(t)}</li>`).join(""),
 
     "ia.frases": (items) => items.map((t) => `<span class="ai-line">${esc(t)}</span>`).join(""),
     "ia.texto": (items) => items.map((t) => `<p>${rich(t)}</p>`).join(""),
@@ -163,7 +89,7 @@
         .map(
           (p, i) => `<li class="award award--${i + 1}">
             <span class="award-place">${esc(p.lugar.replace(" lugar", ""))}<span class="sr-only"> lugar</span></span>
-            <span class="award-items">${p.medalha ? `<span class="award-medal">${esc(p.medalha)}</span> <span aria-hidden="true">+</span>` : ""} ${rich(p.premio)}</span>
+            <span class="award-items">${p.medalha ? '<span class="award-medal">Medalha</span> <span aria-hidden="true">+</span>' : ""} ${rich(p.premio)}</span>
           </li>`
         )
         .join(""),
@@ -416,13 +342,6 @@
       if (cdStatus) cdStatus.textContent = "A abertura está acontecendo neste momento.";
       if (miniLabel) miniLabel.textContent = "A revelação do tema é agora";
       setThemeTape("Revelando agora", "tape--red");
-    } else if (!LIBERADO) {
-      setTitle("O tema já foi revelado na abertura.");
-      if (cdStatus) cdStatus.textContent = "O conteúdo completo será publicado pela organização em breve.";
-      if (miniLabel) miniLabel.textContent = "O tema já foi revelado na abertura";
-      setThemeTape("Revelado em 26/10", "tape--white");
-      const st = document.querySelector(".hero-statement");
-      if (st) st.innerHTML = "O tema já foi revelado.".split(" ").map((w) => `<span class="w"><span>${esc(w)}</span></span>`).join(" ");
     } else if (reveal.tema && reveal.tema.trim()) {
       setTitle("O tema foi revelado.");
       if (cdStatus) cdStatus.textContent = `Revelado na abertura de ${reveal.dia.toLowerCase()}.`;
@@ -502,10 +421,9 @@
 
   /* ---------- Course line: straight legs between controls ---------- */
   const course = document.querySelector(".course");
-  const courseSvg = course ? course.querySelector(".course-line") : null;
+  const courseSvg = course.querySelector(".course-line");
   let coursePath = null;
   function drawCourse() {
-    if (!course) return;
     const box = course.getBoundingClientRect();
     const nums = [...course.querySelectorAll(".control-num")].map((n) => {
       const r = n.getBoundingClientRect();
@@ -548,35 +466,24 @@
   if (document.fonts) document.fonts.ready.then(drawCourse);
 
   /* ---------- Fig. 1: the week model. SVG drawing first; WebGL replaces it where it can ---------- */
-  // Each day of the model comes from the agenda: public days show their facts, locked days only a padlock.
-  const KIND = { revelacao: "dated", prazo: "deadline", final: "final" };
   const modelData = days.map((d) => {
-    const ev = (C.agenda || []).find((x) => x.dia === d.num);
-    const short = d.name.slice(0, 3).replace(/^./, (c) => c.toUpperCase());
-    if (!ev) return { num: d.num, short, kind: "empty", date: "", title: "" };
-    if (ev.bloqueado) return { num: d.num, short, kind: "locked", date: `${short} ${d.num}/10`, title: "Revelado em 26.10" };
-    const extra = [ev.local, ev.apresentador].filter(Boolean).join(" · ");
+    const ev = d.events[0];
+    const kind = !ev ? "empty" : ev.marco ? "deadline" : /apresenta/i.test(ev.titulo) ? "final" : "dated";
     return {
       num: d.num,
-      short,
-      kind: KIND[ev.tipo] || "dated",
-      date: `${short} ${d.num}/10${ev.hora ? " · " + ev.hora : ""}`,
-      title: ev.titulo,
-      extra,
+      short: d.name.slice(0, 3).replace(/^./, (c) => c.toUpperCase()),
+      kind,
+      date: ev ? `${d.name.slice(0, 3).replace(/^./, (c) => c.toUpperCase())} ${d.num}/10${ev.hora ? " · " + ev.hora : ""}` : "",
+      title: ev ? (ev.marco ? "Inscrições encerram" : /apresenta/i.test(ev.titulo) ? "Pitch final" : ev.titulo) : "",
     };
   });
-  // The accessible description is built from the same public data, so it never says more than the drawing.
-  const modelAria = "Maquete da semana: " + modelData
-    .filter((m) => m.kind !== "empty")
-    .map((m) => (m.kind === "locked" ? `${m.date}: bloqueado até o anúncio oficial` : `${m.date}: ${m.title}${m.extra ? " (" + m.extra + ")" : ""}`))
-    .join("; ") + ".";
   const stage = document.querySelector("[data-model-stage]");
   function drawModelSvg() {
     // Isometric drawing of the same five volumes; dated days solid, the rest dashed wireframe.
     const W = 640, H = 560, s = 44;
     const cx = 290, cy = 350;
     const iso = (x, y, z) => [cx + (x - z) * Math.cos(Math.PI / 6) * s, cy + (x + z) * Math.sin(Math.PI / 6) * s - y * s];
-    const heights = { empty: 0.7, dated: 2.4, deadline: 3.2, final: 4, locked: 2.9 };
+    const heights = { empty: 0.7, dated: 2.4, deadline: 3.2, final: 4 };
     const fills = { dated: ["#2b2d30", "#161718", "#0d0e0f"], deadline: ["#e0393d", "#cd191e", "#a51216"], final: ["#2c9a45", "#1f7f33", "#16632a"] };
     let grid = "";
     for (let i = -3; i <= 3; i++) {
@@ -595,31 +502,25 @@
       if (m.kind === "empty") {
         return `<g class="svg-wire"><polygon points="${top}"/><polygon points="${left}"/><polygon points="${right}"/></g>${day}`;
       }
-      if (m.kind === "locked") {
-        return `<g class="svg-locked"><polygon points="${right}" fill="url(#hatch-dark)"/><polygon points="${left}" fill="url(#hatch)"/><polygon points="${top}" fill="#2b2d30"/></g>${day}`;
-      }
       const f = fills[m.kind];
       return `<g class="svg-solid"><polygon points="${right}" fill="${f[2]}"/><polygon points="${left}" fill="${f[1]}"/><polygon points="${top}" fill="${f[0]}"/></g>${day}`;
     });
-    let rank = 0;
     const labels = modelData
       .map((m, i) => {
         if (m.kind === "empty") return "";
-        const order = rank++;
         const x = (i - 2) * 1.55 - 0.5, z = (i - 2) * -0.4 - 0.5;
         const p = iso(x + 0.5, heights[m.kind] + 0.25, z + 0.5);
         // Labels fan upward from left to right, like the WebGL version, so they never collide.
-        const lift = [112, 62, 18][order] || 18;
+        const lift = { dated: 112, deadline: 62, final: 18 }[m.kind];
         const lx = p[0], ly = p[1] - lift;
-        const color = m.kind === "deadline" ? "#b3161b" : m.kind === "final" ? "#176a2a" : m.kind === "locked" ? "#6f747a" : "#17181a";
+        const color = m.kind === "deadline" ? "#cd191e" : m.kind === "final" ? "#1f7f33" : "#17181a";
         return `<g class="svg-label"><line x1="${p[0].toFixed(1)}" y1="${p[1].toFixed(1)}" x2="${lx.toFixed(1)}" y2="${ly.toFixed(1)}" stroke="${color}"/>
           <text x="${(lx + 6).toFixed(1)}" y="${(ly - 16).toFixed(1)}" class="svg-l-date" fill="${color}">${esc(m.date)}</text>
-          <text x="${(lx + 6).toFixed(1)}" y="${(ly + 4).toFixed(1)}" class="svg-l-title">${esc(m.title)}</text>${m.extra ? `<text x="${(lx + 6).toFixed(1)}" y="${(ly + 22).toFixed(1)}" class="svg-l-date">${esc(m.extra)}</text>` : ""}</g>`;
+          <text x="${(lx + 6).toFixed(1)}" y="${(ly + 4).toFixed(1)}" class="svg-l-title">${esc(m.title)}</text></g>`;
       })
       .join("");
     const vb = matchMedia("(max-width: 600px)").matches ? `0 175 ${W} 380` : `0 0 ${W} ${H}`;
-    stage.innerHTML = `<svg class="model-svg" viewBox="${vb}" role="img" aria-label="${esc(modelAria)}">
-      <defs><pattern id="hatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="12" height="12" fill="#f2c200"/><rect width="6" height="12" fill="#17181a"/></pattern><pattern id="hatch-dark" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="12" height="12" fill="#b38f00"/><rect width="6" height="12" fill="#0d0e10"/></pattern></defs>
+    stage.innerHTML = `<svg class="model-svg" viewBox="${vb}" role="img" aria-label="Maquete da semana: segunda 26 revelação do tema; quarta 28 encerramento das inscrições às 23h59; sexta 30 pitch final.">
       <g class="svg-grid">${grid}</g>${vols.join("")}${labels}</svg>`;
   }
   drawModelSvg();
@@ -628,7 +529,7 @@
   legend.className = "model-legend";
   legend.innerHTML = modelData
     .filter((m) => m.kind !== "empty")
-    .map((m) => `<li class="ml-${m.kind}"><span class="ml-date">${esc(m.date)}</span><span class="ml-title">${esc(m.title)}</span>${m.extra ? `<span class="ml-extra">${esc(m.extra)}</span>` : ""}</li>`)
+    .map((m) => `<li class="ml-${m.kind}"><span class="ml-date">${esc(m.date)}</span><span class="ml-title">${esc(m.title)}</span></li>`)
     .join("");
   stage.after(legend);
 
@@ -642,7 +543,7 @@
   if (wantsWebGL()) {
     const load = () =>
       import("./model.js")
-        .then((mod) => mod.mountWeekModel(stage, modelData, modelAria))
+        .then((mod) => mod.mountWeekModel(stage, modelData))
         .catch(() => { /* keep the SVG drawing */ });
     if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 1500 });
     else setTimeout(load, 300);
@@ -795,11 +696,6 @@
       gsap.from(c, { y: -14, rotate: -10, opacity: 0, duration: 0.5, ease: "back.out(2)", scrollTrigger: { trigger: c, start: "top 90%", once: true } });
     });
 
-    // The locked drawers slide in one after another.
-    if (document.querySelector(".lockbox")) {
-      gsap.from(".lockbox", { y: 26, opacity: 0, duration: 0.55, stagger: 0.06, ease: "power3.out", scrollTrigger: { trigger: ".vault-grid", start: "top 85%", once: true } });
-    }
-
     // Problem → idea → solution: the arrows draw, the steps follow.
     gsap.utils.toArray(".flow [data-draw]").forEach((p, i) => {
       const len = p.getTotalLength();
@@ -827,21 +723,20 @@
       gsap.set(coursePath, { strokeDasharray: len, strokeDashoffset: len });
       gsap.to(coursePath, { strokeDashoffset: 0, ease: "none", scrollTrigger: { id: "course", trigger: ".course", start: "top 75%", end: "bottom 60%", scrub: 0.6 } });
     };
-    if (course) window.__courseTween();
+    window.__courseTween();
     gsap.utils.toArray(".control-num").forEach((n) => {
       gsap.from(n, { scale: 0.6, opacity: 0, duration: 0.4, ease: "back.out(2.4)", scrollTrigger: { trigger: n, start: "top 85%", once: true } });
     });
 
     // The week: the rule draws across, then the days and their events drop in.
-    if (document.querySelector(".week")) gsap.from(".week-day", { opacity: 0, y: 24, duration: 0.6, stagger: 0.09, ease: "power3.out", scrollTrigger: { trigger: ".week", start: "top 80%", once: true } });
-    if (document.querySelector(".week")) gsap.from(".wd-event", { opacity: 0, y: -18, duration: 0.5, stagger: 0.12, delay: 0.35, ease: "back.out(1.8)", scrollTrigger: { trigger: ".week", start: "top 80%", once: true } });
+    gsap.from(".week-day", { opacity: 0, y: 24, duration: 0.6, stagger: 0.09, ease: "power3.out", scrollTrigger: { trigger: ".week", start: "top 80%", once: true } });
+    gsap.from(".wd-event", { opacity: 0, y: -18, duration: 0.5, stagger: 0.12, delay: 0.35, ease: "back.out(1.8)", scrollTrigger: { trigger: ".week", start: "top 80%", once: true } });
 
     // The regulation sheet slides onto the bench.
-    if (document.querySelector(".sheet")) gsap.from(".sheet", { y: 60, rotate: -0.5, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: ".sheet", start: "top 92%", once: true } });
+    gsap.from(".sheet", { y: 60, rotate: -0.5, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: ".sheet", start: "top 92%", once: true } });
 
     addEventListener("load", () => ScrollTrigger.refresh());
   }
   if (document.readyState === "complete" || document.readyState === "interactive") startMotion();
   else addEventListener("DOMContentLoaded", startMotion);
-  }
 })();
