@@ -472,7 +472,7 @@
     tl.fromTo(chars, { opacity: 0, scale: 1.35, y: -4 }, { opacity: 1, scale: 1, y: 0, duration: 0.16, stagger: 0.045, ease: "back.out(3)" }, 0.1)
       .fromTo(".hero-meta", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.5 }, 0.05)
       .fromTo(".hero-statement .w > span", { yPercent: 110 }, { yPercent: 0, duration: 0.7, stagger: 0.05 }, "-=0.3")
-      .fromTo(".hero-lede, .hero-facts, .hero-actions, .mini-countdown", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.07 }, "-=0.45")
+      .fromTo(".hero-lede, .hero-actions, .mini-countdown", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.07 }, "-=0.45")
       .add(() => gsap.set([strip, ...segs], { clearProps: "clipPath" }));
 
     // Headlines rise word by word as their section arrives.

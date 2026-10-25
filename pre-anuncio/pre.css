@@ -88,6 +88,7 @@
   letter-spacing: -0.03em; text-wrap: balance; color: #fff;
 }
 .locked-date { margin: 0; font: 700 var(--tape-l)/1.3 var(--font-tape); letter-spacing: 0.05em; color: var(--tape-yellow); }
+@media (max-width: 520px) { .locked-date .nowrap { display: block; } .locked-sep { display: none; } }
 .locked-hint { margin: 0; min-height: 1.5em; font-size: 0.9375rem; color: var(--ink-on-steel-muted); }
 
 @media (prefers-reduced-motion: reduce) {
