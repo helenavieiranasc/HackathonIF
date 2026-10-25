@@ -192,7 +192,8 @@
     const lockedTitle = document.querySelector(".locked-title");
     if (lockedTitle && !lockedTitle.dataset.after) {
       lockedTitle.dataset.after = "1";
-      lockedTitle.innerHTML = "O restante será publicado em breve.".split(" ").map((w) => `<span class="w"><span>${esc(w)}</span></span>`).join(" ");
+      const words = (s) => s.split(" ").map((w) => `<span class="w"><span>${esc(w)}</span></span>`).join(" ");
+      lockedTitle.innerHTML = `<span class="lt-line">${words("O restante será")}</span> <span class="lt-line">${words("publicado em breve.")}</span>`;
     }
   }
   tickReveal();
