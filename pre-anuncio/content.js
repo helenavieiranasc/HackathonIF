@@ -51,7 +51,7 @@ window.HACKATHON = {
     sala: "Sala 2",
     bloco: "Bloco 1",
     local: "Sala 2, Bloco 1, IFSP campus Jacareí",
-    apresentador: "Prof. Olavo",
+    apresentadora: "Profa. Ariadne",
   },
 
   // Agenda pública da semana, desenhada na maquete 3D.

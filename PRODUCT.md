@@ -41,7 +41,7 @@ Confirmed:
 
 Confirmed by the organizers (October 2026 brief):
 - Event week: 23ª Semana de Ciência e Tecnologia, IFSP campus Jacareí, 26 to 30 October 2026.
-- Theme is secret until the opening on Monday 26 October 2026, 8:00 to 9:30, Sala 2, Bloco 1, IFSP Jacareí, presented by Prof. Olavo. The site must never reveal, guess or invent it.
+- Theme is secret until the opening on Monday 26 October 2026, 8:00 to 9:30, Sala 2, Bloco 1, IFSP Jacareí, presented by Profa. Ariadne. The site must never reveal, guess or invent it.
 - Registration: one team leader submits the official form for the whole team by Wednesday 28 October 2026, 23:59. Late or incomplete registrations are not approved.
 - Eligibility: teams of 3 to 5, every member regularly enrolled at IFSP campus Jacareí; students from other IFSP campuses or other institutions cannot take part. All courses welcome; programming expertise is not required.
 - AI tools are allowed (optional); projects must still be original and built during the event. Any technology/format; open-source libraries and public APIs allowed.

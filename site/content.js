@@ -78,7 +78,7 @@ window.HACKATHON = {
     local: "Sala 2, Bloco 1, IFSP campus Jacareí",
     sala: "Sala 2",
     bloco: "Bloco 1",
-    apresentador: "Prof. Olavo",
+    apresentadora: "Profa. Ariadne.",
     pauta: [
       "O que é um hackathon e como ele vai funcionar",
       "A revelação do tema",
@@ -197,7 +197,7 @@ window.HACKATHON = {
     },
     {
       pergunta: "Quando o tema é revelado?",
-      resposta: "Na segunda-feira, 26 de outubro, das 8h às 9h30. Na Sala 2, Bloco 1, do IFSP campus Jacareí, com apresentação do Prof. Olavo.",
+      resposta: "Na segunda-feira, 26 de outubro, das 8h às 9h30. Na Sala 2, Bloco 1, do IFSP campus Jacareí, com apresentação da Profa. Ariadne.",
       confirmado: true,
     },
     {
@@ -253,7 +253,7 @@ window.HACKATHON = {
         itens: [
           "O tema fica em sigilo até a revelação oficial, na segunda-feira, 26 de outubro de 2026, das 8h às 9h30.",
           { rotulo: "Local da revelação", valor: "Sala 2, Bloco 1, IFSP campus Jacareí" },
-          { rotulo: "Apresentação", valor: "Prof. Olavo" },
+          { rotulo: "Apresentação", valor: "Profa. Ariadne" },
           "Nesse encontro, a organização apresenta o conceito de hackathon, revela o tema e passa as informações essenciais para começar.",
           "Todos os projetos precisam responder ao tema anunciado.",
         ],

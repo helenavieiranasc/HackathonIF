@@ -13,7 +13,7 @@ O projeto tem duas versões. Só uma vai ao ar, escolhida em `release.json`.
 | `pre-anuncio` (no ar agora) | `pre-anuncio/` + arquivos neutros de `site/` | apresentação com contagem regressiva, data, horário, local e apresentador da reunião de abertura, o que é um hackathon, montagem de equipe (3 a 5 integrantes), maquete 3D da semana e uma página trancada para o restante |
 | `completo` (depois do anúncio) | `site/` | o site inteiro, com tudo o que for anunciado na reunião de abertura |
 
-**Reunião de abertura:** segunda-feira, 26/10/2026, das 8h às 9h30, Sala 2, Bloco 1, IFSP Jacareí. Apresentação: Prof. Olavo.
+**Reunião de abertura:** segunda-feira, 26/10/2026, das 8h às 9h30, Sala 2, Bloco 1, IFSP Jacareí. Apresentação: Profa. Ariadne.
 
 ## Rodar no computador
 
