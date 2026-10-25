@@ -200,7 +200,7 @@ button.tape:disabled { cursor: not-allowed; opacity: 0.55; translate: none; filt
   text-decoration: underline dashed 1.5px;
   text-underline-offset: 0.22em;
 }
-.challenge .ph, .who .ph { color: var(--ink); }
+.challenge .ph { color: var(--ink); }
 
 /* Punched letters (split by JS) */
 .ch { display: inline-block; }
@@ -424,23 +424,58 @@ button.tape:disabled { cursor: not-allowed; opacity: 0.55; translate: none; filt
 }
 
 /* ---------- 02 Quem participa: the one green field ---------- */
-.who { background: var(--tape-green); color: #fff; }
-.who ::selection { background: #fff; color: var(--tape-green); }
-.who .h2 { color: #fff; }
-.who-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--s5) var(--s7); align-items: start; }
-.who-text { font-size: var(--t-lead); line-height: 1.55; max-width: 48ch; margin-bottom: var(--s3); }
-.who-skills { max-width: 48ch; }
 .who-label { font-weight: 600; }
-.who-team { display: grid; gap: var(--s2); padding-top: var(--s2); border-top: 2px solid #fff; }
-.team-slots { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s2); }
-.team-slots li:nth-child(1) .tape { --r: -1.4deg; }
-.team-slots li:nth-child(2) .tape { --r: 0.6deg; }
-.team-slots li:nth-child(3) .tape { --r: -0.4deg; }
-.tape--blank { --tape-bg: transparent; --tape-fg: currentColor; filter: none; }
-.tape--blank .tape-body { background: none; outline: 2px dashed currentColor; outline-offset: -2px; clip-path: none; }
-.tape--blank .tape-face { filter: none; }
-.who-campus { margin-top: var(--s2); padding: var(--s3); background: rgb(0 0 0 / 0.16); max-width: 46ch; }
-@media (max-width: 900px) { .who-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Teams: a roster board, three punched seats, two empty ones, drawn dimensions ---------- */
+.crew {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s5) var(--s7); align-items: center;
+  background: var(--bench); border-top: 1px solid var(--rule);
+}
+.crew-copy .lead { margin-top: var(--s3); max-width: 50ch; }
+.crew-skills { margin-top: var(--s3); max-width: 48ch; color: var(--ink-muted); }
+.crew-label { display: block; margin-bottom: 0.3rem; font: 700 0.75rem/1.2 var(--font-tape); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); }
+
+.crew-board {
+  display: grid; gap: var(--s3); margin: 0; padding: var(--s4); min-width: 0;
+  color: var(--ink-on-steel);
+  background: #2b2e33 linear-gradient(180deg, rgb(255 255 255 / 0.06), rgb(255 255 255 / 0) 30%, rgb(0 0 0 / 0.18));
+  border-radius: 22px;
+  box-shadow: 0 2px 2px rgb(0 0 0 / 0.25), 0 30px 50px -28px rgb(0 0 0 / 0.65);
+}
+.crew-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s2); }
+.crew-head .tape { --r: -1deg; }
+.crew-size { font-size: 0.9375rem; color: var(--ink-on-steel-muted); }
+.crew-size strong { font: 700 1.05rem var(--font-tape); color: #fff; letter-spacing: 0.04em; }
+
+.crew-grid { display: grid; grid-template-columns: minmax(0, 1fr) 3rem 3rem; grid-template-rows: repeat(5, auto); row-gap: 0.6rem; }
+.crew-slots { grid-column: 1; display: grid; grid-template-rows: subgrid; margin: 0; padding: 0; list-style: none; }
+.crew-row { display: grid; grid-template-columns: 2.2rem minmax(0, 1fr); align-items: center; gap: var(--s1); min-height: 2.6rem; }
+.crew-num { font: 700 0.8rem/1 var(--font-tape); letter-spacing: 0.08em; color: var(--ink-on-steel-muted); }
+.crew-tape { justify-self: start; }
+.crew-empty {
+  display: flex; align-items: center; min-height: 2.35rem; padding: 0 0.9rem;
+  border: 2px dashed rgb(255 255 255 / 0.3); border-radius: var(--radius-tape);
+  font: 700 0.75rem/1 var(--font-tape); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-on-steel-muted);
+}
+
+/* Dimension lines: a bracket with end ticks, its value written along it. */
+.crew-dim { --dim: var(--tape-yellow); position: relative; display: flex; align-items: center; margin: 0.55rem 0 0.55rem 1.1rem; border-left: 2px solid var(--dim); }
+.crew-dim::before, .crew-dim::after { content: ""; position: absolute; left: -8px; width: 14px; height: 2px; background: var(--dim); }
+.crew-dim::before { top: 0; }
+.crew-dim::after { bottom: 0; }
+.crew-dim span { writing-mode: vertical-rl; rotate: 180deg; padding-right: 0.4rem; font: 700 0.72rem/1 var(--font-tape); letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); white-space: nowrap; }
+.crew-dim--min { grid-column: 2; }
+.crew-dim--max { --dim: #c9ced3; grid-column: 3; }
+
+.crew-campus { margin: 0; padding-top: var(--s3); border-top: 1px solid rgb(255 255 255 / 0.12); font-size: 0.9375rem; line-height: 1.55; color: var(--ink-on-steel-muted); }
+.crew-campus .tape { margin-right: 0.35rem; }
+
+@media (max-width: 900px) { .crew { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 420px) {
+  .crew-board { padding: var(--s3); }
+  .crew-grid { grid-template-columns: minmax(0, 1fr) 2.4rem 2.4rem; }
+  .crew-dim { margin-left: 0.8rem; }
+}
 
 /* ---------- 03 Tema secreto: the steel drawer and the countdown ---------- */
 .challenge { background: var(--steel); color: var(--ink-on-steel); }
@@ -620,7 +655,7 @@ button.tape:disabled { cursor: not-allowed; opacity: 0.55; translate: none; filt
 @media (max-width: 560px) { .qa-a { padding-right: 0; } }
 
 /* ---------- 10 Regulamento: one readable column with an index ---------- */
-.rules { background: var(--bench); }
+.rules { background: var(--bench); overflow-x: clip; } /* the sheet slides in slightly tilted */
 .sheet { position: relative; background: var(--paper); padding: var(--s5) var(--s5) var(--s6); border-radius: 2px; box-shadow: 0 1px 2px rgb(0 0 0 / 0.08), 0 24px 40px -28px rgb(0 0 0 / 0.35); }
 .sheet-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s2); justify-items: start; padding-bottom: var(--s4); margin-bottom: var(--s4); border-bottom: 2px solid var(--ink); }
 .sheet-summary { max-width: var(--measure); font-size: var(--t-lead); line-height: 1.5; }

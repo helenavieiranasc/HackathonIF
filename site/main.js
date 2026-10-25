@@ -191,15 +191,21 @@
       .join("")
   );
 
-  /* ---------- Team slots: required seats are punched, optional ones are blank tape ---------- */
+  /* ---------- Team roster: required seats are punched tape, optional ones are empty slots,
+     and two dimension lines mark the minimum and the maximum, like a drawing ---------- */
   const team = document.querySelector("[data-team]");
   if (team && C.participacao) {
     const { minimo, maximo } = C.participacao;
-    team.innerHTML = Array.from({ length: maximo }, (_, i) =>
-      i < minimo
-        ? `<li><span class="tape tape--black tape--s">Integrante ${i + 1}</span></li>`
-        : `<li><span class="tape tape--blank tape--s">Opcional ${i + 1}</span></li>`
-    ).join("");
+    const rows = Array.from({ length: maximo }, (_, i) => {
+      const n = String(i + 1).padStart(2, "0");
+      const slot = i < minimo
+        ? `<span class="tape tape--black tape--m crew-tape">Integrante ${i + 1}</span>`
+        : `<span class="crew-empty">Opcional</span>`;
+      return `<li class="crew-row${i < minimo ? "" : " crew-row--opt"}" style="grid-row:${i + 1}"><span class="crew-num" aria-hidden="true">${n}</span>${slot}</li>`;
+    }).join("");
+    team.innerHTML = `<ol class="crew-slots" style="grid-row:1 / ${maximo + 1}" aria-label="Equipe de ${minimo} a ${maximo} integrantes: ${minimo} obrigatórios e ${maximo - minimo} opcionais">${rows}</ol>
+      <span class="crew-dim crew-dim--min" style="grid-row:1 / ${minimo + 1}" aria-hidden="true"><span>mín. ${minimo}</span></span>
+      <span class="crew-dim crew-dim--max" style="grid-row:1 / ${maximo + 1}" aria-hidden="true"><span>máx. ${maximo}</span></span>`;
   }
 
   /* ---------- Links: real URLs go out, placeholders stay on the page and say why ---------- */
@@ -695,6 +701,10 @@
     gsap.utils.toArray(".chap").forEach((c) => {
       gsap.from(c, { y: -14, rotate: -10, opacity: 0, duration: 0.5, ease: "back.out(2)", scrollTrigger: { trigger: c, start: "top 90%", once: true } });
     });
+
+    // The roster fills seat by seat, then the dimension lines draw the minimum and the maximum.
+    gsap.from(".crew-row", { x: -24, opacity: 0, duration: 0.5, stagger: 0.08, ease: "power3.out", scrollTrigger: { trigger: ".crew-board", start: "top 80%", once: true } });
+    gsap.from(".crew-dim", { scaleY: 0, transformOrigin: "50% 0%", duration: 0.7, stagger: 0.2, delay: 0.35, ease: "power2.inOut", scrollTrigger: { trigger: ".crew-board", start: "top 80%", once: true } });
 
     // Problem → idea → solution: the arrows draw, the steps follow.
     gsap.utils.toArray(".flow [data-draw]").forEach((p, i) => {
