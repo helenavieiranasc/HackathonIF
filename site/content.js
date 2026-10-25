@@ -78,7 +78,7 @@ window.HACKATHON = {
     local: "Sala 2, Bloco 1, IFSP campus Jacareí",
     sala: "Sala 2",
     bloco: "Bloco 1",
-    apresentadora: "Profa. Ariadne.",
+    apresentador: "Profa. Ariadne.",
     pauta: [
       "O que é um hackathon e como ele vai funcionar",
       "A revelação do tema",
