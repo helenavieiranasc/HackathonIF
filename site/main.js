@@ -539,8 +539,8 @@
     .join("");
   stage.after(legend);
 
+  // Every screen that can draw WebGL gets the 3D model; the SVG drawing stays only where it cannot.
   const wantsWebGL = () => {
-    if (reduceMotion.matches || !matchMedia("(min-width: 900px)").matches) return false;
     try {
       const c = document.createElement("canvas");
       return !!(c.getContext("webgl2") || c.getContext("webgl"));
@@ -549,7 +549,7 @@
   if (wantsWebGL()) {
     const load = () =>
       import("./model.js")
-        .then((mod) => mod.mountWeekModel(stage, modelData))
+        .then((mod) => mod.mountWeekModel(stage, modelData, { still: reduceMotion.matches }))
         .catch(() => { /* keep the SVG drawing */ });
     if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 1500 });
     else setTimeout(load, 300);

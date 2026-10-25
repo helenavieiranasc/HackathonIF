@@ -351,7 +351,7 @@ button.tape:disabled { cursor: not-allowed; opacity: 0.55; translate: none; filt
 .hero-actions .tape--l { --r: -0.6deg; }
 .mini-countdown { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1) var(--s2); text-decoration: none; padding: var(--s1) 0; }
 .mini-label { font-weight: 600; }
-.mini-cells { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem; }
+.mini-cells { display: inline-flex; flex-wrap: nowrap; align-items: baseline; gap: 0.35rem; }
 .mini-cells .tape { font-size: clamp(1.25rem, 0.9rem + 1vw, 1.75rem); font-variant-numeric: tabular-nums; }
 .mini-cells .tape-face { filter: url(#emboss-l); }
 .mini-cells i { font-style: normal; font-size: 1rem; color: var(--ink-muted); margin-right: 0.5rem; }
@@ -857,6 +857,7 @@ button.tape:disabled { cursor: not-allowed; opacity: 0.55; translate: none; filt
 .model-legend { display: none; }
 @media (max-width: 600px) {
   .model-svg .svg-label { display: none; }
+  .model-label { display: none; }
   .model-legend { display: grid; gap: var(--s1); border-top: 2px solid var(--ink); padding-top: var(--s1); }
   .model-legend li { position: relative; display: grid; padding: 0.4rem 0 0.4rem 1.75rem; }
   .model-legend li::before { content: ""; position: absolute; left: 0; top: 0.75rem; width: 0.9rem; height: 0.9rem; background: var(--tape-black); }

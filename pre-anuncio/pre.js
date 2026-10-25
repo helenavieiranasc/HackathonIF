@@ -328,8 +328,8 @@
     .join("");
   stage.after(legend);
 
+  // Every screen that can draw WebGL gets the 3D model; the SVG drawing stays only where it cannot.
   const wantsWebGL = () => {
-    if (reduceMotion.matches || !matchMedia("(min-width: 900px)").matches) return false;
     try {
       const c = document.createElement("canvas");
       return !!(c.getContext("webgl2") || c.getContext("webgl"));
@@ -338,7 +338,7 @@
   if (wantsWebGL()) {
     const load = () =>
       import("./model.js")
-        .then((mod) => mod.mountWeekModel(stage, modelData))
+        .then((mod) => mod.mountWeekModel(stage, modelData, { still: reduceMotion.matches }))
         .catch(() => { /* keep the SVG drawing */ });
     if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 1500 });
     else setTimeout(load, 300);
@@ -501,11 +501,7 @@
     gsap.from(".crew-row", { x: -24, opacity: 0, duration: 0.5, stagger: 0.08, ease: "power3.out", scrollTrigger: { trigger: ".crew-board", start: "top 80%", once: true } });
     gsap.from(".crew-dim", { scaleY: 0, transformOrigin: "50% 0%", duration: 0.7, stagger: 0.2, delay: 0.35, ease: "power2.inOut", scrollTrigger: { trigger: ".crew-board", start: "top 80%", once: true } });
 
-    // Into the locked part: the open page behind frosts over and the padlock drops onto the bench.
-    const veil = document.querySelector("[data-veil]");
-    if (veil) {
-      gsap.fromTo(veil, { "--veil": 0 }, { "--veil": 1, ease: "none", scrollTrigger: { trigger: "#trancado", start: "top 65%", end: "top 5%", scrub: true } });
-    }
+    // Into the locked part: the padlock drops onto the bench.
     gsap.from(".padlock", { y: -140, rotate: -10, opacity: 0, duration: 1.1, ease: "bounce.out", scrollTrigger: { trigger: "#trancado", start: "top 55%", once: true } });
     gsap.from(".padlock-tag", { scale: 1.6, opacity: 0, rotate: 30, duration: 0.5, delay: 0.9, ease: "back.out(2.4)", scrollTrigger: { trigger: "#trancado", start: "top 55%", once: true } });
     gsap.from(".locked-title .w > span", { yPercent: 110, duration: 0.8, stagger: 0.06, delay: 0.3, ease: "power3.out", scrollTrigger: { trigger: "#trancado", start: "top 55%", once: true } });

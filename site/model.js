@@ -7,7 +7,9 @@ const COLORS = { dated: 0x1e2023, deadline: 0xcd191e, final: 0x1f7f33 };
 const LIFT = { dated: 120, deadline: 64, final: 14 };
 const LABEL_TONE = { dated: "", deadline: " model-label--red", final: " model-label--green" };
 
-export function mountWeekModel(stage, data) {
+// `still`: with reduced motion the model is drawn once, already standing, and does not follow
+// the scroll or the pointer.
+export function mountWeekModel(stage, data, { still = false } = {}) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -88,12 +90,14 @@ export function mountWeekModel(stage, data) {
     width = Math.max(1, r.width);
     height = Math.max(1, r.height);
     renderer.setSize(width, height, false);
-    const view = 10.5;
+    // Phones show the labels as a legend below, so the model can fill the frame.
+    const view = width < 360 ? 7.6 : width < 600 ? 6.9 : 10.5;
+    const lift = width < 600 ? 0.75 : 0; // and sits a little higher, clear of the day names
     const aspect = width / height;
     camera.left = (-view * aspect) / 2;
     camera.right = (view * aspect) / 2;
-    camera.top = view / 2;
-    camera.bottom = -view / 2;
+    camera.top = view / 2 - lift;
+    camera.bottom = -view / 2 - lift;
     camera.updateProjectionMatrix();
     request();
   }
@@ -106,6 +110,7 @@ export function mountWeekModel(stage, data) {
     const sx = (v.x * 0.5 + 0.5) * width + dx;
     const sy = (-v.y * 0.5 + 0.5) * height + dy;
     el.style.transform = `translate(${sx.toFixed(1)}px, ${sy.toFixed(1)}px)`;
+    return [sx, sy];
   }
 
   // State: the model rises on load, turns a little with the hero scroll and leans toward the pointer.
@@ -118,6 +123,7 @@ export function mountWeekModel(stage, data) {
   let frame = 0;
 
   function targets() {
+    if (still) return;
     const r = hero.getBoundingClientRect();
     const progress = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height)));
     targetY = -0.18 + progress * 0.7 + (pointerX - 0.5) * 0.3;
@@ -126,7 +132,7 @@ export function mountWeekModel(stage, data) {
 
   function render(now) {
     frame = 0;
-    rise = Math.min(1, (now - riseStart) / 1400);
+    rise = still ? 1 : Math.min(1, (now - riseStart) / 1400);
     parts.forEach(({ holder }, i) => {
       const t = Math.min(1, Math.max(0, rise * 1.6 - i * 0.12));
       holder.scale.y = Math.max(0.001, 1 - Math.pow(1 - t, 3));
@@ -143,7 +149,11 @@ export function mountWeekModel(stage, data) {
       place(day, holder.position.x, 0, 0.95, 0, 8);
       if (tag) {
         // Labels fan upward from left to right so they never sit on top of each other.
-        const lift = LIFT[parts[i].m.kind];
+        // Near the right edge the label wraps instead of leaving the frame, and rises clear of the block.
+        const [sx] = place(tag, holder.position.x, h * holder.scale.y, 0, 0, 0);
+        const room = width - sx - 2;
+        tag.style.maxWidth = `${Math.max(96, Math.min(240, room)).toFixed(0)}px`;
+        const lift = LIFT[parts[i].m.kind] + (tag.scrollWidth > room || tag.offsetHeight > 46 ? 46 : 0);
         place(tag, holder.position.x, h * holder.scale.y, 0, 0, -lift - tag.offsetHeight);
         tag.style.setProperty("--lead", `${lift}px`);
         tag.style.opacity = holder.scale.y > 0.98 ? "1" : "0";
@@ -157,8 +167,8 @@ export function mountWeekModel(stage, data) {
     if (!frame) frame = requestAnimationFrame(render);
   }
 
-  addEventListener("scroll", request, { passive: true });
-  addEventListener("pointermove", (e) => {
+  if (!still) addEventListener("scroll", request, { passive: true });
+  if (!still) addEventListener("pointermove", (e) => {
     pointerX = e.clientX / innerWidth;
     pointerY = e.clientY / innerHeight;
     request();
