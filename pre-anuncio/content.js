@@ -57,7 +57,7 @@ window.HACKATHON = {
   // Agenda pública da semana, desenhada na maquete 3D.
   cronograma: [
     { titulo: "Revelação do tema", data: "Seg 26/10", hora: "8h às 9h30" },
-    { titulo: "Encerramento das inscrições", data: "Qua 28/10", hora: "até 23h59", marco: true },
+    { titulo: "Encerramento das inscrições", data: "Ter 27/10", hora: "até 23h59", marco: true },
     { titulo: "Apresentações finais e defesa dos projetos", data: "Sex 30/10", hora: "8h às 11h40" },
   ],
 };
