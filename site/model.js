@@ -17,7 +17,7 @@ export function mountWeekModel(stage, data, { still = false } = {}) {
   canvas.setAttribute("role", "img");
   canvas.setAttribute(
     "aria-label",
-    "Maquete da semana: segunda 26 revelação do tema; quarta 28 encerramento das inscrições às 23h59; sexta 30 pitch final."
+    "Maquete da semana: segunda 26 revelação do tema; terça 27 encerramento das inscrições às 23h59; sexta 30 pitch final."
   );
 
   const scene = new THREE.Scene();
